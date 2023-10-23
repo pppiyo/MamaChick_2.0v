@@ -225,10 +225,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalInput: 0
-  speed: 40
-  backRange: 300
-  forwardRange: 15
-  jumpForce: 50
+  speed: 30
+  jumpForce: 20
 --- !u!1001 &998239397
 PrefabInstance:
   m_ObjectHideFlags: 0

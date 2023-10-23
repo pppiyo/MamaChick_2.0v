@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     public float horizontalInput;
-    public float speed = 40.0f;
-    public float jumpForce = 5.0f;
+    public float speed;
+    public float jumpForce;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private bool isGrounded;
