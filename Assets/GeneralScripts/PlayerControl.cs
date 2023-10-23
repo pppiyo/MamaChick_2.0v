@@ -5,8 +5,9 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     public float horizontalInput;
-    public float speed;
-    public float jumpForce;
+    public float speed = 15;
+    private float xBound = 9.88f;
+    public float jumpForce = 40;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private bool isGrounded;
@@ -30,12 +31,17 @@ public class PlayerControl : MonoBehaviour
             isGrounded = false;
     }
 
-    // todo: when grab worm and pebble, make them use gravity. // currently, they are kinematic and don't use gravity.
     void Update()
     {
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
+
+        //  Keep player in bound
+        if (transform.position.x > xBound)
+            transform.position = new Vector2(xBound, transform.position.y);
+        else if (transform.position.x < -xBound)
+            transform.position = new Vector2(-xBound, transform.position.y);
 
         // Jump With Impulse Force 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
