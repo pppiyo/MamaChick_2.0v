@@ -145,7 +145,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalInput: 0
+<<<<<<< HEAD
   speed: 15
   jumpForce: 40
 =======
 >>>>>>> e1a5f28 ([lvl]: original)
+=======
+  speed: 30
+  jumpForce: 20
+>>>>>>> 1f47482 (number updated)
