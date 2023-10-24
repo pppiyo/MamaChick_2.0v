@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4388556524763799117}
   - component: {fileID: 4388556524763799106}
   - component: {fileID: -3083645663318245275}
-  m_Layer: 0
-  m_Name: Level
-  m_TagString: Ground
+  m_Layer: 7
+  m_Name: Platform
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,21 +123,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Number_Text
       objectReference: {fileID: 0}
+    - target: {fileID: 3586916678666598213, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_fontColor.b
-      value: 0.18431373
+      value: 0.49056602
       objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.18431373
+      value: 0.39724028
       objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.94509804
+      value: 0.19206122
       objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4281282545
+      value: 4286407985
       objectReference: {fileID: 0}
     - target: {fileID: 8821883836249200090, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_Pivot.x
