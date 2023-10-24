@@ -86,7 +86,7 @@ public class PlayerControl : MonoBehaviour
 
             // Platform Equation Logic
             TextMeshPro obstacleEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
-            if (obstacleEquationText != null)
+            if (obstacleEquationText != null && obstacleEquationText.text.Length != 0)
             {
                 GameObject obj = GameObject.Find("EquationManager");
 
