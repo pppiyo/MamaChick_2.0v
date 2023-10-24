@@ -179,7 +179,7 @@ public class PlayerControl : MonoBehaviour
             // Debug.Log(canPass);
             if (canPass)
             {
-                StartCoroutine(ActivateEffect());
+                StartCoroutine(ActivateEffect(obstacle.gameObject));
             }
         }
 
@@ -194,30 +194,25 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    private IEnumerator ActivateEffect()
+    private IEnumerator ActivateEffect(GameObject Platform)
     {
         // Code for the effect to start here
-        DisableLayerCollision();
+        DisableLayerCollision(Platform);
 
         yield return new WaitForSeconds(effectDuration);
 
         // Code for the effect to end here
-        EnableLayerCollision();
-
+        EnableLayerCollision(Platform);
     }
 
-    void DisableLayerCollision()
+    void DisableLayerCollision(GameObject Platform)
     {
-        Physics2D.IgnoreLayerCollision(playerLayer, platformLayer, true); // Ignore collisions between layer1 and layer2
-
+        Platform.layer = LayerMask.NameToLayer("Fake");
     }
 
-    void EnableLayerCollision()
+    void EnableLayerCollision(GameObject Platform)
     {
-        int playerLayerMask = Physics2D.GetLayerCollisionMask(playerLayer);
-        playerLayerMask |= (1 << platformLayer); // Enable collisions with otherLayer
-        Physics2D.SetLayerCollisionMask(playerLayer, playerLayerMask);
-        // Debug.Log("cnt:" + cnt.ToString());
+        Platform.layer = LayerMask.NameToLayer("Platform");
     }
 
 
