@@ -14,9 +14,10 @@ public class PlayerControl : MonoBehaviour
     public TMP_Text xBoard;
     public GameObject WheelManager;
     public int operatorID;
+    public float xBound;
     private Rigidbody2D playerRB;
     private Vector2 force;
-    private int increaseX; 
+    private int increaseX;
     private bool isGrounded;
 
     void Start() 
@@ -71,6 +72,13 @@ public class PlayerControl : MonoBehaviour
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
+
+        //  Keep player in bound
+        Debug.Log(transform.position.x);
+        if (transform.position.x > xBound)
+            transform.position = new Vector2(xBound, transform.position.y);
+        else if (transform.position.x < -xBound)
+            transform.position = new Vector2(-xBound, transform.position.y);
 
         // Jump With Impulse Force 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
