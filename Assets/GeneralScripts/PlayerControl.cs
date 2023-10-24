@@ -4,6 +4,8 @@ using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerControl : MonoBehaviour
 {
@@ -78,6 +80,10 @@ public class PlayerControl : MonoBehaviour
             xBoard.text = currentX.ToString();
         }
 
+        if (obstacle.gameObject.CompareTag("Destination"))
+        {
+            ReturnToMainMenu();
+        }
         // 如果玩家与一个障碍物碰撞
         if (obstacle.gameObject.CompareTag("Ground"))
         {
@@ -122,4 +128,11 @@ public class PlayerControl : MonoBehaviour
 
         }
     }
+    
+    private void ReturnToMainMenu()
+    {
+        // 加载主菜单场景，假设场景的名字为"MainMenu"
+        SceneManager.LoadScene("LevelSelection");
+    }
+
 }
