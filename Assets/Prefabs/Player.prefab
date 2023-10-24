@@ -140,6 +140,9 @@ MonoBehaviour:
   horizontalInput: 0
   speed: 15
   jumpForce: 40
+  currentX: 0
+  xObject: {fileID: 8912069458882757949}
+  xBoard: {fileID: 0}
 --- !u!1001 &5361902882650600056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -150,6 +153,10 @@ PrefabInstance:
     - target: {fileID: 3586916678666598213, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
       propertyPath: m_Name
       value: Player_Number
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727643624131759845, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4284769380
       objectReference: {fileID: 0}
     - target: {fileID: 8821883836249200090, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
       propertyPath: m_Pivot.x
@@ -240,5 +247,10 @@ PrefabInstance:
 --- !u!224 &3460153028259932066 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8821883836249200090, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
+  m_PrefabInstance: {fileID: 5361902882650600056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8912069458882757949 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3586916678666598213, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
   m_PrefabInstance: {fileID: 5361902882650600056}
   m_PrefabAsset: {fileID: 0}
