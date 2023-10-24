@@ -8,14 +8,16 @@ TagManager:
   - Level
   - Destination
   - Goal
+  - Number
+  - Platform
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Number
   - 
   - 
   - 

@@ -12,16 +12,18 @@ public class PlayerControl : MonoBehaviour
     private Vector2 force;
     private bool isGrounded;
 
-    void Start() 
+    void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
         force = jumpForce * Vector2.up;
         isGrounded = false;
+
     }
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
-        if(obstacle.gameObject.CompareTag("Ground"))
+        if (obstacle.gameObject.CompareTag("Ground"))
+            // if (obstacle.gameObject.CompareTag("Ground") | obstacle.gameObject.CompareTag("Platform"))
             isGrounded = true;
     }
 
@@ -48,5 +50,25 @@ public class PlayerControl : MonoBehaviour
         {
             playerRB.AddForce(force, ForceMode2D.Impulse);
         }
+
+        // Pick up the number and do the calculation
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            pickUp();
+            // Todo: Do the calculation
+
+        }
     }
+
+
+    private void pickUp()
+    {
+        LayerMask playerLayer = LayerMask.NameToLayer("Player");
+        LayerMask numberLayer = LayerMask.NameToLayer("Number");
+        int playerLayerMask = Physics2D.GetLayerCollisionMask(playerLayer);
+        playerLayerMask |= (1 << numberLayer); // Enable collisions with otherLayer
+        Physics2D.SetLayerCollisionMask(playerLayer, playerLayerMask);
+        Destroy(gameObject);
+    }
+
 }
