@@ -12,6 +12,8 @@ public class PlayerControl : MonoBehaviour
     public int currentX;
     public GameObject xObject; 
     public TMP_Text xBoard;
+    public GameObject WheelManager;
+    public int operatorID;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private int increaseX; 
@@ -24,6 +26,7 @@ public class PlayerControl : MonoBehaviour
         isGrounded = false;
         currentX = 0;
         xBoard = xObject.GetComponent<TMP_Text>();
+        operatorID = 0;
     }
 
     void OnCollisionEnter2D(Collision2D obstacle)
@@ -35,7 +38,21 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Number"))
         {
             increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
-            currentX += increaseX;
+            switch (operatorID)
+            {
+                case 0:
+                    currentX += increaseX;
+                    break;
+                case 1:
+                    currentX -= increaseX;
+                    break;
+                case 2:
+                    currentX *= increaseX;
+                    break;
+                case 3:
+                    currentX /= increaseX;
+                    break;
+            }
             Destroy(obstacle.gameObject);
             xBoard.text = currentX.ToString();
         }
@@ -60,5 +77,8 @@ public class PlayerControl : MonoBehaviour
         {
             playerRB.AddForce(force, ForceMode2D.Impulse);
         }
+
+        // Operator Update 
+        operatorID = WheelManager.GetComponent<WheelController>().operatorID;
     }
 }
