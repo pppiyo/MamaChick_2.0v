@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.9960785, g: 0.7372549, b: 0.1764706, a: 1}
+  m_Color: {r: 0.9245283, g: 0.5800015, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -146,6 +146,7 @@ MonoBehaviour:
   WheelManager: {fileID: 0}
   operatorID: 0
   xBound: 0
+  hintText: {fileID: 0}
 --- !u!1001 &5361902882650600056
 PrefabInstance:
   m_ObjectHideFlags: 0
