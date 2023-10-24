@@ -8,6 +8,8 @@ TagManager:
   - Level
   - Destination
   - Goal
+  - Number
+  - Fake
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Fake
   - 
   - 
   - 
