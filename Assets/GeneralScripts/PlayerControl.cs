@@ -20,6 +20,14 @@ public class PlayerControl : MonoBehaviour
     private Vector2 force;
     private int increaseX;
     private bool isGrounded;
+    private JudgeEquation judgeEquation;
+    private LayerMask playerLayer;
+    private LayerMask platformLayer;
+    private float effectDuration = 0.8f;
+
+    // private float startTime;
+
+    private int cnt = 0;
 
     void Start()
     {
@@ -29,6 +37,10 @@ public class PlayerControl : MonoBehaviour
         currentX = 0;
         xBoard = xObject.GetComponent<TMP_Text>();
         operatorID = 0;
+
+        playerLayer = LayerMask.NameToLayer("Player");
+        platformLayer = LayerMask.NameToLayer("Platform");
+
     }
 
     void Update()
@@ -50,11 +62,21 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Operator Update 
-        operatorID = WheelManager.GetComponent<WheelController>().operatorID;
+        if (WheelManager != null)
+        {
+            operatorID = WheelManager.GetComponent<WheelController>().operatorID;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
+        // 如果玩家与一个障碍物碰撞
+        if (obstacle.gameObject.CompareTag("Ground"))
+        {
+            // Jump Enabled
+            isGrounded = true;
+        }
+
         // Score update
         if (obstacle.gameObject.CompareTag("Number"))
         {
@@ -78,48 +100,106 @@ public class PlayerControl : MonoBehaviour
             xBoard.text = currentX.ToString();
         }
 
-        // 如果玩家与一个障碍物碰撞
-        if (obstacle.gameObject.CompareTag("Ground"))
+        // if Player collides with a platform
+        if (obstacle.gameObject.CompareTag("Platform"))
         {
-            // Jump Enabled
             isGrounded = true;
-
-            // Platform Equation Logic
-            TextMeshPro obstacleEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
-            if (obstacleEquationText != null)
+            bool canPass = CanPassPlatform(obstacle);
+            // Debug.Log(canPass);
+            if (canPass)
             {
-                GameObject obj = GameObject.Find("EquationManager");
+                StartCoroutine(ActivateEffect());
 
-                JudgeEquation judge = obj.GetComponent<JudgeEquation>();
-
-                // 设置JudgeEquation组件的equationText属性为障碍物上的方程
-                judge.equationText = obstacleEquationText;
-
-                // 设置JudgeEquation的targetObject为碰撞的障碍物
-                judge.targetObject = obstacle.gameObject;
-
-                // 获取玩家上的TextMeshProUGUI组件的值
-                GameObject player = GameObject.Find("Player");
-                judge.playerEquationText = player.GetComponentInChildren<TextMeshPro>();
-                Debug.Log(judge.playerEquationText.text);
-                Debug.Log(judge.equationText.text);
-
-                if (judge.playerEquationText != null)
-                {
-                    judge.varValue = int.Parse(judge.playerEquationText.text);
-                }
-
-                // 调用EvaluateFromTextMeshPro方法来检查玩家的数值是否满足方程
-                judge.EvaluateFromTextMeshPro();
             }
         }
 
-        void OnCollisionExit2D(Collision2D obstacle)
+    }
+
+
+    private IEnumerator ActivateEffect()
+    {
+        // Code for the effect to start here
+        DisableLayerCollision();
+
+        yield return new WaitForSeconds(effectDuration);
+
+        // Code for the effect to end here
+        EnableLayerCollision();
+
+    }
+
+    void DisableLayerCollision()
+    {
+        Physics2D.IgnoreLayerCollision(playerLayer, platformLayer, true); // Ignore collisions between layer1 and layer2
+
+    }
+
+    void EnableLayerCollision()
+    {
+        int playerLayerMask = Physics2D.GetLayerCollisionMask(playerLayer);
+        playerLayerMask |= (1 << platformLayer); // Enable collisions with otherLayer
+        Physics2D.SetLayerCollisionMask(playerLayer, playerLayerMask);
+        // Debug.Log("cnt:" + cnt.ToString());
+    }
+
+
+
+    void OnCollisionExit2D(Collision2D obstacle)
+    {
+        // Jump Disabled
+        if (obstacle.gameObject.CompareTag("Ground"))
         {
-            // Jump Disabled
-            if (obstacle.gameObject.CompareTag("Ground"))
-                isGrounded = false;
+            // Jump Enabled
+            isGrounded = false;
+        }
+
+        if (obstacle.gameObject.CompareTag("Platform"))
+        {
+            cnt += 1;
+            // Jump Enabled
+            isGrounded = false;
+
+
 
         }
     }
+
+
+
+    bool CanPassPlatform(Collision2D obstacle)
+    {
+        bool pass = false;
+
+        // Platform Equation Logic
+        TextMeshPro obstacleEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
+
+        if (obstacleEquationText != null)
+        {
+            GameObject obj = GameObject.Find("EquationManager");
+
+            JudgeEquation judge = obj.GetComponent<JudgeEquation>();
+
+            // 设置JudgeEquation组件的equationText属性为障碍物上的方程
+            judge.equationText = obstacleEquationText;
+
+            // 设置JudgeEquation的targetObject为碰撞的障碍物
+            judge.targetObject = obstacle.gameObject;
+
+            // 获取玩家上的TextMeshProUGUI组件的值
+            GameObject player = GameObject.Find("Player");
+            judge.playerEquationText = player.GetComponentInChildren<TextMeshPro>();
+            // Debug.Log(judge.playerEquationText.text);
+
+            if (judge.playerEquationText != null)
+            {
+                judge.varValue = int.Parse(judge.playerEquationText.text);
+            }
+
+            // 调用EvaluateFromTextMeshPro方法来检查玩家的数值是否满足方程
+            pass = !judge.EvaluateFromTextMeshPro(); // if satisfied equation, pass = false
+        }
+
+        return pass;
+    }
+
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4609709761923799662}
   - component: {fileID: 4609709761923799663}
   - component: {fileID: -5072421279001929149}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Number
   m_TagString: Number
   m_Icon: {fileID: 0}
@@ -112,6 +112,10 @@ PrefabInstance:
     - target: {fileID: 3586916678666598213, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_Name
       value: Number_Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 3586916678666598213, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8821883836249200090, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_Pivot.x
