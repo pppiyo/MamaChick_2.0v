@@ -10,6 +10,7 @@ public class JudgeEquation : MonoBehaviour
     public TextMeshPro equationText; // 障碍物上的TextMeshProUGUI组件
     public int varValue;
     public GameObject targetObject;
+
     private double Evaluate(string expression)
     {
         var termTokens = Regex.Split(expression, @"([-+])");
@@ -110,23 +111,10 @@ public class JudgeEquation : MonoBehaviour
     }
 
 
-    public void EvaluateFromTextMeshPro()
+    public bool EvaluateFromTextMeshPro()
     {
-        string equationStr = equationText.text; 
+        string equationStr = equationText.text;
         bool result = CheckEquation(equationStr, varValue);
-        
-        // 根据CheckEquation的结果为targetObject设置标签
-        if (result)
-        {
-            targetObject.tag = "Ground";
-            targetObject.layer = 0;
-        }
-        else
-        {
-            targetObject.tag = "Fake";
-            targetObject.layer = 6;
-        }
-        
-        Debug.Log(result);
+        return result;
     }
 }
