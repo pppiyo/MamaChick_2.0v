@@ -112,7 +112,7 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionExit2D(Collision2D obstacle)
     {
         // Jump Disabled
-        if (obstacle.gameObject.CompareTag("Ground"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform"))
             isGrounded = false;
     }
 
@@ -149,12 +149,12 @@ public class PlayerControl : MonoBehaviour
             xBoard.text = currentX.ToString();
         }
 
-        if (obstacle.gameObject.CompareTag("Destination"))
+        if (obstacle.gameObject.CompareTag("Goal"))
         {
             ReturnToMainMenu();
         }
         // 如果玩家与一个障碍物碰撞
-        if (obstacle.gameObject.CompareTag("Ground"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform"))
         {
             // Jump Enabled
             isGrounded = true;
