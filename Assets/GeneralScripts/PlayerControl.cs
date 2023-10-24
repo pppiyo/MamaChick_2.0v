@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerControl : MonoBehaviour
 {
@@ -16,6 +19,7 @@ public class PlayerControl : MonoBehaviour
     public GameObject WheelManager;
     public int operatorID;
     public float xBound;
+    public TMP_Text hintText;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private int increaseX;
@@ -29,6 +33,7 @@ public class PlayerControl : MonoBehaviour
         currentX = 0;
         xBoard = xObject.GetComponent<TMP_Text>();
         operatorID = 0;
+        hintText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -53,6 +58,64 @@ public class PlayerControl : MonoBehaviour
         operatorID = WheelManager.GetComponent<WheelController>().operatorID;
     }
 
+    void ShowHint(string hint)
+    {
+        hintText.text = hint;
+        hintText.gameObject.SetActive(true);
+    }
+
+    private IEnumerator HideHint(int delay)
+    {
+        yield return new WaitForSeconds(delay);
+        hintText.gameObject.SetActive(false);
+    }
+
+    bool negativeX(int result, int increment)
+    {
+        switch (operatorID)
+        {
+            case 0:
+                result += increment;
+                if (result >= 0)
+                    ShowHint("Adding " + increment);
+                break;
+            case 1:
+                result -= increment;
+                if (result >= 0)
+                    ShowHint("Subracting " + increment);
+                break;
+            case 2:
+                if (result >= 0)
+                    ShowHint("Multiplying " + increment);
+                result *= increment;
+                break;
+            case 3:
+                if (result >= 0)
+                    ShowHint("Dividing " + increment);
+                result /= increment;
+                break;
+        }
+        if (result >= 0) 
+        {
+            StartCoroutine(HideHint(1));
+            return false;   
+        }
+     
+        else
+        {
+            ShowHint("Cannot be a Negative number!");
+            StartCoroutine(HideHint(3));
+            return true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D obstacle)
+    {
+        // Jump Disabled
+        if (obstacle.gameObject.CompareTag("Ground"))
+            isGrounded = false;
+    }
+
     void OnCollisionEnter2D(Collision2D obstacle)
     {
         // Score update
@@ -62,15 +125,23 @@ public class PlayerControl : MonoBehaviour
             switch (operatorID)
             {
                 case 0:
+                    if (negativeX(currentX, increaseX))
+                        return;
                     currentX += increaseX;
                     break;
                 case 1:
+                    if (negativeX(currentX, increaseX))
+                        return;
                     currentX -= increaseX;
                     break;
                 case 2:
+                    if (negativeX(currentX, increaseX))
+                        return;
                     currentX *= increaseX;
                     break;
                 case 3:
+                    if (negativeX(currentX, increaseX))
+                        return;
                     currentX /= increaseX;
                     break;
             }
@@ -78,6 +149,10 @@ public class PlayerControl : MonoBehaviour
             xBoard.text = currentX.ToString();
         }
 
+        if (obstacle.gameObject.CompareTag("Destination"))
+        {
+            ReturnToMainMenu();
+        }
         // 如果玩家与一个障碍物碰撞
         if (obstacle.gameObject.CompareTag("Ground"))
         {
@@ -113,13 +188,12 @@ public class PlayerControl : MonoBehaviour
                 judge.EvaluateFromTextMeshPro();
             }
         }
-
-        void OnCollisionExit2D(Collision2D obstacle)
-        {
-            // Jump Disabled
-            if (obstacle.gameObject.CompareTag("Ground"))
-                isGrounded = false;
-
-        }
     }
+    
+    private void ReturnToMainMenu()
+    {
+        // 加载主菜单场景，假设场景的名字为"MainMenu"
+        SceneManager.LoadScene("LevelSelection");
+    }
+
 }
