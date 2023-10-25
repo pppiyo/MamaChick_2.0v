@@ -36,7 +36,7 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         // 查找所有包含 "platform" 字符串的游戏对象
-        GameObject[] platformObjects = FindObjectsWithSubstring("platform");
+        GameObject[] platformObjects = FindObjectsWithSubstring("Platform");
 
         // 输出找到的游戏对象的名称
         foreach (GameObject obj in platformObjects)

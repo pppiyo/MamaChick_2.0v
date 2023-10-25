@@ -17,4 +17,6 @@ public static class GlobalVariables
     public static int collisions = 0;
     
     public static Dictionary<string, int> platformMap = new Dictionary<string, int>();
+
+    public static string mode = "test";
 }

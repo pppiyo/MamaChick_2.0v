@@ -19,6 +19,7 @@ public class GameReport
     public List<int> numbers = new List<int>();
     [SerializeField]
     public List<string> names = new List<string>();
+    public string mode;
 
     public GameReport()
     {
@@ -28,6 +29,7 @@ public class GameReport
         success = GlobalVariables.win;
         userID = GlobalVariables.userID;
         collisions = GlobalVariables.collisions;
+        mode = GlobalVariables.mode;
         foreach (var keyValuePair in GlobalVariables.platformMap)
         {
             names.Add(keyValuePair.Key);
