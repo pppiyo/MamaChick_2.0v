@@ -253,6 +253,6 @@ public class PlayerControl : MonoBehaviour
     private void ReturnToMainMenu()
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
-        SceneManager.LoadScene("LevelSelection");
+        SceneManager.LoadScene("Game Over");
     }
 }
