@@ -35,6 +35,14 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        // 查找所有包含 "platform" 字符串的游戏对象
+        GameObject[] platformObjects = FindObjectsWithSubstring("platform");
+
+        // 输出找到的游戏对象的名称
+        foreach (GameObject obj in platformObjects)
+        {
+            GlobalVariables.platformMap[obj.name] = 0;
+        }
         playerRB = GetComponent<Rigidbody2D>();
         force = jumpForce * Vector2.up;
         isGrounded = false;
@@ -123,6 +131,22 @@ public class PlayerControl : MonoBehaviour
             return true;
         }
     }
+    
+    GameObject[] FindObjectsWithSubstring(string substring)
+    {
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+        List<GameObject> matchingObjects = new List<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name.Contains(substring))
+            {
+                matchingObjects.Add(obj);
+            }
+        }
+
+        return matchingObjects.ToArray();
+    }
 
 
 
@@ -139,6 +163,7 @@ public class PlayerControl : MonoBehaviour
         // Score update
         if (obstacle.gameObject.CompareTag("Number"))
         {
+            GlobalVariables.collisions++;
             increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
             switch (operatorID)
             {
@@ -169,6 +194,8 @@ public class PlayerControl : MonoBehaviour
 
         if (obstacle.gameObject.CompareTag("Goal"))
         {
+            Debug.Log("Goal");
+            GlobalVariables.win = true;
             ReturnToMainMenu();
         }
         // if Player collides with a platform
