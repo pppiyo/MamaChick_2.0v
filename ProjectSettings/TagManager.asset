@@ -10,16 +10,17 @@ TagManager:
   - Goal
   - Number
   - Fake
+  - Platform
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Fake
-  - 
-  - 
+  - Platform
+  - 'Number  '
   - 
   - 
   - 
