@@ -25,6 +25,14 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
+        // 查找所有包含 "platform" 字符串的游戏对象
+        GameObject[] platformObjects = FindObjectsWithSubstring("platform");
+
+        // 输出找到的游戏对象的名称
+        foreach (GameObject obj in platformObjects)
+        {
+            GlobalVariables.platformMap[obj.name] = 0;
+        }
         playerRB = GetComponent<Rigidbody2D>();
         force = jumpForce * Vector2.up;
         isGrounded = false;
@@ -54,12 +62,29 @@ public class PlayerControl : MonoBehaviour
         // Operator Update 
         operatorID = WheelManager.GetComponent<WheelController>().operatorID;
     }
+    
+    GameObject[] FindObjectsWithSubstring(string substring)
+    {
+        GameObject[] allObjects = FindObjectsOfType<GameObject>();
+        List<GameObject> matchingObjects = new List<GameObject>();
+
+        foreach (GameObject obj in allObjects)
+        {
+            if (obj.name.Contains(substring))
+            {
+                matchingObjects.Add(obj);
+            }
+        }
+
+        return matchingObjects.ToArray();
+    }
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
         // Score update
         if (obstacle.gameObject.CompareTag("Number"))
         {
+            GlobalVariables.collisions++;
             increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
             switch (operatorID)
             {
@@ -80,8 +105,10 @@ public class PlayerControl : MonoBehaviour
             xBoard.text = currentX.ToString();
         }
 
-        if (obstacle.gameObject.CompareTag("Destination"))
+        if (obstacle.gameObject.CompareTag("Goal"))
         {
+            Debug.Log("Goal");
+            GlobalVariables.win = true;
             ReturnToMainMenu();
         }
         // 如果玩家与一个障碍物碰撞
@@ -92,7 +119,7 @@ public class PlayerControl : MonoBehaviour
 
             // Platform Equation Logic
             TextMeshPro obstacleEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
-            if (obstacleEquationText != null)
+            if (obstacleEquationText != null && obstacleEquationText.text.Length == 0)
             {
                 GameObject obj = GameObject.Find("EquationManager");
 
