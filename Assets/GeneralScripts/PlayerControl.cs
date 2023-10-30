@@ -28,7 +28,7 @@ public class PlayerControl : MonoBehaviour
     private LayerMask playerLayer;
     private LayerMask platformLayer;
     private float effectDuration = 0.8f;
-
+    private Transform nearbyTeleporterDestination;
     // private float startTime;
 
     private int cnt = 0;
@@ -79,6 +79,13 @@ public class PlayerControl : MonoBehaviour
         {
             operatorID = WheelManager.GetComponent<WheelController>().operatorID;
         }
+        
+        //press 'E' to teleport
+        if (nearbyTeleporterDestination != null && Input.GetKeyDown(KeyCode.E))
+        {
+            transform.position = nearbyTeleporterDestination.position; 
+        }
+        
     }
 
     void ShowHint(string hint)
@@ -218,8 +225,70 @@ public class PlayerControl : MonoBehaviour
         // Jump Disabled
         if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform"))
             isGrounded = false;
+
     }
 
+    //teleporter
+    void OnTriggerEnter2D(Collider2D obstacle)
+    {
+        if (obstacle.gameObject.CompareTag("Portal"))
+        {
+            TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
+            GameObject obj = GameObject.Find("EquationManager");
+            JudgeEquation judge = obj.GetComponent<JudgeEquation>();
+            TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
+            
+            if (portalEquationText == null || portalEquationText.text.Length == 0 || playerEquationText != null)
+            {
+                bool equationSatisfied = true; 
+                
+                if (portalEquationText != null && portalEquationText.text.Length > 0)
+                {
+                    int playerNumber;
+                    if (int.TryParse(playerEquationText.text, out playerNumber))
+                    {
+                        equationSatisfied = judge.CheckEquation(portalEquationText.text, playerNumber);
+                    }
+                    else
+                    {
+                        equationSatisfied = false;  
+                    }
+                }
+                
+                if (equationSatisfied)
+                {
+                    ShowHint("Press 'E' to teleport");
+                }
+                else
+                {
+                    ShowHint("Your point doesn't satisfy the condition");
+                }
+
+                if (equationSatisfied)
+                {
+                    string pairName = obstacle.gameObject.name.EndsWith("1") ?
+                        obstacle.gameObject.name.Replace("1", "2") :
+                        obstacle.gameObject.name.Replace("2", "1");
+                    GameObject pairPortal = GameObject.Find(pairName);
+                    if (pairPortal != null)
+                    {
+                        nearbyTeleporterDestination = pairPortal.transform;  // set paired portal
+                    }
+                }
+                
+            }
+        }
+
+    }
+
+    void OnTriggerExit2D(Collider2D obstacle)
+    {
+        if (obstacle.gameObject.CompareTag("Portal"))
+        {
+            nearbyTeleporterDestination = null;  
+            StartCoroutine(HideHint(0)); 
+        }
+    }
 
     private IEnumerator ActivateEffect(GameObject Platform)
     {
@@ -276,6 +345,7 @@ public class PlayerControl : MonoBehaviour
         }
         return pass;
     }
+
 
     private void ReturnToMainMenu()
     {
