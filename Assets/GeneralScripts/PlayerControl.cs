@@ -19,11 +19,15 @@ public class PlayerControl : MonoBehaviour
     public GameObject WheelManager;
     public int operatorID;
     public float xBound;
+    public int gravityDirection;
     public TMP_Text hintText;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private int increaseX;
     private bool isGrounded;
+    private Vector2 invertedGravity;
+    private int previousResult;
+    private string hintDisplay;
     private JudgeEquation judgeEquation;
     private LayerMask playerLayer;
     private LayerMask platformLayer;
@@ -37,6 +41,8 @@ public class PlayerControl : MonoBehaviour
     {
         // 查找所有包含 "platform" 字符串的游戏对象
         GameObject[] platformObjects = FindObjectsWithSubstring("Platform");
+        gravityDirection = 1;
+        invertedGravity = new Vector2(0, -9.81f);
 
         // 输出找到的游戏对象的名称
         foreach (GameObject obj in platformObjects)
@@ -71,7 +77,10 @@ public class PlayerControl : MonoBehaviour
         // Jump With Impulse Force 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            playerRB.AddForce(force, ForceMode2D.Impulse);
+            if (gravityDirection == 1)
+                playerRB.AddForce(force, ForceMode2D.Impulse);
+            else
+                playerRB.AddForce((float)-0.7 * force, ForceMode2D.Impulse);
         }
 
         // Operator Update 
@@ -85,7 +94,12 @@ public class PlayerControl : MonoBehaviour
         {
             transform.position = nearbyTeleporterDestination.position; 
         }
-        
+
+        // Flip Gravity
+        if (currentX >= 0)
+            Physics2D.gravity = invertedGravity;
+        else
+            Physics2D.gravity = (float)-0.5 * invertedGravity;
     }
 
     void ShowHint(string hint)
@@ -102,41 +116,57 @@ public class PlayerControl : MonoBehaviour
 
     bool negativeX(int result, int increment)
     {
+        previousResult = result;
+        hintDisplay = "";
         switch (operatorID)
         {
             case 0:
                 result += increment;
-                if (result >= 0)
-                    ShowHint("Adding " + increment);
+                hintDisplay = "Adding " + increment;
                 break;
             case 1:
                 result -= increment;
-                if (result >= 0)
-                    ShowHint("Subracting " + increment);
+                hintDisplay = "Subracting " + increment;
                 break;
             case 2:
-                if (result >= 0)
-                    ShowHint("Multiplying " + increment);
                 result *= increment;
+                hintDisplay = "Multiplying " + increment;
                 break;
             case 3:
-                if (result >= 0)
-                    ShowHint("Dividing " + increment);
                 result /= increment;
+                hintDisplay = "Dividing " + increment;
                 break;
         }
-        if (result >= 0)
+        if(result < 0)
         {
-            StartCoroutine(HideHint(1));
-            return false;
+            // Flip Gravity Logic;
+            if(previousResult >= 0)
+            {
+                hintDisplay += "\n Flipping Gravity!";
+                gravityDirection = gravityDirection * -1;
+                ShowHint(hintDisplay);
+            }
+            else
+            {
+                ShowHint(hintDisplay);
+            }
         }
-
         else
         {
-            ShowHint("Cannot be a Negative number!");
-            StartCoroutine(HideHint(3));
-            return true;
+            // Flip Gravity Logic;
+            if (previousResult < 0)
+            {
+                hintDisplay += "\n Flipping Gravity!";
+                gravityDirection = gravityDirection * -1;
+                ShowHint(hintDisplay);
+            }
+            else
+            {
+                ShowHint(hintDisplay);
+            }
         }
+        StartCoroutine(HideHint(1));
+        return false;
     }
     
     GameObject[] FindObjectsWithSubstring(string substring)
