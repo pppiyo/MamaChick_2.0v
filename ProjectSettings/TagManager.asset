@@ -11,6 +11,7 @@ TagManager:
   - Number
   - Fake
   - Platform
+  - Monster
   - Portal
   layers:
   - Default
@@ -22,7 +23,7 @@ TagManager:
   - Fake
   - Platform
   - 'Number  '
-  - 
+  - Monster
   - 
   - 
   - 
