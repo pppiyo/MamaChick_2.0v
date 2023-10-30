@@ -146,6 +146,9 @@ MonoBehaviour:
   WheelManager: {fileID: 0}
   operatorID: 0
   xBound: 0
+  hintText: {fileID: 0}
+  Fire: {fileID: 2222407229529438561, guid: 19f3b758cc35047abad7e453cc5f17fe, type: 3}
+  fireSpeed: 10
 --- !u!1001 &5361902882650600056
 PrefabInstance:
   m_ObjectHideFlags: 0

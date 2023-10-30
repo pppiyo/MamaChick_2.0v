@@ -24,6 +24,9 @@ public class PlayerControl : MonoBehaviour
     private Vector2 force;
     private int increaseX;
     private bool isGrounded;
+    private Vector3 moveDirection ;
+    public GameObject Fire;
+    public float fireSpeed = 10f;
 
     void Start()
     {
@@ -41,6 +44,13 @@ public class PlayerControl : MonoBehaviour
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
+        
+        // gain the moveDirection
+        if (horizontalInput !=0)
+        {
+            moveDirection = new Vector3(horizontalInput, 0f, 0f);
+            moveDirection = moveDirection.normalized;
+        }
 
         //  Keep player in bound
         if (transform.position.x > xBound)
@@ -56,6 +66,9 @@ public class PlayerControl : MonoBehaviour
 
         // Operator Update 
         operatorID = WheelManager.GetComponent<WheelController>().operatorID;
+
+        //Player craft fire
+        CraftFire();
     }
 
     void ShowHint(string hint)
@@ -194,6 +207,29 @@ public class PlayerControl : MonoBehaviour
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
         SceneManager.LoadScene("LevelSelection");
+    }
+
+    // player craft fire()
+    void CraftFire()
+    {
+        if ((Input.GetKeyDown(KeyCode.F )))
+        {
+
+            Vector3 spawnPosition = transform.position;
+
+            GameObject fireInstance = Instantiate(Fire, spawnPosition + moveDirection, Quaternion.identity);
+
+            Transform fireTransform = fireInstance.transform;
+
+            fireTransform.forward = moveDirection;
+
+            Rigidbody2D fireRigidbody2D = fireInstance.GetComponent<Rigidbody2D>();
+
+            fireRigidbody2D.velocity = moveDirection * fireSpeed;
+            Debug.Log("Fire Direction: " + moveDirection);
+
+            fireInstance.transform.eulerAngles = Vector3.zero;
+        }
     }
 
 }
