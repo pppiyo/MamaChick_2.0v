@@ -12,6 +12,7 @@ TagManager:
   - Fake
   - Platform
   - Monster
+  - Portal
   layers:
   - Default
   - TransparentFX
