@@ -138,7 +138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalInput: 0
-  speed: 15
+  speed: 10
   jumpForce: 40
   currentX: 0
   xObject: {fileID: 8912069458882757949}
@@ -146,6 +146,7 @@ MonoBehaviour:
   WheelManager: {fileID: 0}
   operatorID: 0
   xBound: 0
+  gravityDirection: 0
   hintText: {fileID: 0}
 --- !u!1001 &5361902882650600056
 PrefabInstance:
@@ -168,7 +169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4284769380
+      value: 4283453520
       objectReference: {fileID: 0}
     - target: {fileID: 8821883836249200090, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
       propertyPath: m_Pivot.x

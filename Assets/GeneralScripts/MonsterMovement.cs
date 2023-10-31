@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MonsterMovement : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class MonsterMovement : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
+                        LoseGame();
                     }
                     break; // 如果不使用break语句，将继续执行下一个case（如果条件匹配）。
                 case 2:
@@ -58,6 +60,7 @@ public class MonsterMovement : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
+                        LoseGame();
                     }
                     break;
                 case 3:
@@ -69,6 +72,7 @@ public class MonsterMovement : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
+                        LoseGame();
                     }
                     break;
                 case 4:
@@ -80,6 +84,7 @@ public class MonsterMovement : MonoBehaviour
                     else
                     {
                         Destroy(collision.gameObject);
+                        LoseGame();
                     }
                     break;
 
@@ -88,5 +93,11 @@ public class MonsterMovement : MonoBehaviour
                     break;
             }
         }
+    }
+    
+    private void LoseGame()
+    {
+        // 加载主菜单场景，假设场景的名字为"MainMenu"
+        SceneManager.LoadScene("Game Lose");
     }
 }

@@ -360,6 +360,10 @@ PrefabInstance:
       propertyPath: m_fontStyle
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4802957991430179526, guid: 32025dd08f3ef43d28df15ecaa5711f5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 4802957991984109126, guid: 32025dd08f3ef43d28df15ecaa5711f5, type: 3}
       propertyPath: m_Camera
       value: 

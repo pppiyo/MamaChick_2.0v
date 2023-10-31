@@ -789,6 +789,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5066772804156039853, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066772804156039853, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
@@ -810,7 +814,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9054097055201622418, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
       propertyPath: m_text
-      value: -0.5 * x<=-7
+      value: x >= 14
       objectReference: {fileID: 0}
     - target: {fileID: 9054097055201622418, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
       propertyPath: m_fontSize
