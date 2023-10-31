@@ -10,9 +10,13 @@ TagManager:
   - Goal
   - Number
   - Fake
-  - Platform
   - Monster
   - Portal
+  - Gun
+  - Spike
+  - Bullet
+  - Platform_Mutate
+  - Platform_Solid
   layers:
   - Default
   - TransparentFX
@@ -24,7 +28,7 @@ TagManager:
   - Platform
   - 'Number  '
   - Monster
-  - 
+  - Bullet
   - 
   - 
   - 

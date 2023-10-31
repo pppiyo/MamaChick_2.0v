@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
+    private bool facingRight = true; // To keep track of the player's facing direction.
     public float horizontalInput;
     public float speed;
     public float jumpForce;
@@ -33,9 +34,8 @@ public class PlayerControl : MonoBehaviour
     private LayerMask platformLayer;
     private float effectDuration = 0.8f;
     private Transform nearbyTeleporterDestination;
-    // private float startTime;
+    private Vector3 moveDirection;
 
-    private int cnt = 0;
 
     void Start()
     {
@@ -64,6 +64,23 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        // Detect player input for horizontal movement.
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        // Check if the player is changing direction.
+        if ((horizontalInput < 0 && facingRight) || (horizontalInput > 0 && !facingRight))
+        {
+            // Flip the player's direction.
+            Flip();
+        }
+
+        // gain the moveDirection
+        if (horizontalInput != 0)
+        {
+            moveDirection = new Vector3(horizontalInput, 0f, 0f);
+            moveDirection = moveDirection.normalized;
+        }
+
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
@@ -88,11 +105,11 @@ public class PlayerControl : MonoBehaviour
         {
             operatorID = WheelManager.GetComponent<WheelController>().operatorID;
         }
-        
+
         //press 'E' to teleport
         if (nearbyTeleporterDestination != null && Input.GetKeyDown(KeyCode.E))
         {
-            transform.position = nearbyTeleporterDestination.position; 
+            transform.position = nearbyTeleporterDestination.position;
         }
 
         // Flip Gravity
@@ -102,13 +119,38 @@ public class PlayerControl : MonoBehaviour
             Physics2D.gravity = (float)-0.5 * invertedGravity;
     }
 
-    void ShowHint(string hint)
+    private void Flip()
+    {
+        // Find the "Gun" child of the player GameObject.
+        Transform gunChild = transform.Find("Gun");
+
+        if (gunChild != null)
+        {
+            // You have found the "Gun" child. You can access and manipulate it here.
+            // Invert the local scale's x value to flip the player.
+            Vector3 newScale = gunChild.transform.localScale;
+            newScale.x *= -1;
+            gunChild.transform.localScale = newScale;
+            gunChild.transform.localPosition = new Vector3(-gunChild.transform.localPosition.x, gunChild.transform.localPosition.y, gunChild.transform.localPosition.z);
+
+            // Update the facing direction flag.
+            facingRight = !facingRight;
+        }
+    }
+
+    public Vector3 GetMoveDirection()
+    {
+        return moveDirection;
+    }
+
+
+    public void ShowHint(string hint)
     {
         hintText.text = hint;
         hintText.gameObject.SetActive(true);
     }
 
-    private IEnumerator HideHint(int delay)
+    public IEnumerator HideHint(int delay)
     {
         yield return new WaitForSeconds(delay);
         hintText.gameObject.SetActive(false);
@@ -137,10 +179,10 @@ public class PlayerControl : MonoBehaviour
                 hintDisplay = "Dividing " + increment;
                 break;
         }
-        if(result < 0)
+        if (result < 0)
         {
             // Flip Gravity Logic;
-            if(previousResult >= 0)
+            if (previousResult >= 0)
             {
                 hintDisplay += "\n Flipping Gravity!";
                 gravityDirection = gravityDirection * -1;
@@ -168,7 +210,7 @@ public class PlayerControl : MonoBehaviour
         StartCoroutine(HideHint(1));
         return false;
     }
-    
+
     GameObject[] FindObjectsWithSubstring(string substring)
     {
         GameObject[] allObjects = FindObjectsOfType<GameObject>();
@@ -185,11 +227,15 @@ public class PlayerControl : MonoBehaviour
         return matchingObjects.ToArray();
     }
 
-
-
-
     void OnCollisionEnter2D(Collision2D obstacle)
     {
+
+        if (obstacle.gameObject.CompareTag("Spike"))
+        {
+            Destroy(gameObject); // kill 1 life
+        }
+
+
         // 如果玩家与一个障碍物碰撞
         if (obstacle.gameObject.CompareTag("Ground"))
         {
@@ -200,33 +246,8 @@ public class PlayerControl : MonoBehaviour
         // Score update
         if (obstacle.gameObject.CompareTag("Number"))
         {
-            GlobalVariables.collisions++;
-            increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
-            switch (operatorID)
-            {
-                case 0:
-                    if (negativeX(currentX, increaseX))
-                        return;
-                    currentX += increaseX;
-                    break;
-                case 1:
-                    if (negativeX(currentX, increaseX))
-                        return;
-                    currentX -= increaseX;
-                    break;
-                case 2:
-                    if (negativeX(currentX, increaseX))
-                        return;
-                    currentX *= increaseX;
-                    break;
-                case 3:
-                    if (negativeX(currentX, increaseX))
-                        return;
-                    currentX /= increaseX;
-                    break;
-            }
+            UpdateScore(obstacle);
             Destroy(obstacle.gameObject);
-            xBoard.text = currentX.ToString();
         }
 
         if (obstacle.gameObject.CompareTag("Goal"))
@@ -235,8 +256,8 @@ public class PlayerControl : MonoBehaviour
             GlobalVariables.win = true;
             ReturnToMainMenu();
         }
-        // if Player collides with a platform
-        if (obstacle.gameObject.CompareTag("Platform"))
+        // if Player collides with a mutate platform
+        if (obstacle.gameObject.CompareTag("Platform_Mutate"))
         {
             isGrounded = true;
             bool canPass = CanPassPlatform(obstacle);
@@ -247,15 +268,53 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
+        // if Player collides with a mutate platform
+        if (obstacle.gameObject.CompareTag("Platform_Solid"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    public void UpdateScore(Collision2D obstacle)
+    {
+        GlobalVariables.collisions++;
+        increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
+        Debug.Log("increaseX: " + increaseX);
+        switch (operatorID)
+        {
+            case 0:
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX += increaseX;
+                break;
+            case 1:
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX -= increaseX;
+                break;
+            case 2:
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX *= increaseX;
+                break;
+            case 3:
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX /= increaseX;
+                break;
+        }
+        // Destroy(obstacle.gameObject);
+        Debug.Log("currentX: " + currentX);
+
+        xBoard.text = currentX.ToString();
     }
 
 
     void OnCollisionExit2D(Collision2D obstacle)
     {
         // Jump Disabled
-        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate"))
             isGrounded = false;
-
     }
 
     //teleporter
@@ -267,11 +326,11 @@ public class PlayerControl : MonoBehaviour
             GameObject obj = GameObject.Find("EquationManager");
             JudgeEquation judge = obj.GetComponent<JudgeEquation>();
             TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
-            
+
             if (portalEquationText == null || portalEquationText.text.Length == 0 || playerEquationText != null)
             {
-                bool equationSatisfied = true; 
-                
+                bool equationSatisfied = true;
+
                 if (portalEquationText != null && portalEquationText.text.Length > 0)
                 {
                     int playerNumber;
@@ -281,10 +340,10 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        equationSatisfied = false;  
+                        equationSatisfied = false;
                     }
                 }
-                
+
                 if (equationSatisfied)
                 {
                     ShowHint("Press 'E' to teleport");
@@ -305,7 +364,7 @@ public class PlayerControl : MonoBehaviour
                         nearbyTeleporterDestination = pairPortal.transform;  // set paired portal
                     }
                 }
-                
+
             }
         }
 
@@ -315,8 +374,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (obstacle.gameObject.CompareTag("Portal"))
         {
-            nearbyTeleporterDestination = null;  
-            StartCoroutine(HideHint(0)); 
+            nearbyTeleporterDestination = null;
+            StartCoroutine(HideHint(0));
         }
     }
 
@@ -380,6 +439,6 @@ public class PlayerControl : MonoBehaviour
     private void ReturnToMainMenu()
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
-        SceneManager.LoadScene("Game Over");
+        SceneManager.LoadScene("_Game Over");
     }
 }

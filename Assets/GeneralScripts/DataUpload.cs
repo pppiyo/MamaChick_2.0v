@@ -43,7 +43,7 @@ public class DataUpload : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -54,10 +54,9 @@ public class DataUpload : MonoBehaviour
             PostToDB();
             GlobalVariables.win = false;
             GlobalVariables.collisions = 0;
-            // SceneManager.LoadScene("LevelSelection");
         }
     }
-    
+
     private void PostToDB()
     {
         GameReport gameReport = new GameReport();
