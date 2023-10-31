@@ -108,7 +108,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 2
 --- !u!61 &725720197248709570
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   moveSpeed: 1
   leftBoundary: -2.5
   rightBoundary: 2.5
+  condition: 1
 --- !u!1001 &725720197653270922
 PrefabInstance:
   m_ObjectHideFlags: 0
