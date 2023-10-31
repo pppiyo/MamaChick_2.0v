@@ -12,7 +12,6 @@ public class GunController : MonoBehaviour
 
     void Start()
     {
-        // playerFacingDirection = GetPlayerFacingDirection();
     }
 
     void Update()
@@ -37,23 +36,23 @@ public class GunController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-
+            // Destroy(obstacle.gameObject);
+            player.ShowHint("You got a gun! Press 'F' to shoot");
+            StartCoroutine(player.HideHint(1));
+            // GlobalVariables.mode = "test";
             AttachGunToPlayer(other.gameObject);
         }
-
     }
 
     Vector2 GetPlayerFacingDirection()
     {
         // Calculate the direction the player is facing.
         Vector3 playerDirectionV3 = player.GetMoveDirection();
-        // Debug.Log("playerDirectionV3: " + playerDirectionV3);
         Vector2 playerDirection = new Vector2(playerDirectionV3.x, playerDirectionV3.y);
         if (playerDirection == Vector2.zero)
         {
             playerDirection = Vector2.right;
         }
-        // Debug.Log("playerDirection: " + playerDirection);
 
         return playerDirection;
     }
@@ -81,15 +80,6 @@ public class GunController : MonoBehaviour
 
             // Set the gun's parent to the player's GameObject, making it move with the player.
             gameObject.transform.SetParent(player.transform);
-
-
-            // Instantiate the prefab.
-            // GameObject newPrefabInstance = Instantiate(gameObject, player.transform);
-
-            // // Set the prefab's position and rotation if needed.
-            // newPrefabInstance.transform.position = player.transform.position + new Vector3(0.2f, 0, 0);
-            // newPrefabInstance.transform.rotation = player.transform.rotation;
-
         }
         else
         {

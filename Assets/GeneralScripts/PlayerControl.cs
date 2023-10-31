@@ -11,7 +11,6 @@ using UnityEngine.SceneManagement;
 public class PlayerControl : MonoBehaviour
 {
     private bool facingRight = true; // To keep track of the player's facing direction.
-
     public float horizontalInput;
     public float speed;
     public float jumpForce;
@@ -33,16 +32,6 @@ public class PlayerControl : MonoBehaviour
     private Transform nearbyTeleporterDestination;
     private Vector3 moveDirection;
 
-    private int cnt = 0;
-    private int _lives = 5;
-    public int Lives { get => _lives; }
-    [SerializeField] Transform _respawnPoint;
-
-
-    // public Transform rayOrigin; // The point where the ray will originate from.
-    public float raycastDistance = 10000f; // How far the ray should reach.
-    private float cooldown = 0.5f;
-    // public GameObject bulletPrefab;
 
     void Start()
     {
@@ -141,31 +130,13 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    // public void Respawn()
-    // {
-    //     transform.position = _respawnPoint.position;
-    //     _lives--;
-    //     if (_lives <= 0)
-    //     {
-    //         ReturnToMainMenu();
-    //     }
-    //     StartCoroutine(EnableController());
-    // }
-
-    // private IEnumerator EnableController()
-    // {
-    //     yield return new WaitForSeconds(0.5f);
-    //     GetComponent<PlayerControl>().enabled = true;
-    // }
-
-
-    void ShowHint(string hint)
+    public void ShowHint(string hint)
     {
         hintText.text = hint;
         hintText.gameObject.SetActive(true);
     }
 
-    private IEnumerator HideHint(int delay)
+    public IEnumerator HideHint(int delay)
     {
         yield return new WaitForSeconds(delay);
         hintText.gameObject.SetActive(false);
@@ -234,14 +205,6 @@ public class PlayerControl : MonoBehaviour
             Destroy(gameObject); // kill 1 life
         }
 
-        if (obstacle.gameObject.CompareTag("Gun"))
-        {
-
-            // Destroy(obstacle.gameObject);
-            ShowHint("You got a gun! Press 'F' to shoot");
-            StartCoroutine(HideHint(1));
-            // GlobalVariables.mode = "test";
-        }
 
         // 如果玩家与一个障碍物碰撞
         if (obstacle.gameObject.CompareTag("Ground"))
@@ -274,17 +237,6 @@ public class PlayerControl : MonoBehaviour
                 StartCoroutine(ActivateEffect(obstacle.gameObject));
             }
         }
-
-        // if (gameObject.CompareTag("Bullet") && obstacle.gameObject.CompareTag("Number"))
-        // {
-        //     Debug.Log("Bullet hit ");
-        //     // Destroy(obstacle.gameObject);
-        //     UpdateScore(obstacle);
-
-        //     Destroy(obstacle.gameObject);
-        //     Destroy(gameObject);
-        // }
-
     }
 
     public void UpdateScore(Collision2D obstacle)
