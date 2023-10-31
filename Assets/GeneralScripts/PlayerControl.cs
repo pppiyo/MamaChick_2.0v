@@ -286,12 +286,12 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Platform_Mutate"))
         {
             isGrounded = true;
-            bool canPass = CanPassPlatform(obstacle);
-            // Debug.Log(canPass);
-            if (canPass)
-            {
-                StartCoroutine(ActivateEffect(obstacle.gameObject));
-            }
+            // bool canPass = CanPassPlatform(obstacle);
+            // // Debug.Log(canPass);
+            // if (canPass)
+            // {
+            //     StartCoroutine(ActivateEffect(obstacle.gameObject));
+            // }
         }
 
         // if Player collides with a mutate platform
