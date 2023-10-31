@@ -11,6 +11,24 @@ public class JudgeEquation : MonoBehaviour
     public int varValue;
     public GameObject targetObject;
 
+    void Update()
+    {
+        if (GlobalVariables.curLevel == 1)
+        {
+            if(curX > 30)
+            {
+                // EndGame
+            }
+        }
+
+        else if(GlobalVariables.curLevel == 2)
+        {
+            if (curX > 30)
+            {
+                // EndGame
+            }
+        }
+    }
     private double Evaluate(string expression)
     {
         expression = expression.Replace("x", varValue.ToString());
