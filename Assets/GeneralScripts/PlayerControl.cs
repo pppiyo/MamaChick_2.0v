@@ -69,6 +69,7 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(SceneManager.GetActiveScene().name);
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
@@ -82,7 +83,8 @@ public class PlayerControl : MonoBehaviour
         // Jump With Impulse Force 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            if (gravityDirection == 1)
+            if (gravityDirection == 1 ||(SceneManager.GetActiveScene().name == "Level1") || (SceneManager.GetActiveScene().name == "Level2")|| (SceneManager.GetActiveScene().name == "Tutorial_Portal_Geng")
+                || (SceneManager.GetActiveScene().name == "Level1_Portal_Geng 1") || (SceneManager.GetActiveScene().name == "Level1_Monster_Chris") || (SceneManager.GetActiveScene().name == "Level2_Monster_Chris"))
                 playerRB.AddForce(force, ForceMode2D.Impulse);
             else
                 playerRB.AddForce((float)-0.7 * force, ForceMode2D.Impulse);
@@ -101,10 +103,14 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Flip Gravity
-        if (currentX >= 0)
-            Physics2D.gravity = invertedGravity;
-        else
-            Physics2D.gravity = (float)-0.5 * invertedGravity;
+        if ((SceneManager.GetActiveScene().name != "Level1") && (SceneManager.GetActiveScene().name != "Level2") && (SceneManager.GetActiveScene().name != "Tutorial_Portal_Geng")
+            && (SceneManager.GetActiveScene().name != "Level1_Portal_Geng 1") && (SceneManager.GetActiveScene().name != "Level1_Monster_Chris") && (SceneManager.GetActiveScene().name != "Level2_Monster_Chris"))
+        {
+            if (currentX >= 0)
+                Physics2D.gravity = invertedGravity;
+            else
+                Physics2D.gravity = (float)-0.5 * invertedGravity;
+        }
     }
 
     // Sets the platform logic at start and whenever currentX changes
@@ -159,32 +165,37 @@ public class PlayerControl : MonoBehaviour
                 hintDisplay = "Dividing " + increment;
                 break;
         }
-        if(result < 0)
-        {
-            // Flip Gravity Logic;
-            if(previousResult >= 0)
+        string sceneName = SceneManager.GetActiveScene().name;
+        if ((SceneManager.GetActiveScene().name != "Level1") && (SceneManager.GetActiveScene().name != "Level2") && (SceneManager.GetActiveScene().name != "Tutorial_Portal_Geng")
+            && (SceneManager.GetActiveScene().name != "Level1_Portal_Geng 1") && (SceneManager.GetActiveScene().name != "Level1_Monster_Chris") && (SceneManager.GetActiveScene().name != "Level2_Monster_Chris")){
+            if(result < 0)
             {
-                hintDisplay += "\n Flipping Gravity!";
-                gravityDirection = gravityDirection * -1;
-                ShowHint(hintDisplay);
+                // Flip Gravity Logic;
+                if(previousResult >= 0)
+                {
+                    
+                    hintDisplay += "\n Flipping Gravity!";
+                    gravityDirection = gravityDirection * -1;
+                    ShowHint(hintDisplay);
+                }
+                else
+                {
+                    ShowHint(hintDisplay);
+                }
             }
             else
             {
-                ShowHint(hintDisplay);
-            }
-        }
-        else
-        {
-            // Flip Gravity Logic;
-            if (previousResult < 0)
-            {
-                hintDisplay += "\n Flipping Gravity!";
-                gravityDirection = gravityDirection * -1;
-                ShowHint(hintDisplay);
-            }
-            else
-            {
-                ShowHint(hintDisplay);
+                // Flip Gravity Logic;
+                if (previousResult < 0)
+                {
+                    hintDisplay += "\n Flipping Gravity!";
+                    gravityDirection = gravityDirection * -1;
+                    ShowHint(hintDisplay);
+                }
+                else
+                {
+                    ShowHint(hintDisplay);
+                }
             }
         }
         StartCoroutine(HideHint(1));
