@@ -13,6 +13,7 @@ public class PlayerControl : MonoBehaviour
     public float horizontalInput;
     public float speed;
     public float jumpForce;
+    public float traslateForce;
     public int currentX;
     public GameObject xObject;
     public TMP_Text xBoard;
@@ -20,6 +21,7 @@ public class PlayerControl : MonoBehaviour
     public int operatorID;
     public float xBound;
     public TMP_Text hintText;
+    public int velocityLimit;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private int increaseX;
@@ -60,8 +62,13 @@ public class PlayerControl : MonoBehaviour
     {
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
-
+        
+        if (!isGrounded)
+        {
+            // Gliding motion in Air
+            transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
+        }
+       
         //  Keep player in bound
         if (transform.position.x > xBound)
             transform.position = new Vector2(xBound, transform.position.y);
@@ -86,6 +93,20 @@ public class PlayerControl : MonoBehaviour
             transform.position = nearbyTeleporterDestination.position; 
         }
         
+    }
+
+    void FixedUpdate()
+    {
+         if(isGrounded)
+        {
+            // Accelerated Run Motion
+            Debug.Log(playerRB.velocity.magnitude);
+            if (playerRB.velocity.magnitude < velocityLimit)
+            {
+                Debug.Log(Vector2.right * traslateForce * (float)horizontalInput * Time.fixedDeltaTime);
+                playerRB.AddForce(Vector2.right * traslateForce * (float)horizontalInput * Time.fixedDeltaTime, ForceMode2D.Force);
+            }
+        }
     }
 
     void ShowHint(string hint)
