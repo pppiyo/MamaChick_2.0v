@@ -477,6 +477,34 @@ PrefabInstance:
       propertyPath: WheelManager
       value: 
       objectReference: {fileID: 1247633268}
+    - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: acceleration
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: traslateForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: velocityLimit
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: translateForce
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: airDeceleration
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: initialVelocity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: groundDeceleration
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 860953409972059293, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_text
       value: 0
@@ -532,6 +560,10 @@ PrefabInstance:
     - target: {fileID: 8141260372545767314, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8786336996122671707, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 970879d43d1e94bd586fe13880d00024, type: 3}

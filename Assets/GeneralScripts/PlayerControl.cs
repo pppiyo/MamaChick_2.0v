@@ -13,7 +13,10 @@ public class PlayerControl : MonoBehaviour
     public float horizontalInput;
     public float speed;
     public float jumpForce;
-    public float traslateForce;
+    public float acceleration;
+    public float groundDeceleration;
+    public float airDeceleration;
+    public float initialVelocity;
     public int currentX;
     public GameObject xObject;
     public TMP_Text xBoard;
@@ -22,6 +25,7 @@ public class PlayerControl : MonoBehaviour
     public float xBound;
     public TMP_Text hintText;
     public int velocityLimit;
+    private Vector2 accelerationVector;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private int increaseX;
@@ -100,13 +104,45 @@ public class PlayerControl : MonoBehaviour
          if(isGrounded)
         {
             // Accelerated Run Motion
-            Debug.Log(playerRB.velocity.magnitude);
-            if (playerRB.velocity.magnitude < velocityLimit)
+            if (playerRB.velocity.magnitude < velocityLimit && horizontalInput != 0)
             {
-                Debug.Log(Vector2.right * traslateForce * (float)horizontalInput * Time.fixedDeltaTime);
-                playerRB.AddForce(Vector2.right * traslateForce * (float)horizontalInput * Time.fixedDeltaTime, ForceMode2D.Force);
+                accelerationVector = Vector2.right * acceleration;
+                // Setting initial velocity
+                if (playerRB.velocity.magnitude == 0)
+                {
+                    if (horizontalInput > 0)
+                        playerRB.velocity = Vector2.right * initialVelocity;
+
+                    if (horizontalInput < 0)
+                        playerRB.velocity = -1 * Vector2.right * initialVelocity;
+                }
+                
+                // Setting constant acceleration
+                if(horizontalInput > 0)
+                    playerRB.velocity += accelerationVector * Time.fixedDeltaTime;
+
+                if (horizontalInput < 0)
+                    playerRB.velocity -= accelerationVector * Time.fixedDeltaTime;
+                // Make sure the velocity doesn't exceed the maximum
+                playerRB.velocity = Vector2.ClampMagnitude(playerRB.velocity, velocityLimit);
+            }
+            // Decelerate constantly ground friction
+            if(playerRB.velocity.magnitude > 0 && horizontalInput == 0)
+            {
+                Vector2 decelerationVector = -playerRB.velocity.normalized * groundDeceleration;
+                playerRB.velocity += decelerationVector * Time.fixedDeltaTime;
             }
         }
+        else
+        {
+            // Decelerate constantly air friction
+            if (playerRB.velocity.magnitude > 0 && horizontalInput == 0)
+            {
+                Vector2 decelerationVector = -playerRB.velocity.normalized * airDeceleration;
+                playerRB.velocity += decelerationVector * Time.fixedDeltaTime;
+            }
+        }
+        Debug.Log(playerRB.velocity.magnitude);
     }
 
     void ShowHint(string hint)
