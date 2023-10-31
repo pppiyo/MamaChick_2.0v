@@ -10,6 +10,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour
 {
+    private bool facingRight = true; // To keep track of the player's facing direction.
+
     public float horizontalInput;
     public float speed;
     public float jumpForce;
@@ -29,9 +31,18 @@ public class PlayerControl : MonoBehaviour
     private LayerMask platformLayer;
     private float effectDuration = 0.8f;
     private Transform nearbyTeleporterDestination;
-    // private float startTime;
+    private Vector3 moveDirection;
 
     private int cnt = 0;
+    private int _lives = 5;
+    public int Lives { get => _lives; }
+    [SerializeField] Transform _respawnPoint;
+
+
+    // public Transform rayOrigin; // The point where the ray will originate from.
+    public float raycastDistance = 10000f; // How far the ray should reach.
+    private float cooldown = 0.5f;
+    // public GameObject bulletPrefab;
 
     void Start()
     {
@@ -58,6 +69,23 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        // Detect player input for horizontal movement.
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        // Check if the player is changing direction.
+        if ((horizontalInput < 0 && facingRight) || (horizontalInput > 0 && !facingRight))
+        {
+            // Flip the player's direction.
+            Flip();
+        }
+
+        // gain the moveDirection
+        if (horizontalInput != 0)
+        {
+            moveDirection = new Vector3(horizontalInput, 0f, 0f);
+            moveDirection = moveDirection.normalized;
+        }
+
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
@@ -79,14 +107,57 @@ public class PlayerControl : MonoBehaviour
         {
             operatorID = WheelManager.GetComponent<WheelController>().operatorID;
         }
-        
+
         //press 'E' to teleport
         if (nearbyTeleporterDestination != null && Input.GetKeyDown(KeyCode.E))
         {
-            transform.position = nearbyTeleporterDestination.position; 
+            transform.position = nearbyTeleporterDestination.position;
         }
-        
+
     }
+
+    private void Flip()
+    {
+        // Find the "Gun" child of the player GameObject.
+        Transform gunChild = transform.Find("Gun");
+
+        if (gunChild != null)
+        {
+            // You have found the "Gun" child. You can access and manipulate it here.
+            // Invert the local scale's x value to flip the player.
+            Vector3 newScale = gunChild.transform.localScale;
+            newScale.x *= -1;
+            gunChild.transform.localScale = newScale;
+            gunChild.transform.localPosition = new Vector3(-gunChild.transform.localPosition.x, gunChild.transform.localPosition.y, gunChild.transform.localPosition.z);
+
+            // Update the facing direction flag.
+            facingRight = !facingRight;
+        }
+    }
+
+    public Vector3 GetMoveDirection()
+    {
+        return moveDirection;
+    }
+
+
+    // public void Respawn()
+    // {
+    //     transform.position = _respawnPoint.position;
+    //     _lives--;
+    //     if (_lives <= 0)
+    //     {
+    //         ReturnToMainMenu();
+    //     }
+    //     StartCoroutine(EnableController());
+    // }
+
+    // private IEnumerator EnableController()
+    // {
+    //     yield return new WaitForSeconds(0.5f);
+    //     GetComponent<PlayerControl>().enabled = true;
+    // }
+
 
     void ShowHint(string hint)
     {
@@ -138,7 +209,7 @@ public class PlayerControl : MonoBehaviour
             return true;
         }
     }
-    
+
     GameObject[] FindObjectsWithSubstring(string substring)
     {
         GameObject[] allObjects = FindObjectsOfType<GameObject>();
@@ -155,11 +226,23 @@ public class PlayerControl : MonoBehaviour
         return matchingObjects.ToArray();
     }
 
-
-
-
     void OnCollisionEnter2D(Collision2D obstacle)
     {
+
+        if (obstacle.gameObject.CompareTag("Spike"))
+        {
+            Destroy(gameObject); // kill 1 life
+        }
+
+        if (obstacle.gameObject.CompareTag("Gun"))
+        {
+
+            // Destroy(obstacle.gameObject);
+            ShowHint("You got a gun! Press 'F' to shoot");
+            StartCoroutine(HideHint(1));
+            // GlobalVariables.mode = "test";
+        }
+
         // 如果玩家与一个障碍物碰撞
         if (obstacle.gameObject.CompareTag("Ground"))
         {
@@ -170,33 +253,8 @@ public class PlayerControl : MonoBehaviour
         // Score update
         if (obstacle.gameObject.CompareTag("Number"))
         {
-            GlobalVariables.collisions++;
-            increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
-            switch (operatorID)
-            {
-                case 0:
-                    if (negativeX(currentX, increaseX))
-                        return;
-                    currentX += increaseX;
-                    break;
-                case 1:
-                    if (negativeX(currentX, increaseX))
-                        return;
-                    currentX -= increaseX;
-                    break;
-                case 2:
-                    if (negativeX(currentX, increaseX))
-                        return;
-                    currentX *= increaseX;
-                    break;
-                case 3:
-                    if (negativeX(currentX, increaseX))
-                        return;
-                    currentX /= increaseX;
-                    break;
-            }
+            UpdateScore(obstacle);
             Destroy(obstacle.gameObject);
-            xBoard.text = currentX.ToString();
         }
 
         if (obstacle.gameObject.CompareTag("Goal"))
@@ -217,6 +275,50 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
+        // if (gameObject.CompareTag("Bullet") && obstacle.gameObject.CompareTag("Number"))
+        // {
+        //     Debug.Log("Bullet hit ");
+        //     // Destroy(obstacle.gameObject);
+        //     UpdateScore(obstacle);
+
+        //     Destroy(obstacle.gameObject);
+        //     Destroy(gameObject);
+        // }
+
+    }
+
+    public void UpdateScore(Collision2D obstacle)
+    {
+        GlobalVariables.collisions++;
+        increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
+        Debug.Log("increaseX: " + increaseX);
+        switch (operatorID)
+        {
+            case 0:
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX += increaseX;
+                break;
+            case 1:
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX -= increaseX;
+                break;
+            case 2:
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX *= increaseX;
+                break;
+            case 3:
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX /= increaseX;
+                break;
+        }
+        // Destroy(obstacle.gameObject);
+        Debug.Log("currentX: " + currentX);
+
+        xBoard.text = currentX.ToString();
     }
 
 
@@ -237,11 +339,11 @@ public class PlayerControl : MonoBehaviour
             GameObject obj = GameObject.Find("EquationManager");
             JudgeEquation judge = obj.GetComponent<JudgeEquation>();
             TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
-            
+
             if (portalEquationText == null || portalEquationText.text.Length == 0 || playerEquationText != null)
             {
-                bool equationSatisfied = true; 
-                
+                bool equationSatisfied = true;
+
                 if (portalEquationText != null && portalEquationText.text.Length > 0)
                 {
                     int playerNumber;
@@ -251,10 +353,10 @@ public class PlayerControl : MonoBehaviour
                     }
                     else
                     {
-                        equationSatisfied = false;  
+                        equationSatisfied = false;
                     }
                 }
-                
+
                 if (equationSatisfied)
                 {
                     ShowHint("Press 'E' to teleport");
@@ -275,7 +377,7 @@ public class PlayerControl : MonoBehaviour
                         nearbyTeleporterDestination = pairPortal.transform;  // set paired portal
                     }
                 }
-                
+
             }
         }
 
@@ -285,8 +387,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (obstacle.gameObject.CompareTag("Portal"))
         {
-            nearbyTeleporterDestination = null;  
-            StartCoroutine(HideHint(0)); 
+            nearbyTeleporterDestination = null;
+            StartCoroutine(HideHint(0));
         }
     }
 

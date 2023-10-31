@@ -13,6 +13,9 @@ TagManager:
   - Platform
   - Monster
   - Portal
+  - Gun
+  - Spike
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -24,7 +27,7 @@ TagManager:
   - Platform
   - 'Number  '
   - Monster
-  - 
+  - Bullet
   - 
   - 
   - 

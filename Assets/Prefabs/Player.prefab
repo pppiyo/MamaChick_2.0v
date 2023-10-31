@@ -145,8 +145,10 @@ MonoBehaviour:
   xBoard: {fileID: 0}
   WheelManager: {fileID: 0}
   operatorID: 0
-  xBound: 0
+  xBound: 20
   hintText: {fileID: 0}
+  _respawnPoint: {fileID: 0}
+  raycastDistance: 10000
 --- !u!1001 &5361902882650600056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -168,7 +170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4284769380
+      value: 4283453520
       objectReference: {fileID: 0}
     - target: {fileID: 8821883836249200090, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
       propertyPath: m_Pivot.x
