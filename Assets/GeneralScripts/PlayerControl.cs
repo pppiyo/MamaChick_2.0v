@@ -33,6 +33,7 @@ public class PlayerControl : MonoBehaviour
     private LayerMask platformLayer;
     private float effectDuration = 0.8f;
     private Transform nearbyTeleporterDestination;
+    private List<GameObject> platforms;
     // private float startTime;
 
     private int cnt = 0;
@@ -59,7 +60,11 @@ public class PlayerControl : MonoBehaviour
 
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
-
+        platforms = new List<GameObject>();
+        // These are the platforms that change dynamically
+        platforms.AddRange(GameObject.FindGameObjectsWithTag("Platform"));
+        platforms.AddRange(GameObject.FindGameObjectsWithTag("Fake"));
+        resolvePlatforms();
     }
 
     void Update()
@@ -100,6 +105,23 @@ public class PlayerControl : MonoBehaviour
             Physics2D.gravity = invertedGravity;
         else
             Physics2D.gravity = (float)-0.5 * invertedGravity;
+    }
+
+    // Sets the platform logic at start and whenever currentX changes
+    void resolvePlatforms()
+    {
+        // Check all platforms and separate solid platforms
+        foreach (GameObject platform in platforms)
+        {
+            if (CanPassPlatform(platform))
+            {
+                DisableLayerCollision(platform);
+            }
+            else
+            {
+                EnableLayerCollision(platform);
+            }
+        }
     }
 
     void ShowHint(string hint)
@@ -191,7 +213,7 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionEnter2D(Collision2D obstacle)
     {
         // 如果玩家与一个障碍物碰撞
-        if (obstacle.gameObject.CompareTag("Ground"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination"))
         {
             // Jump Enabled
             isGrounded = true;
@@ -227,6 +249,7 @@ public class PlayerControl : MonoBehaviour
             }
             Destroy(obstacle.gameObject);
             xBoard.text = currentX.ToString();
+            resolvePlatforms();
         }
 
         if (obstacle.gameObject.CompareTag("Goal"))
@@ -239,12 +262,6 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Platform"))
         {
             isGrounded = true;
-            bool canPass = CanPassPlatform(obstacle);
-            // Debug.Log(canPass);
-            if (canPass)
-            {
-                StartCoroutine(ActivateEffect(obstacle.gameObject));
-            }
         }
 
     }
@@ -253,9 +270,8 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionExit2D(Collision2D obstacle)
     {
         // Jump Disabled
-        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform") || obstacle.gameObject.CompareTag("Destination"))
             isGrounded = false;
-
     }
 
     //teleporter
@@ -305,7 +321,6 @@ public class PlayerControl : MonoBehaviour
                         nearbyTeleporterDestination = pairPortal.transform;  // set paired portal
                     }
                 }
-                
             }
         }
 
@@ -320,17 +335,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private IEnumerator ActivateEffect(GameObject Platform)
-    {
-        // Code for the effect to start here
-        DisableLayerCollision(Platform);
-
-        yield return new WaitForSeconds(effectDuration);
-
-        // Code for the effect to end here
-        EnableLayerCollision(Platform);
-    }
-
     void DisableLayerCollision(GameObject Platform)
     {
         Platform.layer = LayerMask.NameToLayer("Fake");
@@ -342,12 +346,12 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    bool CanPassPlatform(Collision2D obstacle)
+    bool CanPassPlatform(GameObject obstacle)
     {
         bool pass = false;
 
         // Platform Equation Logic
-        TextMeshPro obstacleEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
+        TextMeshPro obstacleEquationText = obstacle.GetComponentInChildren<TextMeshPro>();
         if (obstacleEquationText != null && obstacleEquationText.text.Length != 0)
         {
             GameObject obj = GameObject.Find("EquationManager");
