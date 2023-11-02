@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 
 
 public class PlayerControl : MonoBehaviour
@@ -22,10 +21,11 @@ public class PlayerControl : MonoBehaviour
     public float xBound;
     public int gravityDirection;
     public TMP_Text hintText;
+    public GameObject SceneLoader;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private int increaseX;
-    private bool isGrounded;
+    public bool isGrounded;
     private Vector2 invertedGravity;
     private int previousResult;
     private string hintDisplay;
@@ -36,7 +36,6 @@ public class PlayerControl : MonoBehaviour
     private Transform nearbyTeleporterDestination;
     private List<GameObject> platforms;
     private Vector3 moveDirection;
-
 
     void Start()
     {
@@ -65,6 +64,9 @@ public class PlayerControl : MonoBehaviour
         platforms.AddRange(GameObject.FindGameObjectsWithTag("Platform_Mutate"));
         platforms.AddRange(GameObject.FindGameObjectsWithTag("Fake"));
         resolvePlatforms();
+
+        // Scene Loader 
+        SceneLoader = GameObject.Find("SceneManager");
     }
 
     void Update()
@@ -256,7 +258,7 @@ public class PlayerControl : MonoBehaviour
 
         if (obstacle.gameObject.CompareTag("Spike"))
         {
-            Destroy(gameObject); // kill 1 life
+            SceneLoader.GetComponent<Transition>().LoadGameOverLost();
         }
 
 
@@ -286,12 +288,6 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Platform_Mutate"))
         {
             isGrounded = true;
-            // bool canPass = CanPassPlatform(obstacle);
-            // // Debug.Log(canPass);
-            // if (canPass)
-            // {
-            //     StartCoroutine(ActivateEffect(obstacle.gameObject));
-            // }
         }
 
         // if Player collides with a mutate platform
@@ -454,6 +450,6 @@ public class PlayerControl : MonoBehaviour
     private void ReturnToMainMenu()
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
-        SceneManager.LoadScene("_Game Over");
+        SceneLoader.GetComponent<Transition>().LoadMainMenu();
     }
 }
