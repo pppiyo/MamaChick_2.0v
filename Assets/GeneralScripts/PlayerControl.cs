@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 
 public class PlayerControl : MonoBehaviour
@@ -18,7 +19,8 @@ public class PlayerControl : MonoBehaviour
     public TMP_Text xBoard;
     public GameObject WheelManager;
     public int operatorID;
-    public float xBound;
+    public float rightBound;
+    public float leftBound;
     public int gravityDirection;
     public TMP_Text hintText;
     public GameObject SceneLoader;
@@ -36,6 +38,7 @@ public class PlayerControl : MonoBehaviour
     private Transform nearbyTeleporterDestination;
     private List<GameObject> platforms;
     private Vector3 moveDirection;
+    private GameObject tutorialCheck;
 
     void Start()
     {
@@ -54,9 +57,8 @@ public class PlayerControl : MonoBehaviour
         isGrounded = false;
         currentX = 0;
         xBoard = xObject.GetComponent<TMP_Text>();
-        operatorID = 0;
         hintText.gameObject.SetActive(false);
-
+        operatorID = 4;
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
         platforms = new List<GameObject>();
@@ -67,6 +69,8 @@ public class PlayerControl : MonoBehaviour
 
         // Scene Loader 
         SceneLoader = GameObject.Find("SceneManager");
+        // Check if current level is a tutorial scene
+        tutorialCheck = GameObject.Find("TutorialInstructions");
     }
 
     void Update()
@@ -90,13 +94,14 @@ public class PlayerControl : MonoBehaviour
 
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
-        transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
 
         //  Keep player in bound
-        if (transform.position.x > xBound)
-            transform.position = new Vector2(xBound, transform.position.y);
-        else if (transform.position.x < -xBound)
-            transform.position = new Vector2(-xBound, transform.position.y);
+        if (transform.position.x > rightBound)
+            transform.position = new Vector2(rightBound, transform.position.y);
+        else if (transform.position.x < leftBound)
+            transform.position = new Vector2(leftBound, transform.position.y);
 
         // Jump With Impulse Force 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
@@ -124,12 +129,35 @@ public class PlayerControl : MonoBehaviour
             Physics2D.gravity = invertedGravity;
         else
             Physics2D.gravity = (float)-0.5 * invertedGravity;
+
+        // Change Operator from arrow keys
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            operatorID = 1;
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("SubButton"));
+        }
+        else if(Input.GetKey(KeyCode.LeftArrow))
+        {
+            operatorID = 3;
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("DivButton"));
+        }
+        else if (Input.GetKey(KeyCode.UpArrow))
+        {
+            operatorID = 0;
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("AddButton"));
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            operatorID = 2;
+            EventSystem.current.SetSelectedGameObject(GameObject.Find("MulButton"));
+        }
     }
 
     // Sets the platform logic at start and whenever currentX changes
-    void resolvePlatforms()
+    public void resolvePlatforms()
     {
         // Check all platforms and separate solid platforms
+        Debug.Log("Resolving platforms");
         foreach (GameObject platform in platforms)
         {
             if (CanPassPlatform(platform))
@@ -255,8 +283,8 @@ public class PlayerControl : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
-
-        if (obstacle.gameObject.CompareTag("Spike"))
+        // Tutorial You do not kill anyone
+        if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
         {
             SceneLoader.GetComponent<Transition>().LoadGameOverLost();
         }
@@ -274,8 +302,8 @@ public class PlayerControl : MonoBehaviour
         {
             UpdateScore(obstacle);
             resolvePlatforms();
-
-            Destroy(obstacle.gameObject);
+            if(tutorialCheck == null)
+                Destroy(obstacle.gameObject);
         }
 
         if (obstacle.gameObject.CompareTag("Goal"))
@@ -324,11 +352,15 @@ public class PlayerControl : MonoBehaviour
                     return;
                 currentX /= increaseX;
                 break;
+            case 4:
+                hintDisplay = "Select an Operator";
+                ShowHint(hintDisplay);
+                StartCoroutine(HideHint(1));
+                break;
         }
         // Destroy(obstacle.gameObject);
-        Debug.Log("currentX: " + currentX);
-
         xBoard.text = currentX.ToString();
+        Debug.Log("currentX: " + currentX);
     }
 
 
@@ -433,12 +465,13 @@ public class PlayerControl : MonoBehaviour
             // 获取玩家上的TextMeshProUGUI组件的值
             GameObject player = GameObject.Find("Player");
             judge.playerEquationText = player.GetComponentInChildren<TextMeshPro>();
-            // Debug.Log(judge.playerEquationText.text);
+            Debug.Log(judge.playerEquationText.text);
 
             if (judge.playerEquationText != null)
             {
                 judge.varValue = int.Parse(judge.playerEquationText.text);
             }
+            Debug.Log(judge.varValue);
 
             // 调用EvaluateFromTextMeshPro方法来检查玩家的数值是否满足方程
             pass = !judge.EvaluateFromTextMeshPro(); // if 

@@ -10,13 +10,16 @@ public class WheelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        operatorID = 0;
-        EventSystem.current.SetSelectedGameObject(addDefault.gameObject);
+        if(GameObject.Find("TutorialInstructions") == null)
+        {
+            operatorID = 0;
+            EventSystem.current.SetSelectedGameObject(addDefault.gameObject);
+        }
     }
 
     void Update()
     {
-        if(operatorID == 0)
+        if(operatorID == 0 && GameObject.Find("TutorialInstructions") == null)
         {
             EventSystem.current.SetSelectedGameObject(addDefault.gameObject);
         }
