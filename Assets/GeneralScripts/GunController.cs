@@ -59,6 +59,7 @@ public class GunController : MonoBehaviour
         return playerDirection;
     }
 
+    // spawn bullet at the player/gun's facing position
     void SpawnBullet(Vector2 facingDirection)
     {
         Vector3 spawnPos = new Vector3(transform.position.x + transform.localScale.x / 2 + 0.2f, transform.position.y + transform.localScale.y / 4, 0);
@@ -103,7 +104,7 @@ public class GunController : MonoBehaviour
 
     private GameObject GetBulletType(PlayerControl player)
     {
-        Debug.Log("Confirming player id: " + player.operatorID);
+        // Debug.Log("Confirming player id: " + player.operatorID);
         // operatorID; // 0: add; 1: sub; 2: multiply; 3: divide
         if (player.operatorID == 0)
         {
@@ -126,7 +127,4 @@ public class GunController : MonoBehaviour
             return null;
         }
     }
-
-
-
 }

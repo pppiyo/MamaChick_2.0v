@@ -24,7 +24,7 @@ public class PlayerControl : MonoBehaviour
     public TMP_Text hintText;
     private Rigidbody2D playerRB;
     private Vector2 force;
-    private int increaseX;
+    private int number;
     private bool isGrounded;
     private Vector2 invertedGravity;
     private int previousResult;
@@ -36,6 +36,8 @@ public class PlayerControl : MonoBehaviour
     private Transform nearbyTeleporterDestination;
     private List<GameObject> platforms;
     private Vector3 moveDirection;
+    private GameObject numberTextGameObject;
+    private string numberText;
 
 
     void Start()
@@ -58,8 +60,11 @@ public class PlayerControl : MonoBehaviour
         operatorID = 0;
         hintText.gameObject.SetActive(false);
 
+
+        // Note: layer is different from tag, where we only use "Platform" and "Fake" to differentiate the valid/invalid platforms, and in tag we simply use Platform_Mutate and Platform_Solid to differentiate the platforms that can be mutated and the platforms that cannot be mutated.
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
+
         platforms = new List<GameObject>();
         // These are the platforms that change dynamically
         platforms.AddRange(GameObject.FindGameObjectsWithTag("Platform_Mutate"));
@@ -140,7 +145,6 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
-
 
 
     private void Flip()
@@ -298,35 +302,40 @@ public class PlayerControl : MonoBehaviour
 
     public void UpdateScore(Collision2D obstacle)
     {
-        GlobalVariables.collisions++;
-        increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
-        // Debug.Log("increaseX: " + increaseX);
+        GlobalVariables.collisions++; // Chris: data collection
+
+        numberTextGameObject = obstacle.gameObject.transform.Find("Number_Text").gameObject;
+        numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
+
+        int number = int.Parse(numberText); // number for the value on the Number object
+
+
+        // number = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
+        // Debug.Log("number: " + number);
+
         switch (operatorID)
         {
             case 0:
-                if (negativeX(currentX, increaseX))
+                if (negativeX(currentX, number))
                     return;
-                currentX += increaseX;
+                currentX += number;
                 break;
             case 1:
-                if (negativeX(currentX, increaseX))
+                if (negativeX(currentX, number))
                     return;
-                currentX -= increaseX;
+                currentX -= number;
                 break;
             case 2:
-                if (negativeX(currentX, increaseX))
+                if (negativeX(currentX, number))
                     return;
-                currentX *= increaseX;
+                currentX *= number;
                 break;
             case 3:
-                if (negativeX(currentX, increaseX))
+                if (negativeX(currentX, number))
                     return;
-                currentX /= increaseX;
+                currentX /= number;
                 break;
         }
-        // Destroy(obstacle.gameObject);
-        // Debug.Log("currentX: " + currentX);
-
         xBoard.text = currentX.ToString();
     }
 

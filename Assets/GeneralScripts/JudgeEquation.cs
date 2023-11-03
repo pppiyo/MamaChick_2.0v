@@ -36,12 +36,12 @@ public class JudgeEquation : MonoBehaviour
         string leftExpr = match.Groups[1].Value.Trim();
         string operatorStr = match.Groups[2].Value.Trim();
         string rightExpr = match.Groups[3].Value.Trim();
-        
+
         double leftValue = Evaluate(leftExpr);
         double rightValue = Evaluate(rightExpr);
 
-        Debug.Log("left:"+ leftValue);
-        Debug.Log("right:"+ rightValue);
+        // Debug.Log("left:"+ leftValue);
+        // Debug.Log("right:"+ rightValue);
 
         switch (operatorStr)
         {
