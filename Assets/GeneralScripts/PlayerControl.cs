@@ -20,16 +20,21 @@ public class PlayerControl : MonoBehaviour
     public GameObject WheelManager;
     public int operatorID;
     public float xBound;
+    public int gravityDirection;
     public TMP_Text hintText;
     private Rigidbody2D playerRB;
     private Vector2 force;
     private int increaseX;
     private bool isGrounded;
+    private Vector2 invertedGravity;
+    private int previousResult;
+    private string hintDisplay;
     private JudgeEquation judgeEquation;
     private LayerMask playerLayer;
     private LayerMask platformLayer;
     private float effectDuration = 0.8f;
     private Transform nearbyTeleporterDestination;
+    private List<GameObject> platforms;
     private Vector3 moveDirection;
 
 
@@ -37,6 +42,8 @@ public class PlayerControl : MonoBehaviour
     {
         // 查找所有包含 "platform" 字符串的游戏对象
         GameObject[] platformObjects = FindObjectsWithSubstring("Platform");
+        gravityDirection = 1;
+        invertedGravity = new Vector2(0, -9.81f);
 
         // 输出找到的游戏对象的名称
         foreach (GameObject obj in platformObjects)
@@ -53,7 +60,11 @@ public class PlayerControl : MonoBehaviour
 
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
-
+        platforms = new List<GameObject>();
+        // These are the platforms that change dynamically
+        platforms.AddRange(GameObject.FindGameObjectsWithTag("Platform_Mutate"));
+        platforms.AddRange(GameObject.FindGameObjectsWithTag("Fake"));
+        resolvePlatforms();
     }
 
     void Update()
@@ -88,7 +99,10 @@ public class PlayerControl : MonoBehaviour
         // Jump With Impulse Force 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
-            playerRB.AddForce(force, ForceMode2D.Impulse);
+            if (gravityDirection == 1)
+                playerRB.AddForce(force, ForceMode2D.Impulse);
+            else
+                playerRB.AddForce((float)-0.7 * force, ForceMode2D.Impulse);
         }
 
         // Operator Update 
@@ -103,7 +117,31 @@ public class PlayerControl : MonoBehaviour
             transform.position = nearbyTeleporterDestination.position;
         }
 
+        // Flip Gravity
+        if (currentX >= 0)
+            Physics2D.gravity = invertedGravity;
+        else
+            Physics2D.gravity = (float)-0.5 * invertedGravity;
     }
+
+    // Sets the platform logic at start and whenever currentX changes
+    void resolvePlatforms()
+    {
+        // Check all platforms and separate solid platforms
+        foreach (GameObject platform in platforms)
+        {
+            if (CanPassPlatform(platform))
+            {
+                DisableLayerCollision(platform);
+            }
+            else
+            {
+                EnableLayerCollision(platform);
+            }
+        }
+    }
+
+
 
     private void Flip()
     {
@@ -144,41 +182,57 @@ public class PlayerControl : MonoBehaviour
 
     bool negativeX(int result, int increment)
     {
+        previousResult = result;
+        hintDisplay = "";
         switch (operatorID)
         {
             case 0:
                 result += increment;
-                if (result >= 0)
-                    ShowHint("Adding " + increment);
+                hintDisplay = "Adding " + increment;
                 break;
             case 1:
                 result -= increment;
-                if (result >= 0)
-                    ShowHint("Subracting " + increment);
+                hintDisplay = "Subracting " + increment;
                 break;
             case 2:
-                if (result >= 0)
-                    ShowHint("Multiplying " + increment);
                 result *= increment;
+                hintDisplay = "Multiplying " + increment;
                 break;
             case 3:
-                if (result >= 0)
-                    ShowHint("Dividing " + increment);
                 result /= increment;
+                hintDisplay = "Dividing " + increment;
                 break;
         }
-        if (result >= 0)
+        if (result < 0)
         {
-            StartCoroutine(HideHint(1));
-            return false;
+            // Flip Gravity Logic;
+            if (previousResult >= 0)
+            {
+                hintDisplay += "\n Flipping Gravity!";
+                gravityDirection = gravityDirection * -1;
+                ShowHint(hintDisplay);
+            }
+            else
+            {
+                ShowHint(hintDisplay);
+            }
         }
-
         else
         {
-            ShowHint("Cannot be a Negative number!");
-            StartCoroutine(HideHint(3));
-            return true;
+            // Flip Gravity Logic;
+            if (previousResult < 0)
+            {
+                hintDisplay += "\n Flipping Gravity!";
+                gravityDirection = gravityDirection * -1;
+                ShowHint(hintDisplay);
+            }
+            else
+            {
+                ShowHint(hintDisplay);
+            }
         }
+        StartCoroutine(HideHint(1));
+        return false;
     }
 
     GameObject[] FindObjectsWithSubstring(string substring)
@@ -207,7 +261,7 @@ public class PlayerControl : MonoBehaviour
 
 
         // 如果玩家与一个障碍物碰撞
-        if (obstacle.gameObject.CompareTag("Ground"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination"))
         {
             // Jump Enabled
             isGrounded = true;
@@ -217,6 +271,8 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Number"))
         {
             UpdateScore(obstacle);
+            resolvePlatforms();
+
             Destroy(obstacle.gameObject);
         }
 
@@ -226,16 +282,17 @@ public class PlayerControl : MonoBehaviour
             GlobalVariables.win = true;
             ReturnToMainMenu();
         }
-        // if Player collides with a platform
-        if (obstacle.gameObject.CompareTag("Platform"))
+        // if Player collides with a mutate platform
+        if (obstacle.gameObject.CompareTag("Platform_Mutate"))
         {
             isGrounded = true;
-            bool canPass = CanPassPlatform(obstacle);
-            // Debug.Log(canPass);
-            if (canPass)
-            {
-                StartCoroutine(ActivateEffect(obstacle.gameObject));
-            }
+        }
+
+
+        // if Player collides with a mutate platform
+        if (obstacle.gameObject.CompareTag("Platform_Solid"))
+        {
+            isGrounded = true;
         }
     }
 
@@ -277,9 +334,8 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionExit2D(Collision2D obstacle)
     {
         // Jump Disabled
-        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination"))
             isGrounded = false;
-
     }
 
     //teleporter
@@ -344,17 +400,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private IEnumerator ActivateEffect(GameObject Platform)
-    {
-        // Code for the effect to start here
-        DisableLayerCollision(Platform);
-
-        yield return new WaitForSeconds(effectDuration);
-
-        // Code for the effect to end here
-        EnableLayerCollision(Platform);
-    }
-
     void DisableLayerCollision(GameObject Platform)
     {
         Platform.layer = LayerMask.NameToLayer("Fake");
@@ -366,12 +411,12 @@ public class PlayerControl : MonoBehaviour
     }
 
 
-    bool CanPassPlatform(Collision2D obstacle)
+    bool CanPassPlatform(GameObject obstacle)
     {
         bool pass = false;
 
         // Platform Equation Logic
-        TextMeshPro obstacleEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
+        TextMeshPro obstacleEquationText = obstacle.GetComponentInChildren<TextMeshPro>();
         if (obstacleEquationText != null && obstacleEquationText.text.Length != 0)
         {
             GameObject obj = GameObject.Find("EquationManager");
@@ -404,6 +449,6 @@ public class PlayerControl : MonoBehaviour
     private void ReturnToMainMenu()
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
-        SceneManager.LoadScene("Game Over");
+        SceneManager.LoadScene("_Game Over");
     }
 }

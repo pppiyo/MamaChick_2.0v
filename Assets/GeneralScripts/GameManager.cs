@@ -36,13 +36,13 @@ public class GameManager : MonoBehaviour
     private void LoseGame()
     {
         isGameOver = true;
-        SceneManager.LoadScene("GameOverScene");
+        SceneManager.LoadScene("_GameOverScene");
     }
 
     public void WinGame()
     {
         isGameOver = true;
-        SceneManager.LoadScene("WinScene");
+        SceneManager.LoadScene("_WinScene");
     }
 
     // If there're no numbers left on the screen, the game ends.

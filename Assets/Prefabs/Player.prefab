@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 8141260372545767314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 34.915184, y: 1.119, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3460153028259932066}
@@ -146,6 +146,7 @@ MonoBehaviour:
   WheelManager: {fileID: 0}
   operatorID: 0
   xBound: 20
+  gravityDirection: 0
   hintText: {fileID: 0}
   _respawnPoint: {fileID: 0}
   raycastDistance: 10000
@@ -167,6 +168,14 @@ PrefabInstance:
     - target: {fileID: 4727643624131759845, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
       propertyPath: m_text
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727643624131759845, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
+      propertyPath: m_margin.x
+      value: -4.4519234
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727643624131759845, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
+      propertyPath: m_margin.z
+      value: -4.56357
       objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 72bf2a8045ff19d4ba909e49d490ddb1, type: 3}
       propertyPath: m_fontColor32.rgba
