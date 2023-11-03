@@ -81,7 +81,14 @@ public class BulletController : MonoBehaviour
                 }
                 else if (prefabName == "BulletDivide(Clone)")
                 {
-                    textComponent.text = (playerNumber / number).ToString();
+                    if (number != 0)
+                    {
+                        textComponent.text = (playerNumber / number).ToString();
+                    }
+                    else
+                    {
+                        textComponent.text = "0";
+                    }
                 }
             }
         }

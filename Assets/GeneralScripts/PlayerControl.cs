@@ -203,10 +203,18 @@ public class PlayerControl : MonoBehaviour
                 hintDisplay = "Multiplying " + increment;
                 break;
             case 3:
-                result /= increment;
-                hintDisplay = "Dividing " + increment;
+                if (increment != 0)
+                {
+                    result /= increment;
+                    hintDisplay = "Dividing " + increment;
+                }
+                // else
+                // {
+                //     hintDisplay = "Cannot divide by 0";
+                // }
                 break;
         }
+
         if (result < 0)
         {
             // Flip Gravity Logic;
@@ -333,7 +341,17 @@ public class PlayerControl : MonoBehaviour
             case 3:
                 if (negativeX(currentX, number))
                     return;
-                currentX /= number;
+
+                if (number != 0)
+                {
+                    currentX /= number;
+                }
+                // else
+                // {
+                // ShowHint("Cannot divide by 0");
+                // StartCoroutine(HideHint(1));
+                //     return;
+                // }
                 break;
         }
         xBoard.text = currentX.ToString();

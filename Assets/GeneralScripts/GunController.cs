@@ -13,7 +13,7 @@ public class GunController : MonoBehaviour
     private GameObject bulletPrefab;
     private GameObject bullet;
     private float cooldown = 0.5f;
-
+    private bool isEquipped = false;
 
     void Start()
     {
@@ -22,8 +22,9 @@ public class GunController : MonoBehaviour
     void Update()
     {
         //Press 'F' to shoot
-        if (Input.GetKeyDown(KeyCode.F) && cooldown <= 0)
+        if (isEquipped && Input.GetKeyDown(KeyCode.F) && cooldown <= 0)
         {
+            player.HideHint(1);
             SpawnBullet(GetPlayerFacingDirection());
             cooldown = 0.5f;
         }
@@ -36,13 +37,12 @@ public class GunController : MonoBehaviour
     // If the gun collides with player, destroy the gun
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log("Collision detected at position: " + transform.position);
-
         if (other.gameObject.CompareTag("Player"))
         {
             player.ShowHint("You got a gun! Press 'F' to shoot");
-            // StartCoroutine(player.HideHint(3));
+            StartCoroutine(player.HideHint(3));
             AttachGunToPlayer(other.gameObject);
+            isEquipped = true;
         }
     }
 
