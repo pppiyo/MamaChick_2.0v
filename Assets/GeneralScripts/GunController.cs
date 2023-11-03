@@ -19,7 +19,6 @@ public class GunController : MonoBehaviour
         //Press 'F' to shoot
         if (Input.GetKeyDown(KeyCode.F) && cooldown <= 0)
         {
-            Debug.Log("Shoot");
             SpawnBullet(GetPlayerFacingDirection());
             cooldown = 0.5f;
         }
@@ -38,8 +37,7 @@ public class GunController : MonoBehaviour
         {
             // Destroy(obstacle.gameObject);
             player.ShowHint("You got a gun! Press 'F' to shoot");
-            StartCoroutine(player.HideHint(1));
-            // GlobalVariables.mode = "test";
+            StartCoroutine(player.HideHint(2));
             AttachGunToPlayer(other.gameObject);
         }
     }

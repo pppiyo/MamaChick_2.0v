@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// using UnityEngine.UI;
+using TMPro;
 
 public class BulletController : MonoBehaviour
 {
-    public float speed = 50f;  // Adjust this to control the bullet speed.
-    public PlayerControl player; // Reference to the PlayerMovement script.
+    public float speed = 10f;  // Adjust this to control the bullet speed.
 
 
     public void Initialize(Vector2 direction)
@@ -34,8 +35,6 @@ public class BulletController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
-        // Debug.Log("Collision detected at position: " + transform.position);
-
         if (obstacle.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
@@ -44,8 +43,14 @@ public class BulletController : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Number"))
         {
             Destroy(gameObject);
-            player.UpdateScore(obstacle);
-            Destroy(obstacle.gameObject);
+            GameObject numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
+
+            TMP_Text textComponent = numberText.GetComponent<TMP_Text>();
+            Debug.Log("Number collided: " + textComponent.text);
+            if (textComponent != null)
+            {
+                textComponent.text = "0"; // Change the text to whatever you want.
+            }
         }
 
     }
