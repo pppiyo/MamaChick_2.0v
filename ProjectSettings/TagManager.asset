@@ -17,6 +17,10 @@ TagManager:
   - Bullet
   - Platform_Mutate
   - Platform_Solid
+  - Tutorial_key
+  - Tutorial_Text
+  - Tutorial_object
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
