@@ -16,9 +16,9 @@ public class PlayerControl : MonoBehaviour
     public float jumpForce;
     public int currentX;
     public GameObject xObject;
-    public TMP_Text xBoard;
+    private TMP_Text xBoard;
     public GameObject WheelManager;
-    public int operatorID;
+    public int operatorID; // 0: add; 1: sub; 2: multiply; 3: divide
     public float xBound;
     public int gravityDirection;
     public TMP_Text hintText;

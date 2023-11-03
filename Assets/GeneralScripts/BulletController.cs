@@ -46,7 +46,7 @@ public class BulletController : MonoBehaviour
             GameObject numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
 
             TMP_Text textComponent = numberText.GetComponent<TMP_Text>();
-            Debug.Log("Number collided: " + textComponent.text);
+            // Debug.Log("Number collided: " + textComponent.text);
             if (textComponent != null)
             {
                 textComponent.text = "0"; // Change the text to whatever you want.

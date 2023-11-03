@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    private float cooldown = 0.5f;
-
     public PlayerControl player; // Reference to the PlayerMovement script.
+    public GameObject bulletAddPrefab;
+    public GameObject bulletSubPrefab;
+    public GameObject bulletMultiplyPrefab;
+    public GameObject bulletDividePrefab;
+
+    private GameObject bulletPrefab;
+    private GameObject bullet;
+    private float cooldown = 0.5f;
 
 
     void Start()
@@ -35,9 +40,8 @@ public class GunController : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            // Destroy(obstacle.gameObject);
             player.ShowHint("You got a gun! Press 'F' to shoot");
-            StartCoroutine(player.HideHint(2));
+            // StartCoroutine(player.HideHint(3));
             AttachGunToPlayer(other.gameObject);
         }
     }
@@ -58,11 +62,22 @@ public class GunController : MonoBehaviour
     void SpawnBullet(Vector2 facingDirection)
     {
         Vector3 spawnPos = new Vector3(transform.position.x + transform.localScale.x / 2 + 0.2f, transform.position.y + transform.localScale.y / 4, 0);
-        // Instantiate the bullet prefab.
-        GameObject bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
 
-        // Call the Initialize method in the BulletController script.
-        bullet.GetComponent<BulletController>().Initialize(facingDirection);
+        // Instantiate the bullet prefab.
+        bulletPrefab = GetBulletType(player);
+
+
+        if (bulletPrefab == null)
+        {
+            Debug.LogError("Bullet prefab is null. Make sure to assign the prefab to the script.");
+        }
+        else
+        {
+            bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+            // Call the Initialize method in the BulletController script.
+            bullet.GetComponent<BulletController>().Initialize(facingDirection);
+        }
+
     }
 
 
@@ -82,6 +97,33 @@ public class GunController : MonoBehaviour
         else
         {
             Debug.LogError("Player or prefab reference is null. Make sure to assign both the player and the prefab to the script.");
+        }
+    }
+
+
+    private GameObject GetBulletType(PlayerControl player)
+    {
+        Debug.Log("Confirming player id: " + player.operatorID);
+        // operatorID; // 0: add; 1: sub; 2: multiply; 3: divide
+        if (player.operatorID == 0)
+        {
+            return bulletAddPrefab;
+        }
+        else if (player.operatorID == 1)
+        {
+            return bulletSubPrefab;
+        }
+        else if (player.operatorID == 2)
+        {
+            return bulletMultiplyPrefab;
+        }
+        else if (player.operatorID == 3)
+        {
+            return bulletDividePrefab;
+        }
+        else
+        {
+            return null;
         }
     }
 

@@ -143,13 +143,11 @@ MonoBehaviour:
   currentX: 0
   xObject: {fileID: 8912069458882757949}
   xBoard: {fileID: 0}
-  WheelManager: {fileID: 0}
+  WheelManager: {fileID: 2295997845428432070, guid: 75dc220e79fdd4923a58c84a3b4ce9e5, type: 3}
   operatorID: 0
   xBound: 20
   gravityDirection: 0
-  hintText: {fileID: 0}
-  _respawnPoint: {fileID: 0}
-  raycastDistance: 10000
+  hintText: {fileID: 460732968916764914, guid: ed03a98826dca442ab7e6f5bed8b5157, type: 3}
 --- !u!1001 &5361902882650600056
 PrefabInstance:
   m_ObjectHideFlags: 0

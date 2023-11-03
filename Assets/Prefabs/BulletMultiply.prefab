@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1010902715259428105}
   - component: {fileID: 1717193034756332127}
   m_Layer: 10
-  m_Name: BulletDivide
+  m_Name: BulletMultiply
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bf752a5080d1d554897ce10901d2b024, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 75bb66f7c1f760f4f806a1890ca7e8ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -138,7 +138,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.96, y: 4.27}
+    oldSize: {x: 4.5, y: 4.4}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
