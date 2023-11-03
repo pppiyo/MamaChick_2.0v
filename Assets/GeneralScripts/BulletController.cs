@@ -6,8 +6,8 @@ using TMPro;
 
 public class BulletController : MonoBehaviour
 {
-    public float speed = 10f;  // Adjust this to control the bullet speed.
-
+    public float speed = 8f;  // Adjust this to control the bullet speed.
+    public GameObject player; // Reference to the PlayerMovement script.
 
     public void Initialize(Vector2 direction)
     {
@@ -33,26 +33,25 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D obstacle)
+    private void OnCollisionEnter2D(Collision2D obstacle)
     {
-        if (obstacle.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
-
         if (obstacle.gameObject.CompareTag("Number"))
         {
-            Destroy(gameObject);
             GameObject numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
 
             TMP_Text textComponent = numberText.GetComponent<TMP_Text>();
             // Debug.Log("Number collided: " + textComponent.text);
             if (textComponent != null)
             {
-                textComponent.text = "0"; // Change the text to whatever you want.
+                // Debug.Log("player: " + player);
+
+                GameObject playerTextGB = player.transform.Find("Player_Number").gameObject;
+                TMP_Text playerText = playerTextGB.GetComponent<TMP_Text>();
+                textComponent.text = playerText.text; // Change the text to whatever you want.
             }
         }
 
+        Destroy(gameObject);
     }
 
 

@@ -278,7 +278,7 @@ public class PlayerControl : MonoBehaviour
 
         if (obstacle.gameObject.CompareTag("Goal"))
         {
-            Debug.Log("Goal");
+            // Debug.Log("Goal");
             GlobalVariables.win = true;
             ReturnToMainMenu();
         }
@@ -300,7 +300,7 @@ public class PlayerControl : MonoBehaviour
     {
         GlobalVariables.collisions++;
         increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
-        Debug.Log("increaseX: " + increaseX);
+        // Debug.Log("increaseX: " + increaseX);
         switch (operatorID)
         {
             case 0:
@@ -325,7 +325,7 @@ public class PlayerControl : MonoBehaviour
                 break;
         }
         // Destroy(obstacle.gameObject);
-        Debug.Log("currentX: " + currentX);
+        // Debug.Log("currentX: " + currentX);
 
         xBoard.text = currentX.ToString();
     }
