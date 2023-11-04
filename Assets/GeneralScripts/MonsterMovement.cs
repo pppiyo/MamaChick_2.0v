@@ -8,8 +8,13 @@ public class MonsterMovement : MonoBehaviour
     public float leftBoundary = -2.5f; // 左边界
     public float rightBoundary = 2.5f; // 右边界
     public int condition = 1;
-
+    private GameObject SceneLoader;
     private int direction = 1; // 初始方向为向右
+
+    void Start()
+    {
+        SceneLoader = GameObject.Find("SceneManager");
+    }
 
     void Update()
     {
@@ -74,6 +79,17 @@ public class MonsterMovement : MonoBehaviour
                 case 4:
                     // 当expression等于value2时执行的代码
                     if (playerControl.currentX < 10)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        Destroy(collision.gameObject);
+                    }
+                    break;
+                case 5:
+                    // 当expression等于value2时执行的代码
+                    if (playerControl.currentX < 0)
                     {
                         Destroy(gameObject);
                     }

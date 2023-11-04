@@ -15,12 +15,24 @@ EditorBuildSettings:
     path: Assets/Scenes/_Level1.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/_Level2.unity
+    path: Assets/Scenes/_Level2 OLd.unity
     guid: 4b649d9e68ba7f64d98ce7492076668f
   - enabled: 1
     path: Assets/Scenes/_Level1_Gun_Amy.unity
     guid: 92785159ad9384e87b213c2a3d739246
   - enabled: 1
-    path: Assets/Scenes/_Game Over.unity
+    path: Assets/Scenes/_Game Over_Won.unity
     guid: 3cc54aae47b124d11bae60e51f9fb7ec
+  - enabled: 1
+    path: Assets/Scenes/_Game Over_Lost.unity
+    guid: 43a400af3e80eb24bad050deb7f3b082
+  - enabled: 1
+    path: Assets/Scenes/_Level2.unity
+    guid: 6d961ebdcce814eb4abf06925cc3ca93
+  - enabled: 1
+    path: Assets/Scenes/_Level3.unity
+    guid: 6b54d3fe82d62aa459089d0c4b3e9d25
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial1.unity
+    guid: 2d5d5e30315537448931fa27900b854b
   m_configObjects: {}
