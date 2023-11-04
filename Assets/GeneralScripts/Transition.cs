@@ -22,12 +22,12 @@ public class Transition : MonoBehaviour
         GlobalVariables.platformMap = new Dictionary<string, int>();
         SceneManager.LoadScene("_Level2");
     }
-    public void LoadLevel3()
-    {
-        GlobalVariables.curLevel = "level 3";
-        GlobalVariables.platformMap = new Dictionary<string, int>();
-        SceneManager.LoadScene("_Level1_Gun_Amy");
-    }
+    // public void LoadLevel3()
+    // {
+    //     GlobalVariables.curLevel = "level 3";
+    //     GlobalVariables.platformMap = new Dictionary<string, int>();
+    //     SceneManager.LoadScene("_Level1_Gun_Amy");
+    // }
 
     public void LoadLevel3()
     {
