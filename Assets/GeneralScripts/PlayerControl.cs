@@ -44,7 +44,7 @@ public class PlayerControl : MonoBehaviour
     private Collider2D currentCollidingObject = null;
     //test_ball
     public static GameObject nearestBall;
-
+    private bool canTeleport = true; 
 
     void Start()
     {
@@ -140,10 +140,10 @@ public class PlayerControl : MonoBehaviour
         }
 
         //press 'E' to teleport
-        if (nearbyTeleporterDestination != null && Input.GetKeyDown(KeyCode.E))
-        {
-            transform.position = nearbyTeleporterDestination.position;
-        }
+        // if (nearbyTeleporterDestination != null && Input.GetKeyDown(KeyCode.E))
+        // {
+        //     transform.position = nearbyTeleporterDestination.position;
+        // }
 
         // Flip Gravity
         if (currentX >= 0)
@@ -326,8 +326,46 @@ public class PlayerControl : MonoBehaviour
         return matchingObjects.ToArray();
     }
 
+    private IEnumerator TeleportCooldown()
+    {
+        canTeleport = false; // 禁止传送
+        yield return new WaitForSeconds(1); // 等待1秒
+        canTeleport = true; // 重新启用传送
+    }
+
     void OnCollisionEnter2D(Collision2D obstacle)
     {
+        if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
+        {
+            TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
+            GameObject obj = GameObject.Find("EquationManager");
+            JudgeEquation judge = obj.GetComponent<JudgeEquation>();
+            TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
+
+            bool shouldTeleport = portalEquationText == null || portalEquationText.text.Length == 0 ||
+                                (int.TryParse(playerEquationText.text, out int playerNumber) &&
+                                judge.CheckEquation(portalEquationText.text, playerNumber));
+
+            if (shouldTeleport)
+            {
+                string pairName = obstacle.gameObject.name.EndsWith("1") ?
+                                obstacle.gameObject.name.Replace("1", "2") :
+                                obstacle.gameObject.name.Replace("2", "1");
+                GameObject pairPortal = GameObject.Find(pairName);
+                if (pairPortal != null)
+                {
+                    transform.position = pairPortal.transform.position; // Teleport the player
+                    ShowHint("Teleported!"); // Show confirmation hint
+                    StartCoroutine(TeleportCooldown()); // 开始冷却计时
+                }
+            }
+            else
+            {
+                ShowHint("Your point doesn't satisfy the condition");
+            }
+
+            StartCoroutine(HideHint(1)); // Hide the hint after a delay
+        }
         // Tutorial You do not kill anyone
         if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
         {
@@ -519,6 +557,11 @@ public class PlayerControl : MonoBehaviour
         // Jump Disabled
         if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination"))
             isGrounded = false;
+
+        if (obstacle.gameObject.CompareTag("Portal"))
+        {
+            StartCoroutine(HideHint(0)); // Hide the hint immediately
+        }
     }
 
     //teleporter
