@@ -16,9 +16,9 @@ public class PlayerControl : MonoBehaviour
     public float jumpForce;
     public int currentX;
     public GameObject xObject;
-    public TMP_Text xBoard;
+    private TMP_Text xBoard;
     public GameObject WheelManager;
-    public int operatorID;
+    public int operatorID; // 0: add; 1: sub; 2: multiply; 3: divide
     public float rightBound;
     public float leftBound;
     public int gravityDirection;
@@ -39,6 +39,9 @@ public class PlayerControl : MonoBehaviour
     private List<GameObject> platforms;
     private Vector3 moveDirection;
     private GameObject tutorialCheck;
+    private GameObject numberTextGameObject;
+    private string numberText;
+
 
     void Start()
     {
@@ -59,8 +62,11 @@ public class PlayerControl : MonoBehaviour
         xBoard = xObject.GetComponent<TMP_Text>();
         hintText.gameObject.SetActive(false);
         operatorID = 4;
+
+        // Note: layer is different from tag, where we only use "Platform" and "Fake" to differentiate the valid/invalid platforms, and in tag we simply use Platform_Mutate and Platform_Solid to differentiate the platforms that can be mutated and the platforms that cannot be mutated.
         playerLayer = LayerMask.NameToLayer("Player");
         platformLayer = LayerMask.NameToLayer("Platform");
+
         platforms = new List<GameObject>();
         // These are the platforms that change dynamically
         platforms.AddRange(GameObject.FindGameObjectsWithTag("Platform_Mutate"));
@@ -94,7 +100,7 @@ public class PlayerControl : MonoBehaviour
 
         // Move back and forth
         horizontalInput = Input.GetAxis("Horizontal");
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
 
         //  Keep player in bound
@@ -136,7 +142,7 @@ public class PlayerControl : MonoBehaviour
             operatorID = 1;
             EventSystem.current.SetSelectedGameObject(GameObject.Find("SubButton"));
         }
-        else if(Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow))
         {
             operatorID = 3;
             EventSystem.current.SetSelectedGameObject(GameObject.Find("DivButton"));
@@ -170,7 +176,6 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
-
 
 
     private void Flip()
@@ -229,10 +234,18 @@ public class PlayerControl : MonoBehaviour
                 hintDisplay = "Multiplying " + increment;
                 break;
             case 3:
-                result /= increment;
-                hintDisplay = "Dividing " + increment;
+                if (increment != 0)
+                {
+                    result /= increment;
+                    hintDisplay = "Dividing " + increment;
+                }
+                // else
+                // {
+                //     hintDisplay = "Cannot divide by 0";
+                // }
                 break;
         }
+
         if (result < 0)
         {
             // Flip Gravity Logic;
@@ -302,13 +315,13 @@ public class PlayerControl : MonoBehaviour
         {
             UpdateScore(obstacle);
             resolvePlatforms();
-            if(tutorialCheck == null)
+            if (tutorialCheck == null)
                 Destroy(obstacle.gameObject);
         }
 
         if (obstacle.gameObject.CompareTag("Goal"))
         {
-            Debug.Log("Goal");
+            // Debug.Log("Goal");
             GlobalVariables.win = true;
             ReturnToMainMenu();
         }
@@ -317,6 +330,7 @@ public class PlayerControl : MonoBehaviour
         {
             isGrounded = true;
         }
+
 
         // if Player collides with a mutate platform
         if (obstacle.gameObject.CompareTag("Platform_Solid"))
@@ -327,9 +341,17 @@ public class PlayerControl : MonoBehaviour
 
     public void UpdateScore(Collision2D obstacle)
     {
-        GlobalVariables.collisions++;
-        increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
-        Debug.Log("increaseX: " + increaseX);
+        GlobalVariables.collisions++; // Chris: data collection
+
+        numberTextGameObject = obstacle.gameObject.transform.Find("Number_Text").gameObject;
+        numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
+
+        int increaseX = int.Parse(numberText); // number for the value on the Number object
+
+
+        // number = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
+        // Debug.Log("number: " + number);
+
         switch (operatorID)
         {
             case 0:
@@ -350,7 +372,17 @@ public class PlayerControl : MonoBehaviour
             case 3:
                 if (negativeX(currentX, increaseX))
                     return;
-                currentX /= increaseX;
+
+                if (increaseX != 0)
+                {
+                    currentX /= increaseX;
+                }
+                // else
+                // {
+                // ShowHint("Cannot divide by 0");
+                // StartCoroutine(HideHint(1));
+                //     return;
+                // }
                 break;
             case 4:
                 hintDisplay = "Select an Operator";
@@ -359,8 +391,9 @@ public class PlayerControl : MonoBehaviour
                 break;
         }
         // Destroy(obstacle.gameObject);
+        // Debug.Log("currentX: " + currentX);
+
         xBoard.text = currentX.ToString();
-        Debug.Log("currentX: " + currentX);
     }
 
 

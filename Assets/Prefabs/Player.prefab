@@ -142,12 +142,14 @@ MonoBehaviour:
   jumpForce: 40
   currentX: 0
   xObject: {fileID: 8912069458882757949}
-  xBoard: {fileID: 0}
   WheelManager: {fileID: 0}
   operatorID: 0
-  xBound: 20
+  rightBound: 40
+  leftBound: -10
   gravityDirection: 0
   hintText: {fileID: 0}
+  SceneLoader: {fileID: 0}
+  isGrounded: 0
 --- !u!1001 &5361902882650600056
 PrefabInstance:
   m_ObjectHideFlags: 0

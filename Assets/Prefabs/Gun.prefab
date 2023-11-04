@@ -257,8 +257,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca49cba330e814b89949d775b3915b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8876105860029309486, guid: 165c6daae3e0c4c259bfb8d8cca859c3, type: 3}
-  player: {fileID: 0}
+  player: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+  bulletAddPrefab: {fileID: 8876105860029309486, guid: 2e1edf8e93f684387b19b9d7dbf44b04, type: 3}
+  bulletSubPrefab: {fileID: 8876105860029309486, guid: 2ad7fbcd6e88e4fc49cdfe850c100d39, type: 3}
+  bulletMultiplyPrefab: {fileID: 8876105860029309486, guid: 9e1cababb89d84df0b6989090cdef0ae, type: 3}
+  bulletDividePrefab: {fileID: 8876105860029309486, guid: 322ed60273ec84e72a4ccbc3c037a0e6, type: 3}
 --- !u!1 &9098340597880739568
 GameObject:
   m_ObjectHideFlags: 0

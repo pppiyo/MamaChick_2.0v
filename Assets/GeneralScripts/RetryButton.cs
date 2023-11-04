@@ -7,20 +7,20 @@ public class RetryButton : MonoBehaviour
     private GameObject SceneLoader;
 
     // Start is called before the first frame update
+    public void RestartGame()
+    {
+        // Reload the current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    // Start is called before the first frame update
     void Start()
     {
-        SceneLoader = GameObject.Find("SceneManager");
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
-    }
-
-    public void RestartGame()
-    {
-        // Reload the current scene
-        SceneLoader.GetComponent<Transition>().ReloadPreviosLevel();
     }
 }
