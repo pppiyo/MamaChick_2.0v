@@ -136,6 +136,8 @@ public class TutorialManager : MonoBehaviour
 
         // Miscelleneous Objects
         //MenuWheel.SetActive(false);
+        Stage4Objects.SetActive(true);
+        Stage5Objects.SetActive(true);
     }
 
     // Delays transitions between stages
