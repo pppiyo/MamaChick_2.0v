@@ -363,52 +363,53 @@ public class PlayerControl : MonoBehaviour
             isGrounded = true;
         }
 
-        if(obstacle.gameObject.CompareTag("Plat_Modify"))
-        {
-            // 获取与Collider关联的GameObject上的TextMeshPro组件
-            TextMeshPro platTmp = obstacle.transform.GetComponentInChildren<TextMeshPro>();
+        // platforms that provide direct calculation
+        // if(obstacle.gameObject.CompareTag("Plat_Modify"))
+        // {
+        //     // 获取与Collider关联的GameObject上的TextMeshPro组件
+        //     TextMeshPro platTmp = obstacle.transform.GetComponentInChildren<TextMeshPro>();
             
-            if(platTmp != null)
-            {
-                string platText = platTmp.text;
-                char operatorChar = platText[0]; // 获取字符串的第一个字符作为运算符
-                int number;
+        //     if(platTmp != null)
+        //     {
+        //         string platText = platTmp.text;
+        //         char operatorChar = platText[0]; // 获取字符串的第一个字符作为运算符
+        //         int number;
 
-                // 确保从第二个字符开始到结束的字符串是一个有效的数字
-                if(int.TryParse(platText.Substring(1), out number))
-                {
-                    // 根据运算符执行计算
-                    switch(operatorChar)
-                    {
-                        case '+':
-                            currentX += number;
-                            break;
-                        case '-':
-                            currentX -= number;
-                            break;
-                        case '*':
-                            currentX *= number;
-                            break;
-                        case '/':
-                            if(number != 0) 
-                                currentX /= number;
-                            else 
-                                Debug.LogError("Division by zero is not allowed.");
-                            break;
-                        default:
-                            Debug.LogError("Invalid operator.");
-                            break;
-                    }
-                    // 更新UI或其他相关组件
-                    xBoard.text = currentX.ToString();
-                    Debug.Log("Updated currentX: " + currentX);
-                }
-                else
-                {
-                    Debug.LogError("Invalid number format on platform.");
-                }
-            }
-        }
+        //         // 确保从第二个字符开始到结束的字符串是一个有效的数字
+        //         if(int.TryParse(platText.Substring(1), out number))
+        //         {
+        //             // 根据运算符执行计算
+        //             switch(operatorChar)
+        //             {
+        //                 case '+':
+        //                     currentX += number;
+        //                     break;
+        //                 case '-':
+        //                     currentX -= number;
+        //                     break;
+        //                 case '*':
+        //                     currentX *= number;
+        //                     break;
+        //                 case '/':
+        //                     if(number != 0) 
+        //                         currentX /= number;
+        //                     else 
+        //                         Debug.LogError("Division by zero is not allowed.");
+        //                     break;
+        //                 default:
+        //                     Debug.LogError("Invalid operator.");
+        //                     break;
+        //             }
+        //             // 更新UI或其他相关组件
+        //             xBoard.text = currentX.ToString();
+        //             Debug.Log("Updated currentX: " + currentX);
+        //         }
+        //         else
+        //         {
+        //             Debug.LogError("Invalid number format on platform.");
+        //         }
+        //     }
+        // }
 
 
     }
