@@ -21,6 +21,8 @@ TagManager:
   - Tutorial_Text
   - Tutorial_object
   - Checkpoint
+  - Plat_Modify
+  - Test_ball
   layers:
   - Default
   - TransparentFX

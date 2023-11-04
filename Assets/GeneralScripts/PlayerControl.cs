@@ -39,6 +39,9 @@ public class PlayerControl : MonoBehaviour
     private List<GameObject> platforms;
     private Vector3 moveDirection;
     private GameObject tutorialCheck;
+    private Collision2D currentCollidingObject = null;
+    //test_ball
+    public static GameObject nearestBall;
 
     void Start()
     {
@@ -75,6 +78,13 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E)) {
+            UpdateScore(currentCollidingObject);
+            resolvePlatforms();
+            if (tutorialCheck == null)
+                Destroy(currentCollidingObject.gameObject);
+            currentCollidingObject = null; // Clear the collision after use
+        }
         // Detect player input for horizontal movement.
         float horizontalInput = Input.GetAxis("Horizontal");
 
@@ -151,6 +161,23 @@ public class PlayerControl : MonoBehaviour
             operatorID = 2;
             EventSystem.current.SetSelectedGameObject(GameObject.Find("MulButton"));
         }
+
+        //test_ball
+        if (Input.GetKeyDown(KeyCode.P) )
+        {
+            PickupNearestNumber();
+        }
+
+        if (nearestBall != null)
+        {
+            // 获取玩家头部位置
+            Vector3 playerHeadPosition = transform.position + new Vector3(0, 2, 0); // 假设头部相对于玩家位置的偏移是 (0, 2, 0)
+
+            // 设置球体位置为玩家头部位置
+            nearestBall.transform.position = playerHeadPosition;
+
+        }
+        
     }
 
     // Sets the platform logic at start and whenever currentX changes
@@ -298,12 +325,8 @@ public class PlayerControl : MonoBehaviour
         }
 
         // Score update
-        if (obstacle.gameObject.CompareTag("Number"))
-        {
-            UpdateScore(obstacle);
-            resolvePlatforms();
-            if(tutorialCheck == null)
-                Destroy(obstacle.gameObject);
+        if (obstacle.gameObject.CompareTag("Number")) {
+            currentCollidingObject = obstacle; // Store the collision for use in Update
         }
 
         if (obstacle.gameObject.CompareTag("Goal"))
@@ -323,6 +346,55 @@ public class PlayerControl : MonoBehaviour
         {
             isGrounded = true;
         }
+
+        if(obstacle.gameObject.CompareTag("Plat_Modify"))
+        {
+            // 获取与Collider关联的GameObject上的TextMeshPro组件
+            TextMeshPro platTmp = obstacle.transform.GetComponentInChildren<TextMeshPro>();
+            
+            if(platTmp != null)
+            {
+                string platText = platTmp.text;
+                char operatorChar = platText[0]; // 获取字符串的第一个字符作为运算符
+                int number;
+
+                // 确保从第二个字符开始到结束的字符串是一个有效的数字
+                if(int.TryParse(platText.Substring(1), out number))
+                {
+                    // 根据运算符执行计算
+                    switch(operatorChar)
+                    {
+                        case '+':
+                            currentX += number;
+                            break;
+                        case '-':
+                            currentX -= number;
+                            break;
+                        case '*':
+                            currentX *= number;
+                            break;
+                        case '/':
+                            if(number != 0) 
+                                currentX /= number;
+                            else 
+                                Debug.LogError("Division by zero is not allowed.");
+                            break;
+                        default:
+                            Debug.LogError("Invalid operator.");
+                            break;
+                    }
+                    // 更新UI或其他相关组件
+                    xBoard.text = currentX.ToString();
+                    Debug.Log("Updated currentX: " + currentX);
+                }
+                else
+                {
+                    Debug.LogError("Invalid number format on platform.");
+                }
+            }
+        }
+
+
     }
 
     public void UpdateScore(Collision2D obstacle)
@@ -485,4 +557,41 @@ public class PlayerControl : MonoBehaviour
         // 加载主菜单场景，假设场景的名字为"MainMenu"
         SceneLoader.GetComponent<Transition>().LoadMainMenu();
     }
+
+    //test_ball
+
+    void PickupNearestNumber()
+    {
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Test_ball");
+
+        if (balls.Length == 0)
+        {
+            // 如果没有球体对象，不执行任何操作
+            return;
+        }
+
+        // 计算最近的球体对象
+        float minDistance = float.MaxValue;
+        foreach (GameObject ball in balls)
+        {
+            float distance = Vector3.Distance(transform.position, ball.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestBall = ball;
+            }
+        }
+
+        // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
+        if (nearestBall != null)
+        {
+            // 获取玩家头部位置
+            Vector3 playerHeadPosition = transform.position + new Vector3(0, 2, 0); // 假设头部相对于玩家位置的偏移是 (0, 2, 0)
+
+            // 设置球体位置为玩家头部位置
+            nearestBall.transform.position = playerHeadPosition;
+        }
+        
+    }
+    
 }
