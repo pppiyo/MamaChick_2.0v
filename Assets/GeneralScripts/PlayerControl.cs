@@ -10,6 +10,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour
 {
+    private int maxIntValue = 2147483647;
+    private int minIntValue = -2147483648;
     private bool facingRight = true; // To keep track of the player's facing direction.
     public float horizontalInput;
     public float speed;
@@ -50,8 +52,8 @@ public class PlayerControl : MonoBehaviour
     public Transform ground; // Reference to the ground object.
     private Collider2D playerCollider;
     private Collider2D groundCollider;
-    public float rightBound;
-    public float leftBound;
+    private float rightBound;
+    private float leftBound;
 
 
     void Start()
@@ -115,7 +117,7 @@ public class PlayerControl : MonoBehaviour
             if (Regex.IsMatch(numberText, @"\d"))
             // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
             {
-                UpdateScoreCollider(currentCollidingObject);
+                UpdateScore(currentCollidingObject);
                 resolvePlatforms();
                 if (tutorialCheck == null)
                     Destroy(currentCollidingObject.gameObject);
@@ -478,7 +480,7 @@ public class PlayerControl : MonoBehaviour
 
     }
 
-    public void UpdateScore(Collision2D obstacle)
+    public void UpdateScore(Collider2D obstacle)
     {
         GlobalVariables.collisions++; // Chris: data collection
 
@@ -487,34 +489,49 @@ public class PlayerControl : MonoBehaviour
 
         int increaseX = int.Parse(numberText); // number for the value on the Number object
 
-
-        // number = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
-        // Debug.Log("number: " + number);
-
         switch (operatorID)
         {
             case 0:
                 if (negativeX(currentX, increaseX))
                     return;
                 currentX += increaseX;
+                if (currentX >= maxIntValue)
+                {
+                    currentX = maxIntValue;
+                }
                 break;
             case 1:
                 if (negativeX(currentX, increaseX))
                     return;
                 currentX -= increaseX;
+                if (currentX <= minIntValue)
+                {
+                    currentX = minIntValue;
+                }
                 break;
             case 2:
                 if (negativeX(currentX, increaseX))
                     return;
                 currentX *= increaseX;
+                if (currentX >= maxIntValue)
+                {
+                    currentX = maxIntValue;
+                }
                 break;
             case 3:
                 if (negativeX(currentX, increaseX))
                     return;
-
                 if (increaseX != 0)
                 {
                     currentX /= increaseX;
+                }
+                if (currentX <= minIntValue)
+                {
+                    currentX = minIntValue;
+                }
+                else if (currentX >= maxIntValue)
+                {
+                    currentX = maxIntValue;
                 }
                 // else
                 // {
@@ -533,51 +550,6 @@ public class PlayerControl : MonoBehaviour
         // Debug.Log("currentX: " + currentX);
 
         xBoard.text = currentX.ToString();
-    }
-
-    public void UpdateScoreCollider(Collider2D collider)
-    {
-        GlobalVariables.collisions++;
-        // Debug.Log("name:" + collider.gameObject.name);
-        // numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
-        // numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
-        // increaseX = int.Parse(Regex.Match(collider.gameObject.name, @"\d+$").Value);
-        int increaseX = int.Parse(numberText); // number for the value on the Number object
-
-        // Debug.Log("increaseX: " + increaseX);
-        switch (operatorID)
-        {
-            case 0:
-                if (negativeX(currentX, increaseX))
-                    return;
-                currentX += increaseX;
-                break;
-            case 1:
-                if (negativeX(currentX, increaseX))
-                    return;
-                currentX -= increaseX;
-                break;
-            case 2:
-                if (negativeX(currentX, increaseX))
-                    return;
-                currentX *= increaseX;
-                break;
-            case 3:
-                if (negativeX(currentX, increaseX))
-                    return;
-                currentX /= increaseX;
-                break;
-            case 4:
-                hintDisplay = "Select an Operator";
-                ShowHint(hintDisplay);
-                StartCoroutine(HideHint(1));
-                break;
-        }
-        // Optionally destroy the game object if needed
-        // Destroy(collider.gameObject);
-
-        xBoard.text = currentX.ToString();
-        // Debug.Log("currentX: " + currentX);
     }
 
 
