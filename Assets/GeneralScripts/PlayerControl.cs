@@ -101,11 +101,12 @@ public class PlayerControl : MonoBehaviour
 
         if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E))
         {
+            // Grab the Number object's text
             numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
             numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
             int increaseX = int.Parse(numberText); // number for the value on the Number object
-            // Use Regex.IsMatch to check if the name of the GameObject in currentCollidingObject contains a number
 
+            // Use Regex.IsMatch to check if the text in the GameObject in currentCollidingObject contains a number
             if (Regex.IsMatch(numberText, @"\d"))
             // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
             {
