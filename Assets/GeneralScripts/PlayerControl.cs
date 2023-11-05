@@ -19,8 +19,7 @@ public class PlayerControl : MonoBehaviour
     private TMP_Text xBoard;
     public GameObject WheelManager;
     public int operatorID; // 0: add; 1: sub; 2: multiply; 3: divide
-    public float rightBound;
-    public float leftBound;
+
     public int gravityDirection;
     public TMP_Text hintText;
     public GameObject SceneLoader;
@@ -44,10 +43,24 @@ public class PlayerControl : MonoBehaviour
     private Collider2D currentCollidingObject = null;
     //test_ball
     public static GameObject nearestBall;
-    private bool canTeleport = true; 
+    private bool canTeleport = true;
+
+
+    // parameters to keep the player in bound
+    public Transform ground; // Reference to the ground object.
+    private Collider2D playerCollider;
+    private Collider2D groundCollider;
+    public float rightBound;
+    public float leftBound;
+
 
     void Start()
     {
+
+        // Keep the player in bound
+        SetPlayerBoundary();
+        //KeepPlayerInBound();
+
         // 查找所有包含 "platform" 字符串的游戏对象
         GameObject[] platformObjects = FindObjectsWithSubstring("Platform");
         gravityDirection = 1;
@@ -84,11 +97,24 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E)) 
+
+        KeepPlayerInBound();
+
+        if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E))
         {
+
+
+            numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
+            numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
+
+            // int increaseX = int.Parse(numberText); // number for the value on the Number object
+
+
             // Use Regex.IsMatch to check if the name of the GameObject in currentCollidingObject contains a number
             Debug.Log(currentCollidingObject.gameObject.name);
-            if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d")) {
+            if (Regex.IsMatch(numberText, @"\d"))
+            // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
+            {
                 UpdateScoreCollider(currentCollidingObject);
                 resolvePlatforms();
                 if (tutorialCheck == null)
@@ -118,11 +144,11 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
 
-        //  Keep player in bound
-        if (transform.position.x > rightBound)
-            transform.position = new Vector2(rightBound, transform.position.y);
-        else if (transform.position.x < leftBound)
-            transform.position = new Vector2(leftBound, transform.position.y);
+        // //  Keep player in bound
+        // if (transform.position.x > rightBound)
+        //     transform.position = new Vector2(rightBound, transform.position.y);
+        // else if (transform.position.x < leftBound)
+        //     transform.position = new Vector2(leftBound, transform.position.y);
 
         // Jump With Impulse Force 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
@@ -174,7 +200,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         //test_ball
-        if (Input.GetKeyDown(KeyCode.P) )
+        if (Input.GetKeyDown(KeyCode.P))
         {
             PickupNearestNumber();
         }
@@ -188,14 +214,14 @@ public class PlayerControl : MonoBehaviour
             nearestBall.transform.position = playerHeadPosition;
 
         }
-        
+
     }
 
     // Sets the platform logic at start and whenever currentX changes
     public void resolvePlatforms()
     {
         // Check all platforms and separate solid platforms
-        Debug.Log("Resolving platforms");
+        // Debug.Log("Resolving platforms");
         foreach (GameObject platform in platforms)
         {
             if (CanPassPlatform(platform))
@@ -380,8 +406,8 @@ public class PlayerControl : MonoBehaviour
             isGrounded = true;
         }
 
-       
-        
+
+
         if (obstacle.gameObject.CompareTag("Goal"))
         {
             // Debug.Log("Goal");
@@ -406,7 +432,7 @@ public class PlayerControl : MonoBehaviour
         // {
         //     // 获取与Collider关联的GameObject上的TextMeshPro组件
         //     TextMeshPro platTmp = obstacle.transform.GetComponentInChildren<TextMeshPro>();
-            
+
         //     if(platTmp != null)
         //     {
         //         string platText = platTmp.text;
@@ -512,10 +538,13 @@ public class PlayerControl : MonoBehaviour
     public void UpdateScoreCollider(Collider2D collider)
     {
         GlobalVariables.collisions++;
-        Debug.Log("name:"  + collider.gameObject.name);
-        increaseX = int.Parse(Regex.Match(collider.gameObject.name, @"\d+$").Value);
-        
-        Debug.Log("increaseX: " + increaseX);
+        // Debug.Log("name:" + collider.gameObject.name);
+        // numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
+        // numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
+        // increaseX = int.Parse(Regex.Match(collider.gameObject.name, @"\d+$").Value);
+        int increaseX = int.Parse(numberText); // number for the value on the Number object
+
+        // Debug.Log("increaseX: " + increaseX);
         switch (operatorID)
         {
             case 0:
@@ -546,9 +575,9 @@ public class PlayerControl : MonoBehaviour
         }
         // Optionally destroy the game object if needed
         // Destroy(collider.gameObject);
-        
+
         xBoard.text = currentX.ToString();
-        Debug.Log("currentX: " + currentX);
+        // Debug.Log("currentX: " + currentX);
     }
 
 
@@ -566,9 +595,10 @@ public class PlayerControl : MonoBehaviour
 
     //teleporter
     void OnTriggerEnter2D(Collider2D obstacle)
-    {   
+    {
         //update score
-        if (obstacle.gameObject.CompareTag("Number")) {
+        if (obstacle.gameObject.CompareTag("Number"))
+        {
             currentCollidingObject = obstacle; // Store the collider for use in Update
         }
         if (obstacle.gameObject.CompareTag("Portal"))
@@ -662,13 +692,13 @@ public class PlayerControl : MonoBehaviour
             // 获取玩家上的TextMeshProUGUI组件的值
             GameObject player = GameObject.Find("Player");
             judge.playerEquationText = player.GetComponentInChildren<TextMeshPro>();
-            Debug.Log(judge.playerEquationText.text);
+            // Debug.Log(judge.playerEquationText.text);
 
             if (judge.playerEquationText != null)
             {
                 judge.varValue = int.Parse(judge.playerEquationText.text);
             }
-            Debug.Log(judge.varValue);
+            // Debug.Log(judge.varValue);
 
             // 调用EvaluateFromTextMeshPro方法来检查玩家的数值是否满足方程
             pass = !judge.EvaluateFromTextMeshPro(); // if 
@@ -716,7 +746,59 @@ public class PlayerControl : MonoBehaviour
             // 设置球体位置为玩家头部位置
             nearestBall.transform.position = playerHeadPosition;
         }
-        
+
     }
-    
+
+    // Set the player's boundary to the ground's boundary. 
+    // Initialize player's left and right bound.
+    private void SetPlayerBoundary()
+    {
+        // Find the GameObject with the "ground" tag.
+        GameObject groundObject = GameObject.FindGameObjectWithTag("Ground");
+
+        // Check if a GameObject with the "ground" tag was found.
+        if (groundObject != null)
+        {
+            // Get the Collider2D component from the ground GameObject.
+            groundCollider = groundObject.GetComponent<Collider2D>();
+
+            // Check if the Collider2D component was found.
+            if (groundCollider != null)
+            {
+                playerCollider = gameObject.GetComponent<Collider2D>();
+
+                // Calculate the minimum and maximum X values based on the ground's bounds.
+                Bounds groundBounds = groundCollider.bounds;
+                Bounds playerBounds = playerCollider.bounds;
+
+                leftBound = groundBounds.min.x + playerBounds.extents.x;
+                rightBound = groundBounds.max.x - playerBounds.extents.x;
+
+                // You now have access to the ground's Collider2D component.
+                // You can use groundCollider in your code.
+            }
+            else
+            {
+                Debug.LogError("Ground GameObject doesn't have a Collider2D component.");
+            }
+        }
+        else
+        {
+            Debug.LogError("No GameObject with the 'ground' tag found in the scene.");
+        }
+    }
+
+    private void KeepPlayerInBound()
+    {
+        // Keep the player in bound
+        // Get the current player position.
+        Vector3 newPosition = transform.position;
+
+        // Constrain the player's X position within the boundaries.
+        newPosition.x = Mathf.Clamp(newPosition.x, leftBound, rightBound);
+
+        // Update the player's position.
+        transform.position = newPosition;
+    }
+
 }
