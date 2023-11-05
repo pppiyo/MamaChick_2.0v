@@ -11,14 +11,14 @@ public class Transition : MonoBehaviour
 
     public void LoadLevel1_1()
     {
-        GlobalVariables.curLevel = "level 1";
+        GlobalVariables.curLevel = "_Level1-1";
         GlobalVariables.platformMap = new Dictionary<string, int>();
         SceneManager.LoadScene("_Level1-1");
     }
 
     public void LoadLevel1_2()
     {
-        GlobalVariables.curLevel = "level 2";
+        GlobalVariables.curLevel = "_Level1-2";
         GlobalVariables.platformMap = new Dictionary<string, int>();
         SceneManager.LoadScene("_Level1-2");
     }
@@ -139,10 +139,10 @@ public class Transition : MonoBehaviour
     {
         switch (GlobalVariables.curLevel)
         {
-            case "level 1":
+            case "_Level1-1":
                 LoadLevel1_1();
                 break;
-            case "level 2":
+            case "_Level1-2":
                 LoadLevel1_2();
                 break;
         }
