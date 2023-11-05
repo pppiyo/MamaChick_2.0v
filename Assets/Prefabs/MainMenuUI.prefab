@@ -494,7 +494,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 9217099278631380863, guid: 858ea3ff6b87e48d4b9bef453929e008, type: 3}
         m_TargetAssemblyTypeName: Transition, Assembly-CSharp
         m_MethodName: LoadLevels
         m_Mode: 1
