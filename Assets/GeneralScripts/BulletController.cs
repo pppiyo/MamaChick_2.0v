@@ -42,11 +42,17 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D obstacle)
+
+    private void OnTriggerEnter2D(Collider2D obstacle)
     {
-        // Debug.Log("player: " + player);
+        // Debug.Log("!!!!!!! number and bullet collided!!!!!: " + player);
+        if (obstacle.gameObject.CompareTag("Gun"))
+        { return; }
+
+
         if (obstacle.gameObject.CompareTag("Number"))
         {
+            // Debug.Log("Number collided by bullet");
             GameObject numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
 
             TMP_Text textComponent = numberText.GetComponent<TMP_Text>();
@@ -95,8 +101,4 @@ public class BulletController : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-
-
-
 }
