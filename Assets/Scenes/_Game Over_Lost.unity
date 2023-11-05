@@ -799,9 +799,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+<<<<<<< HEAD
       - m_Target: {fileID: 9217099278631380863, guid: 858ea3ff6b87e48d4b9bef453929e008, type: 3}
         m_TargetAssemblyTypeName: Transition, Assembly-CSharp
         m_MethodName: ReloadPreviosLevel
+=======
+      - m_Target: {fileID: 8212037373853646046, guid: 24a9fb893aa1344adb256baf52672192, type: 3}
+        m_TargetAssemblyTypeName: RetryButton, Assembly-CSharp
+        m_MethodName: RestartGame
+>>>>>>> 6504817 ([Transition]:Added all the levels in level selection scene; [Levels]:created level1-1 (#44))
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
