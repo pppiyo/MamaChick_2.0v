@@ -404,6 +404,19 @@ public class PlayerControl : MonoBehaviour
         }
 
 
+        // Score update
+        if (obstacle.gameObject.CompareTag("Number"))
+        {
+            UpdateScore(obstacle);
+            resolvePlatforms();
+            if (tutorialCheck == null)
+                Destroy(obstacle.gameObject);
+            if(GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
+            {
+                obstacle.gameObject.SetActive(false);
+            }
+        }
+
         if (obstacle.gameObject.CompareTag("Goal"))
         {
             // Debug.Log("Goal");

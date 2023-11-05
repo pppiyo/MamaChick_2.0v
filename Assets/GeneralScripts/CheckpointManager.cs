@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CheckpointManager : MonoBehaviour
 {
@@ -60,6 +61,22 @@ public class CheckpointManager : MonoBehaviour
                     GameObject.Find("Player").GetComponent<PlayerControl>().currentX = 0;
                     GameObject.Find("Player_Number").GetComponent<TMP_Text>().text = "0";
                     GameObject.Find("Player").GetComponent<PlayerControl>().resolvePlatforms();
+                    break;
+            }
+        }
+
+        if (GlobalVariables.curLevel == "tutorial 2" && obstacle.gameObject.CompareTag("Spike"))
+        {
+            switch (obstacle.gameObject.transform.parent.name)
+            {
+                case "Stage0":
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    break;
+                case "Stage4":
+                    transform.position = GameObject.Find("Checkpoint1").transform.position;
+                    break;
+                case "Stage5":
+                    transform.position = GameObject.Find("Checkpoint2").transform.position;
                     break;
             }
         }

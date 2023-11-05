@@ -10,10 +10,12 @@ public class MonsterMovement : MonoBehaviour
     public int condition = 1;
     private GameObject SceneLoader;
     private int direction = 1; // 初始方向为向右
+    private GameObject checkTutorial;
 
     void Start()
     {
         SceneLoader = GameObject.Find("SceneManager");
+        checkTutorial = GameObject.Find("TutorialInstructions");
     }
 
     void Update()
@@ -98,7 +100,69 @@ public class MonsterMovement : MonoBehaviour
                         Destroy(collision.gameObject);
                     }
                     break;
-
+                case 6:
+                    // 当expression等于value2时执行的代码
+                    if (playerControl.currentX > 5)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        if (checkTutorial == null)
+                        {
+                            Destroy(collision.gameObject);
+                        }
+                        else
+                        {
+                            if (GlobalVariables.curLevel == "tutorial 2")
+                            {
+                                GameObject.Find("Player").transform.position = GameObject.Find("Checkpoint2").transform.position;
+                            }
+                        }
+                    }
+                    break;
+                case 7:
+                    // 当expression等于value2时执行的代码
+                    if (playerControl.currentX > 200)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        if (checkTutorial == null)
+                        {
+                            Destroy(collision.gameObject);
+                        }
+                        else
+                        {
+                            if (GlobalVariables.curLevel == "tutorial 2")
+                            {
+                                GameObject.Find("Player").transform.position = GameObject.Find("Checkpoint2").transform.position;
+                            }
+                        }
+                    }
+                    break;
+                case 8:
+                    // 当expression等于value2时执行的代码
+                    if (playerControl.currentX > 100)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        if (checkTutorial == null)
+                        {
+                            Destroy(collision.gameObject);
+                        }
+                        else
+                        {
+                            if (GlobalVariables.curLevel == "tutorial 2")
+                            {
+                                GameObject.Find("Player").transform.position = GameObject.Find("Checkpoint2").transform.position;
+                            }
+                        }
+                    }
+                    break;
                 default:
                     // 当expression与任何case都不匹配时执行的默认代码块
                     break;

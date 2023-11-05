@@ -18,8 +18,10 @@ public class JudgeEquation : MonoBehaviour
         return e.calculate();
     }
 
-    public bool CheckEquation(string equationStr, int varValue)
+    public bool CheckEquation(string equationStr, int varValuePassed)
     {
+        // variable Name overriding caused memory leak errors
+        varValue = varValuePassed;
         if (equationStr.Trim().ToLower() == "even")
         {
             return varValue % 2 == 0;
