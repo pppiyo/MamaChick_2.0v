@@ -43,6 +43,13 @@ public class Transition : MonoBehaviour
         SceneManager.LoadScene("_Tutorial1");
     }
 
+    public void LoadTutorial2()
+    {
+        GlobalVariables.curLevel = "tutorial 2";
+        GlobalVariables.platformMap = new Dictionary<string, int>();
+        SceneManager.LoadScene("_Tutorial2");
+    }
+
     public void LoadMainMenu()
     {
         SceneManager.LoadScene("_MainMenu");
