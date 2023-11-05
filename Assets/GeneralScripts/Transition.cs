@@ -13,7 +13,7 @@ public class Transition : MonoBehaviour
     {
         GlobalVariables.curLevel = "level 1";
         GlobalVariables.platformMap = new Dictionary<string, int>();
-        SceneManager.LoadScene("_Level1");
+        SceneManager.LoadScene("_Level1-1");
     }
 
     public void LoadLevel2()
@@ -50,12 +50,12 @@ public class Transition : MonoBehaviour
 
     public void LoadGameOverLost()
     {
-        SceneManager.LoadScene("_Game Over_Lost");
+        SceneManager.LoadScene("_Game_Over_Lost");
     }
 
     public void LoadGameOverWon()
     {
-        SceneManager.LoadScene("_Game Over_Won");
+        SceneManager.LoadScene("_Game_Over_Won");
     }
 
     public void ReloadPreviosLevel()
