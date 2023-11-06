@@ -413,6 +413,10 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 3935546409916861622, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_text
+      value: Interstellar 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4400606357159177162, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
