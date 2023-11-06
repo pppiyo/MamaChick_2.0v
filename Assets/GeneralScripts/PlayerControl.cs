@@ -114,6 +114,10 @@ public class PlayerControl : MonoBehaviour
                 resolvePlatforms();
                 if (tutorialCheck == null)
                     Destroy(currentCollidingObject.gameObject);
+                else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
+                {
+                    currentCollidingObject.gameObject.SetActive(false);
+                }
                 currentCollidingObject = null; // Clear the collider reference after processing
             }
         }
@@ -407,7 +411,8 @@ public class PlayerControl : MonoBehaviour
         // Score update
         if (obstacle.gameObject.CompareTag("Number"))
         {
-            UpdateScore(obstacle);
+            increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value); // number for the value on the Number object
+            UpdateScore(increaseX);
             resolvePlatforms();
             if (tutorialCheck == null)
                 Destroy(obstacle.gameObject);
