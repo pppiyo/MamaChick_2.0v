@@ -158,7 +158,7 @@ public class PlayerControl : MonoBehaviour
         {
             if (gravityDirection == 1)
                 playerRB.AddForce(force, ForceMode2D.Impulse);
-            else
+            else if(GlobalVariables.gravityLevel)
                 playerRB.AddForce((float)-0.7 * force, ForceMode2D.Impulse);
         }
 
@@ -177,7 +177,7 @@ public class PlayerControl : MonoBehaviour
         // Flip Gravity
         if (currentX >= 0)
             Physics2D.gravity = invertedGravity;
-        else
+        else if(GlobalVariables.gravityLevel)
             Physics2D.gravity = (float)-0.5 * invertedGravity;
 
         // Change Operator from arrow keys
@@ -307,35 +307,40 @@ public class PlayerControl : MonoBehaviour
                 break;
         }
 
-        if (result < 0)
+        // Only is Gravity for the level is activated
+        if (GlobalVariables.gravityLevel)
         {
-            // Flip Gravity Logic;
-            if (previousResult >= 0)
+            if (result < 0)
             {
-                hintDisplay += "\n Flipping Gravity!";
-                gravityDirection = gravityDirection * -1;
-                ShowHint(hintDisplay);
+                // Flip Gravity Logic;
+                if (previousResult >= 0)
+                {
+                    hintDisplay += "\n Flipping Gravity!";
+                    gravityDirection = gravityDirection * -1;
+                    ShowHint(hintDisplay);
+                }
+                else
+                {
+                    ShowHint(hintDisplay);
+                }
             }
             else
             {
-                ShowHint(hintDisplay);
-            }
-        }
-        else
-        {
-            // Flip Gravity Logic;
-            if (previousResult < 0)
-            {
-                hintDisplay += "\n Flipping Gravity!";
-                gravityDirection = gravityDirection * -1;
-                ShowHint(hintDisplay);
-            }
-            else
-            {
-                ShowHint(hintDisplay);
+                // Flip Gravity Logic;
+                if (previousResult < 0)
+                {
+                    hintDisplay += "\n Flipping Gravity!";
+                    gravityDirection = gravityDirection * -1;
+                    ShowHint(hintDisplay);
+                }
+                else
+                {
+                    ShowHint(hintDisplay);
+                }
             }
         }
 
+        ShowHint(hintDisplay);
         StartCoroutine(HideHint(1));
 
         return false;

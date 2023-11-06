@@ -20,4 +20,6 @@ public static class GlobalVariables
 
     public static string mode = "test";
 
+    public static bool gravityLevel = false;
+
 }
