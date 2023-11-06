@@ -127,7 +127,7 @@ public class PlayerControl : MonoBehaviour
             Flip();
         }
 
-        // gain the moveDirection
+        // Gain the moveDirection
         if (horizontalInput != 0)
         {
             moveDirection = new Vector3(horizontalInput, 0f, 0f);
@@ -139,14 +139,9 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
 
-        // //  Keep player in bound
-        // if (transform.position.x > rightBound)
-        //     transform.position = new Vector2(rightBound, transform.position.y);
-        // else if (transform.position.x < leftBound)
-        //     transform.position = new Vector2(leftBound, transform.position.y);
 
         // Jump With Impulse Force 
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)))
         {
             if (gravityDirection == 1)
                 playerRB.AddForce(force, ForceMode2D.Impulse);
@@ -659,6 +654,8 @@ public class PlayerControl : MonoBehaviour
 
         // 计算最近的球体对象
         float minDistance = float.MaxValue;
+        nearestBall = null;
+
         foreach (GameObject ball in balls)
         {
             float distance = Vector3.Distance(transform.position, ball.transform.position);
