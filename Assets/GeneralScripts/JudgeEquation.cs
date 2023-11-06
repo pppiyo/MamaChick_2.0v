@@ -32,6 +32,7 @@ public class JudgeEquation : MonoBehaviour
         }
 
         var match = Regex.Match(equationStr, @"(.+)(<=|>=|<|>|!=|==)([^=]+)");
+        Debug.Log(match.Success);
         if (!match.Success)
             return false;
 
