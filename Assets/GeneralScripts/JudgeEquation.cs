@@ -42,8 +42,8 @@ public class JudgeEquation : MonoBehaviour
         double leftValue = Evaluate(leftExpr);
         double rightValue = Evaluate(rightExpr);
 
-        // Debug.Log("left:"+ leftValue);
-        // Debug.Log("right:"+ rightValue);
+        Debug.Log("left:"+ leftValue);
+        Debug.Log("right:"+ rightValue);
 
         switch (operatorStr)
         {

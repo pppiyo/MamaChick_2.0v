@@ -612,6 +612,7 @@ public class PlayerControl : MonoBehaviour
             nearbyTeleporterDestination = null;
             StartCoroutine(HideHint(0));
         }
+        currentCollidingObject = null;
     }
 
     void DisableLayerCollision(GameObject Platform)
