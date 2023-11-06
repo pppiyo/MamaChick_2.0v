@@ -13,6 +13,7 @@ public class CheckpointManager : MonoBehaviour
     private GameObject fakePlatformInstruction;
     private GameObject Stage4_1;
     private GameObject AddInstruction;
+    private GameObject EpressInstruction;
     private GameObject Upkey;
     private GameObject MenuWheel;
 
@@ -28,6 +29,8 @@ public class CheckpointManager : MonoBehaviour
                 MenuWheel.SetActive(false);
                 AddInstruction = GameObject.Find("AddInstruction");
                 AddInstruction.SetActive(false);
+                EpressInstruction = GameObject.Find("EpressInstruction");
+                EpressInstruction.SetActive(false);
                 Upkey = GameObject.Find("UPkey");
                 Upkey.SetActive(false);
                 fakePlatformInstruction.SetActive(false);
@@ -52,6 +55,7 @@ public class CheckpointManager : MonoBehaviour
                     transform.position = GameObject.Find("Checkpoint2").transform.position;
                     fakePlatformInstruction.SetActive(true);
                     AddInstruction.SetActive(true);
+                    EpressInstruction.SetActive(true);
                     Upkey.SetActive(true);
                     Stage4_1.SetActive(true);
                     MenuWheel.SetActive(true);

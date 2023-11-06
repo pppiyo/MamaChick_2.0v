@@ -42,6 +42,7 @@ public class TutorialManager : MonoBehaviour
     private GameObject SpikeInstruction;
     private GameObject Stage4Objects;
     private GameObject AddInstruction;
+    private GameObject EpressInstruction;
     private GameObject fakePlatformInstruction;
     private GameObject MenuInstruction;
     private GameObject Stage5Objects;
@@ -107,6 +108,7 @@ public class TutorialManager : MonoBehaviour
         fakePlatformInstruction = GameObject.Find("fakePlatformInstruction");
         MenuInstruction = GameObject.Find("MenuInstruction");
         AddInstruction = GameObject.Find("AddInstruction");
+        EpressInstruction = GameObject.Find("EpressInstruction");
         Platform_1_7 = GameObject.Find("Platform_1_7");
         Platform_1_8 = GameObject.Find("Platform_1_8");
 
@@ -230,13 +232,11 @@ public class TutorialManager : MonoBehaviour
         currentStage = "Level1Stage3";
         Stage3Objects.SetActive(true);
         SpikeInstruction.SetActive(true);
-        PlatformInstruction.SetActive(true);
         level1Stage3 = 1;
     }
 
     void deactivateLevel1Stage3()
     {
-        PlatformInstruction.SetActive(false);
         SpikeInstruction.SetActive(false);
         level1Stage3 = 3;
     }
@@ -245,16 +245,15 @@ public class TutorialManager : MonoBehaviour
     {
         currentStage = "Level1Stage4";
         Stage4Objects.SetActive(true);
-        PlatformInstruction.SetActive(true);
         level1Stage4 = 1;
     }
 
     void deactivateLevel1Stage4()
     {
-        PlatformInstruction.SetActive(false);
         SpikeInstruction.SetActive(false);
         fakePlatformInstruction = GameObject.Find("fakePlatformInstruction");
         AddInstruction.SetActive(false);
+        EpressInstruction.SetActive(false);
         fakePlatformInstruction.SetActive(false);
         level1Stage4 = 3;
     }
@@ -270,6 +269,7 @@ public class TutorialManager : MonoBehaviour
         MenuInstruction.SetActive(true);
         Platform_1_7.SetActive(true);
         Platform_1_8.SetActive(true);
+        Platform_1_9.SetActive(true);
         Destination.SetActive(true);
         level1Stage4 = 5;
     }
@@ -421,7 +421,6 @@ public class TutorialManager : MonoBehaviour
 
     void activateLevel2Stage1()
     {
-        Debug.Log("ehewdg");
         MenuInstruction.SetActive(true);
     }
 
