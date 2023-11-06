@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/_Level2-1.unity
     guid: 4ff81f241c51b4d33b2cf4ade408650d
+  - enabled: 1
+    path: Assets/Scenes/Nithesh_MainMenu.unity
+    guid: d3d01e41a225346b7bd5183dd02ee29c
   m_configObjects: {}
