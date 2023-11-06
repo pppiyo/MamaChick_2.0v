@@ -30,7 +30,14 @@ public class DestroyOutOfBounds : MonoBehaviour
 
 
     private void Update()
-    {
+    {   
+
+        // if(transform.position.x < GlobalVariables.leftBound || transform.position.x > GlobalVariables.rightBound)
+        // {
+        //     Destroy(gameObject);
+        // }
+        if(groundObject == null)
+            Debug.Log("---");
         if (IsOutOfBounds())
         {
             // The object is out of bounds, so destroy it.
@@ -43,7 +50,9 @@ public class DestroyOutOfBounds : MonoBehaviour
         // Check if a GameObject with the "ground" tag was found.
         if (groundObject != null)
         {
+            // Debug.Log(groundObject.name);
             groundCollider = groundObject.GetComponent<Collider2D>();
+            // Debug.Log(groundCollider);
 
             if (groundCollider == null)
             {

@@ -12,6 +12,8 @@ public class Transition : MonoBehaviour
     public void LoadLevel1_1()
     {
         GlobalVariables.curLevel = "_Level1-1";
+        // GlobalVariables.leftBound = -30;
+        // GlobalVariables.rightBound = 70;
         GlobalVariables.platformMap = new Dictionary<string, int>();
         SceneManager.LoadScene("_Level1-1");
     }
