@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using TMPro;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -10,7 +11,6 @@ public class TutorialManager : MonoBehaviour
     private GameObject Player;
     private GameObject MenuWheel;
     private GameObject[] tutorialElements;
-
 
     //Variables for Level1 Progress Tracking
     private string currentStage;
@@ -42,12 +42,21 @@ public class TutorialManager : MonoBehaviour
     private GameObject SpikeInstruction;
     private GameObject Stage4Objects;
     private GameObject AddInstruction;
+    private GameObject EpressInstruction;
     private GameObject fakePlatformInstruction;
     private GameObject MenuInstruction;
     private GameObject Stage5Objects;
     private GameObject Platform_1_7;
     private GameObject Platform_1_8;
     private GameObject Destination;
+
+    // Variables for level 2 tracking
+    private int level2Stage0;
+    private int level2Stage1;
+    public GameObject Number2_1;
+    public GameObject Number2_2;
+    public GameObject Number3_1;
+    private GameObject Platform_1_9;
 
     //Miscelleneous Variables for different functions
     private bool shouldWait;
@@ -73,6 +82,11 @@ public class TutorialManager : MonoBehaviour
         level1Stage5 = 0;
         currentProgression = "";
 
+        // Level 2 Initialisation
+        level2Stage0 = 0;
+        level2Stage1 = 0;
+        Platform_1_9 = GameObject.Find("Platform_1_9");
+
         // Initialise Level Components
         Akey = GameObject.Find("Akey");
         Dkey = GameObject.Find("Dkey");
@@ -94,6 +108,7 @@ public class TutorialManager : MonoBehaviour
         fakePlatformInstruction = GameObject.Find("fakePlatformInstruction");
         MenuInstruction = GameObject.Find("MenuInstruction");
         AddInstruction = GameObject.Find("AddInstruction");
+        EpressInstruction = GameObject.Find("EpressInstruction");
         Platform_1_7 = GameObject.Find("Platform_1_7");
         Platform_1_8 = GameObject.Find("Platform_1_8");
 
@@ -131,11 +146,13 @@ public class TutorialManager : MonoBehaviour
         tutorialElements = GameObject.FindGameObjectsWithTag("Destination");
         foreach (GameObject obj in tutorialElements)
         {
-            obj.SetActive(false);
+            obj.SetActive(true);
         }
 
         // Miscelleneous Objects
         //MenuWheel.SetActive(false);
+        Stage4Objects.SetActive(true);
+        Stage5Objects.SetActive(true);
     }
 
     // Delays transitions between stages
@@ -215,13 +232,11 @@ public class TutorialManager : MonoBehaviour
         currentStage = "Level1Stage3";
         Stage3Objects.SetActive(true);
         SpikeInstruction.SetActive(true);
-        PlatformInstruction.SetActive(true);
         level1Stage3 = 1;
     }
 
     void deactivateLevel1Stage3()
     {
-        PlatformInstruction.SetActive(false);
         SpikeInstruction.SetActive(false);
         level1Stage3 = 3;
     }
@@ -230,16 +245,15 @@ public class TutorialManager : MonoBehaviour
     {
         currentStage = "Level1Stage4";
         Stage4Objects.SetActive(true);
-        PlatformInstruction.SetActive(true);
         level1Stage4 = 1;
     }
 
     void deactivateLevel1Stage4()
     {
-        PlatformInstruction.SetActive(false);
         SpikeInstruction.SetActive(false);
         fakePlatformInstruction = GameObject.Find("fakePlatformInstruction");
         AddInstruction.SetActive(false);
+        EpressInstruction.SetActive(false);
         fakePlatformInstruction.SetActive(false);
         level1Stage4 = 3;
     }
@@ -255,6 +269,7 @@ public class TutorialManager : MonoBehaviour
         MenuInstruction.SetActive(true);
         Platform_1_7.SetActive(true);
         Platform_1_8.SetActive(true);
+        Platform_1_9.SetActive(true);
         Destination.SetActive(true);
         level1Stage4 = 5;
     }
@@ -392,16 +407,91 @@ public class TutorialManager : MonoBehaviour
 
     void activateLevel2Stage0()
     {
-
+        Platform_1_1.SetActive(true);
+        Platform_1_3.SetActive(true);
+        JumpInstruction.SetActive(true);
+        Checkpoint1.SetActive(true);
+        level2Stage0 = 1;
     }
 
     void deactivateLevel2Stage0()
     {
-
+        level2Stage0 = 3;
     }
-    void level2Manager()
+
+    void activateLevel2Stage1()
+    {
+        MenuInstruction.SetActive(true);
+    }
+
+    void deactivateLevel2Stage1()
     {
 
+    }
+
+    void level2Manager()
+    {
+        Platform_1_7.SetActive(true);
+        Platform_1_8.SetActive(true);
+        Platform_1_9.SetActive(true);
+        if (Player.transform.position.x > 10)
+        {
+            JumpInstruction.SetActive(false);
+        }
+        switch (level2Stage0)
+        {
+            case 0:
+                activateLevel2Stage0();
+                break;
+            case 1:
+                if(Player.transform.position.x > 20)
+                {
+                    OperationInstruction.SetActive(true);
+                }
+                if(Player.transform.position.y > 5)
+                {
+                    OperationInstruction.SetActive(false);
+                    level2Stage0 = 2;
+                }
+                break;
+            case 2:
+                if (!Number2_1.activeSelf && !Number2_2.activeSelf && !Number3_1.activeSelf)
+                {
+                    if (Player.GetComponent<PlayerControl>().currentX < 9)
+                    {
+                        Debug.Log("PLayerrrr");
+                        Player.transform.position = GameObject.Find("Checkpoint1").transform.position;
+                        Player.GetComponent<PlayerControl>().currentX = 0;
+                        GameObject.Find("Player_Number").GetComponent<TMP_Text>().text = "0";
+                        SpikeInstruction.SetActive(true);
+                        Number2_1.SetActive(true);
+                        Number2_2.SetActive(true);
+                        Number3_1.SetActive(true);
+                    }
+                }
+                if (Player.transform.position.x > 60)
+                {
+                    SpikeInstruction.SetActive(false);
+                    Debug.Log("ehewdg");
+                    deactivateLevel2Stage0();
+                }
+                break;
+            case 3:
+                switch (level2Stage1)
+                {
+                    case 0:
+                        Debug.Log("ehewdg");
+                        activateLevel2Stage1();
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        break;
+                }
+                break;
+        }
     }
 
     void activateLevel3Stage0()
@@ -452,7 +542,7 @@ public class TutorialManager : MonoBehaviour
                 level4Manager();
                 break;
             default:
-                level1Manager();
+                level2Manager();
                 break;
         }
     }

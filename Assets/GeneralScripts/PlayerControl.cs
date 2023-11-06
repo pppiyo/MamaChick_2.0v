@@ -18,9 +18,7 @@ public class PlayerControl : MonoBehaviour
     public GameObject xObject;
     private TMP_Text xBoard;
     public GameObject WheelManager;
-    public int operatorID; // 0: add; 1: sub; 2: multiply; 3: divide
-    public float rightBound;
-    public float leftBound;
+    public int operatorID; // 0: add; 1: sub; 2: multiply; 3: divide; 4: no operator selected
     public int gravityDirection;
     public TMP_Text hintText;
     public GameObject SceneLoader;
@@ -41,10 +39,27 @@ public class PlayerControl : MonoBehaviour
     private GameObject tutorialCheck;
     private GameObject numberTextGameObject;
     private string numberText;
+    private Collider2D currentCollidingObject = null;
+    //test_ball
+    public static GameObject nearestBall;
+    private bool canTeleport = true;
+
+
+    // Parameters to keep the player in bound
+    public Transform ground; // Reference to the ground object.
+    private Collider2D playerCollider;
+    private Collider2D groundCollider;
+    public float rightBound;
+    public float leftBound;
 
 
     void Start()
     {
+
+        // Keep the player in bound
+        SetPlayerBoundary();
+        //KeepPlayerInBound();
+
         // 查找所有包含 "platform" 字符串的游戏对象
         GameObject[] platformObjects = FindObjectsWithSubstring("Platform");
         gravityDirection = 1;
@@ -81,6 +96,35 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+
+        KeepPlayerInBound();
+
+        if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E))
+        {
+            // Grab the Number object's text
+            numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
+            numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
+            int increaseX = int.Parse(numberText); // number for the value on the Number object
+            // Debug.Log(increaseX);
+            
+            // Use Regex.IsMatch to check if the text in the GameObject in currentCollidingObject contains a number
+            if (Regex.IsMatch(numberText, @"\d"))
+            // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
+            {
+                UpdateScore(increaseX);
+                resolvePlatforms();
+                // Debug.Log(currentX);
+
+                // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
+                if (tutorialCheck == null)
+                    Destroy(currentCollidingObject.gameObject);
+                else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
+                {
+                    currentCollidingObject.gameObject.SetActive(false);
+                }
+                currentCollidingObject = null; // Clear the collider reference after processing
+            }
+        }
         // Detect player input for horizontal movement.
         float horizontalInput = Input.GetAxis("Horizontal");
 
@@ -103,11 +147,11 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
 
-        //  Keep player in bound
-        if (transform.position.x > rightBound)
-            transform.position = new Vector2(rightBound, transform.position.y);
-        else if (transform.position.x < leftBound)
-            transform.position = new Vector2(leftBound, transform.position.y);
+        // //  Keep player in bound
+        // if (transform.position.x > rightBound)
+        //     transform.position = new Vector2(rightBound, transform.position.y);
+        // else if (transform.position.x < leftBound)
+        //     transform.position = new Vector2(leftBound, transform.position.y);
 
         // Jump With Impulse Force 
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
@@ -125,10 +169,10 @@ public class PlayerControl : MonoBehaviour
         }
 
         //press 'E' to teleport
-        if (nearbyTeleporterDestination != null && Input.GetKeyDown(KeyCode.E))
-        {
-            transform.position = nearbyTeleporterDestination.position;
-        }
+        // if (nearbyTeleporterDestination != null && Input.GetKeyDown(KeyCode.E))
+        // {
+        //     transform.position = nearbyTeleporterDestination.position;
+        // }
 
         // Flip Gravity
         if (currentX >= 0)
@@ -157,13 +201,30 @@ public class PlayerControl : MonoBehaviour
             operatorID = 2;
             EventSystem.current.SetSelectedGameObject(GameObject.Find("MulButton"));
         }
+
+        //test_ball
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PickupNearestNumber();
+        }
+
+        if (nearestBall != null)
+        {
+            // 获取玩家头部位置
+            Vector3 playerHeadPosition = transform.position + new Vector3(0, 2, 0); // 假设头部相对于玩家位置的偏移是 (0, 2, 0)
+
+            // 设置球体位置为玩家头部位置
+            nearestBall.transform.position = playerHeadPosition;
+
+        }
+
     }
 
     // Sets the platform logic at start and whenever currentX changes
     public void resolvePlatforms()
     {
         // Check all platforms and separate solid platforms
-        Debug.Log("Resolving platforms");
+        // Debug.Log("Resolving platforms");
         foreach (GameObject platform in platforms)
         {
             if (CanPassPlatform(platform))
@@ -274,7 +335,9 @@ public class PlayerControl : MonoBehaviour
                 ShowHint(hintDisplay);
             }
         }
+
         StartCoroutine(HideHint(1));
+
         return false;
     }
 
@@ -294,8 +357,46 @@ public class PlayerControl : MonoBehaviour
         return matchingObjects.ToArray();
     }
 
+    private IEnumerator TeleportCooldown()
+    {
+        canTeleport = false; // 禁止传送
+        yield return new WaitForSeconds(2); // 等待1秒
+        canTeleport = true; // 重新启用传送
+    }
+
     void OnCollisionEnter2D(Collision2D obstacle)
     {
+        if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
+        {
+            TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
+            GameObject obj = GameObject.Find("EquationManager");
+            JudgeEquation judge = obj.GetComponent<JudgeEquation>();
+            TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
+
+            bool shouldTeleport = portalEquationText == null || portalEquationText.text.Length == 0 ||
+                                (int.TryParse(playerEquationText.text, out int playerNumber) &&
+                                judge.CheckEquation(portalEquationText.text, playerNumber));
+
+            if (shouldTeleport)
+            {
+                string pairName = obstacle.gameObject.name.EndsWith("1") ?
+                                obstacle.gameObject.name.Replace("1", "2") :
+                                obstacle.gameObject.name.Replace("2", "1");
+                GameObject pairPortal = GameObject.Find(pairName);
+                if (pairPortal != null)
+                {
+                    transform.position = pairPortal.transform.position; // Teleport the player
+                    ShowHint("Teleported!"); // Show confirmation hint
+                    StartCoroutine(TeleportCooldown()); // 开始冷却计时
+                }
+            }
+            else
+            {
+                ShowHint("Your point doesn't satisfy the condition");
+            }
+
+            StartCoroutine(HideHint(1)); // Hide the hint after a delay
+        }
         // Tutorial You do not kill anyone
         if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
         {
@@ -310,13 +411,19 @@ public class PlayerControl : MonoBehaviour
             isGrounded = true;
         }
 
+
         // Score update
         if (obstacle.gameObject.CompareTag("Number"))
         {
-            UpdateScore(obstacle);
+            increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value); // number for the value on the Number object
+            UpdateScore(increaseX);
             resolvePlatforms();
             if (tutorialCheck == null)
                 Destroy(obstacle.gameObject);
+            if(GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
+            {
+                obstacle.gameObject.SetActive(false);
+            }
         }
 
         if (obstacle.gameObject.CompareTag("Goal"))
@@ -337,20 +444,61 @@ public class PlayerControl : MonoBehaviour
         {
             isGrounded = true;
         }
+
+        // platforms that provide direct calculation
+        // if(obstacle.gameObject.CompareTag("Plat_Modify"))
+        // {
+        //     // 获取与Collider关联的GameObject上的TextMeshPro组件
+        //     TextMeshPro platTmp = obstacle.transform.GetComponentInChildren<TextMeshPro>();
+
+        //     if(platTmp != null)
+        //     {
+        //         string platText = platTmp.text;
+        //         char operatorChar = platText[0]; // 获取字符串的第一个字符作为运算符
+        //         int number;
+
+        //         // 确保从第二个字符开始到结束的字符串是一个有效的数字
+        //         if(int.TryParse(platText.Substring(1), out number))
+        //         {
+        //             // 根据运算符执行计算
+        //             switch(operatorChar)
+        //             {
+        //                 case '+':
+        //                     currentX += number;
+        //                     break;
+        //                 case '-':
+        //                     currentX -= number;
+        //                     break;
+        //                 case '*':
+        //                     currentX *= number;
+        //                     break;
+        //                 case '/':
+        //                     if(number != 0) 
+        //                         currentX /= number;
+        //                     else 
+        //                         Debug.LogError("Division by zero is not allowed.");
+        //                     break;
+        //                 default:
+        //                     Debug.LogError("Invalid operator.");
+        //                     break;
+        //             }
+        //             // 更新UI或其他相关组件
+        //             xBoard.text = currentX.ToString();
+        //             Debug.Log("Updated currentX: " + currentX);
+        //         }
+        //         else
+        //         {
+        //             Debug.LogError("Invalid number format on platform.");
+        //         }
+        //     }
+        // }
+
+
     }
 
-    public void UpdateScore(Collision2D obstacle)
+    public void UpdateScore(int increaseX)
     {
         GlobalVariables.collisions++; // Chris: data collection
-
-        numberTextGameObject = obstacle.gameObject.transform.Find("Number_Text").gameObject;
-        numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
-
-        int increaseX = int.Parse(numberText); // number for the value on the Number object
-
-
-        // number = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value);
-        // Debug.Log("number: " + number);
 
         switch (operatorID)
         {
@@ -372,17 +520,7 @@ public class PlayerControl : MonoBehaviour
             case 3:
                 if (negativeX(currentX, increaseX))
                     return;
-
-                if (increaseX != 0)
-                {
-                    currentX /= increaseX;
-                }
-                // else
-                // {
-                // ShowHint("Cannot divide by 0");
-                // StartCoroutine(HideHint(1));
-                //     return;
-                // }
+                currentX /= increaseX;
                 break;
             case 4:
                 hintDisplay = "Select an Operator";
@@ -390,8 +528,6 @@ public class PlayerControl : MonoBehaviour
                 StartCoroutine(HideHint(1));
                 break;
         }
-        // Destroy(obstacle.gameObject);
-        // Debug.Log("currentX: " + currentX);
 
         xBoard.text = currentX.ToString();
     }
@@ -402,11 +538,22 @@ public class PlayerControl : MonoBehaviour
         // Jump Disabled
         if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination"))
             isGrounded = false;
+
+        if (obstacle.gameObject.CompareTag("Portal"))
+        {
+            StartCoroutine(HideHint(0)); // Hide the hint immediately
+        }
     }
+
 
     //teleporter
     void OnTriggerEnter2D(Collider2D obstacle)
     {
+        //update score
+        if (obstacle.gameObject.CompareTag("Number"))
+        {
+            currentCollidingObject = obstacle; // Store the collider for use in Update
+        }
         if (obstacle.gameObject.CompareTag("Portal"))
         {
             TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
@@ -457,6 +604,7 @@ public class PlayerControl : MonoBehaviour
 
     }
 
+
     void OnTriggerExit2D(Collider2D obstacle)
     {
         if (obstacle.gameObject.CompareTag("Portal"))
@@ -464,6 +612,7 @@ public class PlayerControl : MonoBehaviour
             nearbyTeleporterDestination = null;
             StartCoroutine(HideHint(0));
         }
+        currentCollidingObject = null;
     }
 
     void DisableLayerCollision(GameObject Platform)
@@ -498,13 +647,13 @@ public class PlayerControl : MonoBehaviour
             // 获取玩家上的TextMeshProUGUI组件的值
             GameObject player = GameObject.Find("Player");
             judge.playerEquationText = player.GetComponentInChildren<TextMeshPro>();
-            Debug.Log(judge.playerEquationText.text);
+            // Debug.Log(judge.playerEquationText.text);
 
             if (judge.playerEquationText != null)
             {
                 judge.varValue = int.Parse(judge.playerEquationText.text);
             }
-            Debug.Log(judge.varValue);
+            // Debug.Log(judge.varValue);
 
             // 调用EvaluateFromTextMeshPro方法来检查玩家的数值是否满足方程
             pass = !judge.EvaluateFromTextMeshPro(); // if 
@@ -516,6 +665,95 @@ public class PlayerControl : MonoBehaviour
     private void ReturnToMainMenu()
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
-        SceneLoader.GetComponent<Transition>().LoadMainMenu();
+        SceneLoader.GetComponent<Transition>().LoadGameOverWon();
     }
+
+    //test_ball
+
+    void PickupNearestNumber()
+    {
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Test_ball");
+
+        if (balls.Length == 0)
+        {
+            // 如果没有球体对象，不执行任何操作
+            return;
+        }
+
+        // 计算最近的球体对象
+        float minDistance = float.MaxValue;
+        foreach (GameObject ball in balls)
+        {
+            float distance = Vector3.Distance(transform.position, ball.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestBall = ball;
+            }
+        }
+
+        // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
+        if (nearestBall != null)
+        {
+            // 获取玩家头部位置
+            Vector3 playerHeadPosition = transform.position + new Vector3(0, 2, 0); // 假设头部相对于玩家位置的偏移是 (0, 2, 0)
+
+            // 设置球体位置为玩家头部位置
+            nearestBall.transform.position = playerHeadPosition;
+        }
+
+    }
+
+    // Set the player's boundary to the ground's boundary. 
+    // Initialize player's left and right bound.
+    private void SetPlayerBoundary()
+    {
+        // Find the GameObject with the "ground" tag.
+        GameObject groundObject = GameObject.FindGameObjectWithTag("Ground");
+
+        // Check if a GameObject with the "ground" tag was found.
+        if (groundObject != null)
+        {
+            // Get the Collider2D component from the ground GameObject.
+            groundCollider = groundObject.GetComponent<Collider2D>();
+
+            // Check if the Collider2D component was found.
+            if (groundCollider != null)
+            {
+                playerCollider = gameObject.GetComponent<Collider2D>();
+
+                // Calculate the minimum and maximum X values based on the ground's bounds.
+                Bounds groundBounds = groundCollider.bounds;
+                Bounds playerBounds = playerCollider.bounds;
+
+                leftBound = groundBounds.min.x + playerBounds.extents.x;
+                rightBound = groundBounds.max.x - playerBounds.extents.x;
+
+                // You now have access to the ground's Collider2D component.
+                // You can use groundCollider in your code.
+            }
+            else
+            {
+                Debug.LogError("Ground GameObject doesn't have a Collider2D component.");
+            }
+        }
+        else
+        {
+            Debug.LogError("No GameObject with the 'ground' tag found in the scene.");
+        }
+    }
+
+    private void KeepPlayerInBound()
+    {
+        // Keep the player in bound
+        // Get the current player position.
+        Vector3 newPosition = transform.position;
+
+        // Constrain the player's X position within the boundaries.
+        newPosition.x = Mathf.Clamp(newPosition.x, leftBound, rightBound);
+
+        // Update the player's position.
+        transform.position = newPosition;
+    }
+
 }
