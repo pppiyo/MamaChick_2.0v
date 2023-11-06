@@ -645,7 +645,7 @@ public class PlayerControl : MonoBehaviour
 
             // 设置JudgeEquation组件的equationText属性为障碍物上的方程
             judge.equationText = obstacleEquationText;
-
+            
             // 设置JudgeEquation的targetObject为碰撞的障碍物
             judge.targetObject = obstacle.gameObject;
 
@@ -656,6 +656,7 @@ public class PlayerControl : MonoBehaviour
 
             if (judge.playerEquationText != null)
             {
+                Debug.Log(obstacleEquationText.text);
                 judge.varValue = int.Parse(judge.playerEquationText.text);
             }
             // Debug.Log(judge.varValue);
