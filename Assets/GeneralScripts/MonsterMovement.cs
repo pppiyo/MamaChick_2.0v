@@ -48,10 +48,12 @@ public class MonsterMovement : MonoBehaviour
                     if (playerControl.currentX < 15)
                     {
                         Destroy(gameObject);
+                        GlobalVariables.monsterKilled++;
                     }
                     else
                     {
                         Destroy(collision.gameObject);
+                        killedByMonster(gameObject);
                     }
                     break; // 如果不使用break语句，将继续执行下一个case（如果条件匹配）。
                 case 2:
@@ -59,10 +61,12 @@ public class MonsterMovement : MonoBehaviour
                     if (playerControl.currentX % 2 == 1)
                     {
                         Destroy(gameObject);
+                        GlobalVariables.monsterKilled++;
                     }
                     else
                     {
                         Destroy(collision.gameObject);
+                        killedByMonster(gameObject);
                     }
                     break;
                 case 3:
@@ -70,10 +74,12 @@ public class MonsterMovement : MonoBehaviour
                     if (playerControl.currentX % 2 == 0)
                     {
                         Destroy(gameObject);
+                        GlobalVariables.monsterKilled++;
                     }
                     else
                     {
                         Destroy(collision.gameObject);
+                        killedByMonster(gameObject);
                     }
                     break;
                 case 4:
@@ -81,10 +87,12 @@ public class MonsterMovement : MonoBehaviour
                     if (playerControl.currentX < 10)
                     {
                         Destroy(gameObject);
+                        GlobalVariables.monsterKilled++;
                     }
                     else
                     {
                         Destroy(collision.gameObject);
+                        killedByMonster(gameObject);
                     }
                     break;
                 case 5:
@@ -92,10 +100,12 @@ public class MonsterMovement : MonoBehaviour
                     if (playerControl.currentX < 0)
                     {
                         Destroy(gameObject);
+                        GlobalVariables.monsterKilled++;
                     }
                     else
                     {
                         Destroy(collision.gameObject);
+                        killedByMonster(gameObject);
                     }
                     break;
 
@@ -104,5 +114,11 @@ public class MonsterMovement : MonoBehaviour
                     break;
             }
         }
+    }
+    
+    private void killedByMonster(GameObject gameObject)
+    {
+        GlobalVariables.failReason = "killedByMonster " + gameObject.name;
+        SceneLoader.GetComponent<Transition>().LoadGameOverLost();
     }
 }

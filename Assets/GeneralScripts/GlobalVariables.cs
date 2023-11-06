@@ -17,6 +17,17 @@ public static class GlobalVariables
     public static int collisions = 0;
     
     public static Dictionary<string, int> platformMap = new Dictionary<string, int>();
+    
+    public static Dictionary<string, int> opTimesMap = new Dictionary<string, int>();
+
+    public static string failReason;
+    
+    public static Dictionary<string, int> portUses = new Dictionary<string, int>();
 
     public static string mode = "test";
+
+    public static int monsterKilled = 0;
+
+    public static int inverseTimes;
+
 }

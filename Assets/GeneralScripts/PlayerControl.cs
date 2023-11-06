@@ -44,7 +44,7 @@ public class PlayerControl : MonoBehaviour
     private Collider2D currentCollidingObject = null;
     //test_ball
     public static GameObject nearestBall;
-    private bool canTeleport = true; 
+    private bool canTeleport = true;
 
     void Start()
     {
@@ -57,6 +57,10 @@ public class PlayerControl : MonoBehaviour
         foreach (GameObject obj in platformObjects)
         {
             GlobalVariables.platformMap[obj.name] = 0;
+        }
+        string[] ops = { "+", "-", "*", "/" };
+        foreach (string op in ops) {
+            GlobalVariables.opTimesMap[op] = 0;
         }
         playerRB = GetComponent<Rigidbody2D>();
         force = jumpForce * Vector2.up;
@@ -283,6 +287,7 @@ public class PlayerControl : MonoBehaviour
             // Flip Gravity Logic;
             if (previousResult >= 0)
             {
+                GlobalVariables.inverseTimes++;
                 hintDisplay += "\n Flipping Gravity!";
                 gravityDirection = gravityDirection * -1;
                 ShowHint(hintDisplay);
@@ -297,6 +302,7 @@ public class PlayerControl : MonoBehaviour
             // Flip Gravity Logic;
             if (previousResult < 0)
             {
+                GlobalVariables.inverseTimes++;
                 hintDisplay += "\n Flipping Gravity!";
                 gravityDirection = gravityDirection * -1;
                 ShowHint(hintDisplay);
@@ -348,6 +354,14 @@ public class PlayerControl : MonoBehaviour
 
             if (shouldTeleport)
             {
+                if (GlobalVariables.portUses.ContainsKey(obstacle.gameObject.name))
+                {
+                    GlobalVariables.portUses[obstacle.gameObject.name]++;
+                }
+                else
+                {
+                    GlobalVariables.portUses[obstacle.gameObject.name] = 1;
+                }
                 string pairName = obstacle.gameObject.name.EndsWith("1") ?
                                 obstacle.gameObject.name.Replace("1", "2") :
                                 obstacle.gameObject.name.Replace("2", "1");
@@ -369,6 +383,7 @@ public class PlayerControl : MonoBehaviour
         // Tutorial You do not kill anyone
         if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
         {
+            GlobalVariables.failReason = "killedBySpike " + obstacle.gameObject.name;
             SceneLoader.GetComponent<Transition>().LoadGameOverLost();
         }
 
@@ -385,7 +400,6 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Goal"))
         {
             // Debug.Log("Goal");
-            GlobalVariables.win = true;
             ReturnToMainMenu();
         }
         // if Player collides with a mutate platform
@@ -519,21 +533,25 @@ public class PlayerControl : MonoBehaviour
         switch (operatorID)
         {
             case 0:
+                GlobalVariables.opTimesMap["+"]++;
                 if (negativeX(currentX, increaseX))
                     return;
                 currentX += increaseX;
                 break;
             case 1:
+                GlobalVariables.opTimesMap["-"]++;
                 if (negativeX(currentX, increaseX))
                     return;
                 currentX -= increaseX;
                 break;
             case 2:
+                GlobalVariables.opTimesMap["*"]++;
                 if (negativeX(currentX, increaseX))
                     return;
                 currentX *= increaseX;
                 break;
             case 3:
+                GlobalVariables.opTimesMap["/"]++;
                 if (negativeX(currentX, increaseX))
                     return;
                 currentX /= increaseX;
