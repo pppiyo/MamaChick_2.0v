@@ -19,4 +19,5 @@ public static class GlobalVariables
     public static Dictionary<string, int> platformMap = new Dictionary<string, int>();
 
     public static string mode = "test";
+
 }

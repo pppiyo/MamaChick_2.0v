@@ -401,6 +401,18 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3878415870055587431, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_text
+      value: Transporter Tutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878415870055587431, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_fontSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3878415870055587431, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4400606357159177162, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -652,6 +664,18 @@ PrefabInstance:
     - target: {fileID: 6490599416134277565, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6878257570614724314, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_text
+      value: John Wick Tutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6878257570614724314, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_fontSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6878257570614724314, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7021669404845647986, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size

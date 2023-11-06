@@ -163,6 +163,32 @@ public class MonsterMovement : MonoBehaviour
                         }
                     }
                     break;
+                    
+                case -1:
+                    // 当expression等于value2时执行的代码
+                    if (playerControl.currentX > 10)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        Destroy(collision.gameObject);
+                        SceneLoader.GetComponent<Transition>().LoadGameOverLost();
+                    }
+                    break;
+                case -2:
+                    // 当expression等于value2时执行的代码
+                    if (playerControl.currentX > 15)
+                    {
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        Destroy(collision.gameObject);
+                        SceneLoader.GetComponent<Transition>().LoadGameOverLost();
+
+                    }
+                    break;
                 default:
                     // 当expression与任何case都不匹配时执行的默认代码块
                     break;

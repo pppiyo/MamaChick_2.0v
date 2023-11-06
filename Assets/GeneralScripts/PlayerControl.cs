@@ -105,13 +105,17 @@ public class PlayerControl : MonoBehaviour
             numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
             numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
             int increaseX = int.Parse(numberText); // number for the value on the Number object
-
+            // Debug.Log(increaseX);
+            
             // Use Regex.IsMatch to check if the text in the GameObject in currentCollidingObject contains a number
             if (Regex.IsMatch(numberText, @"\d"))
             // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
             {
                 UpdateScore(increaseX);
                 resolvePlatforms();
+                // Debug.Log(currentX);
+
+                // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
                 if (tutorialCheck == null)
                     Destroy(currentCollidingObject.gameObject);
                 else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
@@ -356,7 +360,7 @@ public class PlayerControl : MonoBehaviour
     private IEnumerator TeleportCooldown()
     {
         canTeleport = false; // 禁止传送
-        yield return new WaitForSeconds(1); // 等待1秒
+        yield return new WaitForSeconds(2); // 等待1秒
         canTeleport = true; // 重新启用传送
     }
 
@@ -660,7 +664,7 @@ public class PlayerControl : MonoBehaviour
     private void ReturnToMainMenu()
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
-        SceneLoader.GetComponent<Transition>().LoadMainMenu();
+        SceneLoader.GetComponent<Transition>().LoadGameOverWon();
     }
 
     //test_ball
