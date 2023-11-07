@@ -77,32 +77,61 @@ public class Monster2 : MonoBehaviour
 
     }
 
-    private void UpdateSize()
+private void UpdateSize()
+{
+    if (int.TryParse(numberText.text, out int number))
     {
-        // GetComponent<TMP_Text>().fontSize = currentNumber * scaleMultiplier;
+        // Calculate the new scale based on the number for both width and height.
+        float scaleFactor = number * scaleMultiplier;
 
-        // Parse the number from the TMP_Text component.
-        if (int.TryParse(numberText.text, out int number))
-        {
-            // Calculate the new scale factor based on the number.
-            float scaleFactor = number * scaleMultiplier;
+        // Apply the scale factor to the initial scale.
+        Vector3 newScale = new Vector3(initialScale.x * scaleFactor, initialScale.y * scaleFactor, initialScale.z);
 
-            // Update the GameObject's scale.
-            transform.localScale = new Vector3(initialScale.x + scaleFactor, initialScale.y + scaleFactor, initialScale.z);
+        // Set the new scale to the transform.
+        transform.localScale = newScale;
 
-            // Calculate the position adjustment to maintain the bottom on the ground.
-            float newHeight = initialHeight * scaleFactor;
-            yOffset = (newHeight - initialHeight) / 2.0f;
+        // Since we are scaling uniformly and the pivot is at the center, the object will grow equally in all directions.
+        // To keep the bottom in the same position, we need to move the object up by half the increased height.
+        float heightIncrease = (initialScale.y * scaleFactor) - initialScale.y;
+        float newYPosition = initialPosition.y + heightIncrease / 2;
 
-            // Adjust the GameObject's position to keep the bottom on the ground.
-            // transform.position = new Vector3(initialPosition.x, initialPosition.y + yOffset, initialPosition.z);
-        }
-        else
-        {
-            Debug.LogError("Failed to parse the number.");
-        }
-
+        // Set the new position to the transform.
+        transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
     }
+    else
+    {
+        Debug.LogError("Failed to parse the number.");
+    }
+}
+
+
+
+    // private void UpdateSize()
+    // {
+    //     // GetComponent<TMP_Text>().fontSize = currentNumber * scaleMultiplier;
+
+    //     // Parse the number from the TMP_Text component.
+    //     if (int.TryParse(numberText.text, out int number))
+    //     {
+    //         // Calculate the new scale factor based on the number.
+    //         float scaleFactor = number * scaleMultiplier;
+
+    //         // Update the GameObject's scale.
+    //         transform.localScale = new Vector3(initialScale.x + scaleFactor, initialScale.y + scaleFactor, initialScale.z);
+
+    //         // Calculate the position adjustment to maintain the bottom on the ground.
+    //         float newHeight = initialHeight * scaleFactor;
+    //         yOffset = (newHeight - initialHeight) / 2.0f;
+
+    //         // Adjust the GameObject's position to keep the bottom on the ground.
+    //         // transform.position = new Vector3(initialPosition.x, initialPosition.y + yOffset, initialPosition.z);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogError("Failed to parse the number.");
+    //     }
+
+    // }
 
     private void UpdateMovement()
     {

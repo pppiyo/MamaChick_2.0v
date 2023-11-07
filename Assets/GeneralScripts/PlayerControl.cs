@@ -752,7 +752,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // 计算最近的球体对象
-        float minDistance = float.MaxValue;
+        float minDistance = 1.5f;
         nearestBall = null;
 
         foreach (GameObject ball in balls)

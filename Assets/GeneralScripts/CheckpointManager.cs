@@ -93,9 +93,17 @@ public class CheckpointManager : MonoBehaviour
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                     break;
                 case "Stage4":
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    GameObject.Find("TutorialInstructions").GetComponent<TutorialManager>().level3Stage0 = 3;
+                    GameObject.Find("TutorialInstructions").GetComponent<TutorialManager>().level3Stage1 = 3;
                     transform.position = GameObject.Find("Checkpoint1").transform.position;
                     break;
             }
+        }
+
+        if(GlobalVariables.curLevel == "tutorial 4" && obstacle.gameObject.CompareTag("Spike"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
     

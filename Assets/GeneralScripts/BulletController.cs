@@ -9,6 +9,7 @@ public class BulletController : MonoBehaviour
     public float speed = 8f;  // Adjust this to control the bullet speed.
     public GameObject player; // Reference to the PlayerMovement script.
     private string prefabName;
+    private GameObject nearestnumber = null;
 
     private void Start()
     {
@@ -27,6 +28,54 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        nearestnumber = null;
+        CalculateWithNearestNumber();
+        if(nearestnumber != null)
+        {
+            GameObject numberText_ = nearestnumber.transform.Find("Number_Text").gameObject;
+            TMP_Text textComponent_ = numberText_.GetComponent<TMP_Text>();
+            // Debug.Log("Number collided: " + textComponent.text);
+            if (textComponent_ != null)
+            {
+                player = GameObject.Find("Player");
+                // Debug.Log("player: " + player.transform.position);
+
+                GameObject playerTextGO = player.transform.Find("Player_Number").gameObject;
+                TMP_Text playerText = playerTextGO.GetComponent<TMP_Text>();
+                // Debug.Log("player text: " + playerText.text);
+
+                // textComponent.text = playerText.text; // Change the text to whatever you want.
+                int number = int.Parse(textComponent_.text);
+                int playerNumber = int.Parse(playerText.text);
+
+                // Debug.Log("Prefab name: " + prefabName);
+
+                if (prefabName == "BulletAdd(Clone)")
+                {
+                    // Debug.Log("add");
+                    textComponent_.text = (playerNumber + number).ToString();
+                }
+                else if (prefabName == "BulletSub(Clone)")
+                {
+                    textComponent_.text = (playerNumber - number).ToString();
+                }
+                else if (prefabName == "BulletMultiply(Clone)")
+                {
+                    textComponent_.text = (playerNumber * number).ToString();
+                }
+                else if (prefabName == "BulletDivide(Clone)")
+                {
+                    if (number != 0)
+                    {
+                        textComponent_.text = (playerNumber / number).ToString();
+                    }
+                    else
+                    {
+                        textComponent_.text = "0";
+                    }
+                }
+            Destroy(gameObject);
+        }
         // Check if the bullet is off-screen and destroy it.
         void DestroyOutOfBounds()
         {
@@ -40,8 +89,8 @@ public class BulletController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        }
     }
-
 
     private void OnTriggerEnter2D(Collider2D obstacle)
     {
@@ -50,14 +99,16 @@ public class BulletController : MonoBehaviour
         { return; }
 
 
-        if (obstacle.gameObject.CompareTag("Number") || obstacle.gameObject.CompareTag("Monster2"))
+        // if (obstacle.gameObject.CompareTag("Number") || obstacle.gameObject.CompareTag("Monster2"))
+        if (obstacle.gameObject.CompareTag("Monster2"))
+
         {
             GameObject numberText = null;
             // Debug.Log("Number collided by bullet");
-            if (obstacle.gameObject.CompareTag("Number"))
-            {
-                numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
-            }
+            // if (obstacle.gameObject.CompareTag("Number"))
+            // {
+            //     numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
+            // }
             if (obstacle.gameObject.CompareTag("Monster2"))
             {
                 numberText = obstacle.gameObject.transform.Find("Monster_Text").gameObject;
@@ -116,6 +167,32 @@ public class BulletController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+        void CalculateWithNearestNumber()
+    {
+        GameObject[] numbers = GameObject.FindGameObjectsWithTag("Number");
+
+        if (numbers.Length == 0)
+        {
+            // 如果没有球体对象，不执行任何操作
+            return;
+        }
+
+        // 计算最近的球体对象
+        float minDistance = 1.0f;
+        nearestnumber = null;
+
+        foreach (GameObject number in numbers)
+        {
+            float distance = Vector3.Distance(transform.position, number.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestnumber = number;
+            }
+        }
+
     }
 
 }

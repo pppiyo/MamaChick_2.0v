@@ -55,6 +55,7 @@ public class Transition : MonoBehaviour
     {
         globalVariablesReset();
         GlobalVariables.curLevel = "level4-1";
+        GlobalVariables.gravityLevel = true;
         SceneManager.LoadScene("_Level4-1");
     }
     public void LoadLevel4_2()
@@ -114,6 +115,7 @@ public class Transition : MonoBehaviour
     {
             globalVariablesReset();
             GlobalVariables.curLevel = "tutorial 4";
+            GlobalVariables.gravityLevel = true;
             SceneManager.LoadScene("_Tutorial4");
     }
 
