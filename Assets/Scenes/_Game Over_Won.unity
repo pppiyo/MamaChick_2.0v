@@ -936,7 +936,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1898761567}
-        m_TargetAssemblyTypeName: NextLevelButton, Assembly-CSharp
+        m_TargetAssemblyTypeName: NextLevel, Assembly-CSharp
         m_MethodName: LoadNextLevel
         m_Mode: 1
         m_Arguments:
@@ -1421,9 +1421,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1898761564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b049763a294c344f5a3b8d3bb1aa522c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8245a3cf928da43d08aee8d94a18a808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLevels: 5
 --- !u!1 &1907522244
 GameObject:
   m_ObjectHideFlags: 0
