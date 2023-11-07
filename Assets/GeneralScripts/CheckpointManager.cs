@@ -84,6 +84,19 @@ public class CheckpointManager : MonoBehaviour
                     break;
             }
         }
+
+        if (GlobalVariables.curLevel == "tutorial 5" && obstacle.gameObject.CompareTag("Spike"))
+        {
+            switch (obstacle.gameObject.transform.parent.name)
+            {
+                case "Stage0":
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                    break;
+                case "Stage4":
+                    transform.position = GameObject.Find("Checkpoint1").transform.position;
+                    break;
+            }
+        }
     }
     
     // Update is called once per frame
