@@ -10,7 +10,7 @@ public class WheelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(GameObject.Find("TutorialInstructions") == null)
+        if(GlobalVariables.curLevel != "tutorial 1")
         {
             operatorID = 0;
             EventSystem.current.SetSelectedGameObject(addDefault.gameObject);
@@ -19,7 +19,7 @@ public class WheelController : MonoBehaviour
 
     void Update()
     {
-        if(operatorID == 0 && GameObject.Find("TutorialInstructions") == null)
+        if(operatorID == 0 && GlobalVariables.curLevel != "tutorial 1")
         {
             EventSystem.current.SetSelectedGameObject(addDefault.gameObject);
         }

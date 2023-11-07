@@ -48,6 +48,8 @@ public class TutorialManager : MonoBehaviour
     private GameObject Stage5Objects;
     private GameObject Platform_1_7;
     private GameObject Platform_1_8;
+    private GameObject Platform_1_9;
+    private GameObject Platform_1_10;
     private GameObject Destination;
 
     // Variables for level 2 tracking
@@ -56,7 +58,6 @@ public class TutorialManager : MonoBehaviour
     public GameObject Number2_1;
     public GameObject Number2_2;
     public GameObject Number3_1;
-    private GameObject Platform_1_9;
 
     //Miscelleneous Variables for different functions
     private bool shouldWait;
@@ -111,7 +112,14 @@ public class TutorialManager : MonoBehaviour
         EpressInstruction = GameObject.Find("EpressInstruction");
         Platform_1_7 = GameObject.Find("Platform_1_7");
         Platform_1_8 = GameObject.Find("Platform_1_8");
+        Platform_1_9 = GameObject.Find("Platform_1_9");
+        Platform_1_10 = GameObject.Find("Platform_1_10");
 
+        // Level 4 is simple in text for now
+        if (GlobalVariables.curLevel == "tutorial 4")
+        {
+            return;
+        }
         // Hide all the tutorial elements initially
         tutorialElements = GameObject.FindGameObjectsWithTag("Tutorial_key");
         foreach (GameObject obj in tutorialElements)
@@ -270,6 +278,7 @@ public class TutorialManager : MonoBehaviour
         Platform_1_7.SetActive(true);
         Platform_1_8.SetActive(true);
         Platform_1_9.SetActive(true);
+        Platform_1_10.SetActive(true);
         Destination.SetActive(true);
         level1Stage4 = 5;
     }
@@ -409,6 +418,7 @@ public class TutorialManager : MonoBehaviour
     {
         Platform_1_1.SetActive(true);
         Platform_1_3.SetActive(true);
+        Platform_1_10.SetActive(true);
         JumpInstruction.SetActive(true);
         Checkpoint1.SetActive(true);
         level2Stage0 = 1;
@@ -456,10 +466,9 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 2:
                 if (!Number2_1.activeSelf && !Number2_2.activeSelf && !Number3_1.activeSelf)
-                {
+                {/*
                     if (Player.GetComponent<PlayerControl>().currentX < 9)
                     {
-                        Debug.Log("PLayerrrr");
                         Player.transform.position = GameObject.Find("Checkpoint1").transform.position;
                         Player.GetComponent<PlayerControl>().currentX = 0;
                         GameObject.Find("Player_Number").GetComponent<TMP_Text>().text = "0";
@@ -467,12 +476,11 @@ public class TutorialManager : MonoBehaviour
                         Number2_1.SetActive(true);
                         Number2_2.SetActive(true);
                         Number3_1.SetActive(true);
-                    }
+                    }*/
                 }
                 if (Player.transform.position.x > 60)
                 {
                     SpikeInstruction.SetActive(false);
-                    Debug.Log("ehewdg");
                     deactivateLevel2Stage0();
                 }
                 break;
@@ -480,7 +488,6 @@ public class TutorialManager : MonoBehaviour
                 switch (level2Stage1)
                 {
                     case 0:
-                        Debug.Log("ehewdg");
                         activateLevel2Stage1();
                         break;
                     case 1:

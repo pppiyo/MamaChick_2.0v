@@ -118,12 +118,12 @@ public class PlayerControl : MonoBehaviour
                 // Debug.Log(currentX);
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
-                if (tutorialCheck == null)
+                if (tutorialCheck == null || GlobalVariables.curLevel == "tutorial 4")
                     Destroy(nearestNumber);
-                else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
+                /* else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
                 {
                     nearestNumber.SetActive(false);
-                }
+                } */
                 nearestNumber = null; // Clear the collider reference after processing
             }
         }
