@@ -99,6 +99,7 @@ public class PlayerControl : MonoBehaviour
     {
 
         KeepPlayerInBound();
+        
         CalculateNearestNumber();
 
         if (nearestNumber!= null && Input.GetKeyDown(KeyCode.E))
@@ -128,7 +129,18 @@ public class PlayerControl : MonoBehaviour
             }
         }
         // Detect player input for horizontal movement.
+        // float horizontalInput = Input.GetAxis("Horizontal");
+
+        // Use "Horizontal" and "HorizontalAlt" axes for input
         float horizontalInput = Input.GetAxis("Horizontal");
+
+        // // Calculate movement vector
+        // Vector3 moveDirection = new Vector3(horizontalInput, 0, 0);
+        // moveDirection.Normalize(); // Ensure it's a unit vector
+
+        // // Move the character
+        // transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+
 
         // Check if the player is changing direction.
         if ((horizontalInput < 0 && facingRight) || (horizontalInput > 0 && !facingRight))
@@ -137,7 +149,7 @@ public class PlayerControl : MonoBehaviour
             Flip();
         }
 
-        // gain the moveDirection
+        // Gain the moveDirection
         if (horizontalInput != 0)
         {
             moveDirection = new Vector3(horizontalInput, 0f, 0f);
@@ -148,15 +160,10 @@ public class PlayerControl : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
-
-        // //  Keep player in bound
-        // if (transform.position.x > rightBound)
-        //     transform.position = new Vector2(rightBound, transform.position.y);
-        // else if (transform.position.x < leftBound)
-        //     transform.position = new Vector2(leftBound, transform.position.y);
+            
 
         // Jump With Impulse Force 
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)))
         {
             if (gravityDirection == 1)
                 playerRB.AddForce(force, ForceMode2D.Impulse);
@@ -359,7 +366,9 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
+        // added?
         ShowHint(hintDisplay);
+        
         StartCoroutine(HideHint(1));
 
         return false;
@@ -434,21 +443,6 @@ public class PlayerControl : MonoBehaviour
             // Jump Enabled
             isGrounded = true;
         }
-
-
-        // Score update
-        // if (obstacle.gameObject.CompareTag("Number"))
-        // {
-        //     increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value); // number for the value on the Number object
-        //     UpdateScore(increaseX);
-        //     resolvePlatforms();
-        //     if (tutorialCheck == null)
-        //         Destroy(obstacle.gameObject);
-        //     if(GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
-        //     {
-        //         obstacle.gameObject.SetActive(false);
-        //     }
-        // }
 
         if (obstacle.gameObject.CompareTag("Goal"))
         {
@@ -579,10 +573,12 @@ public class PlayerControl : MonoBehaviour
     void OnTriggerEnter2D(Collider2D obstacle)
     {
         //update score
+
         // if (obstacle.gameObject.CompareTag("Number"))
         // {
         //     currentCollidingObject = obstacle; // Store the collider for use in Update
         // }
+        
         if (obstacle.gameObject.CompareTag("Portal"))
         {
             TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
@@ -695,7 +691,7 @@ public class PlayerControl : MonoBehaviour
     private void ReturnToMainMenu()
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
-        SceneLoader.GetComponent<Transition>().LoadGameOverWon();
+        SceneLoader.GetComponent<Transition>().LoadMainMenu();
     }
 
     //test_ball
@@ -739,6 +735,8 @@ public class PlayerControl : MonoBehaviour
 
         // 计算最近的球体对象
         float minDistance = float.MaxValue;
+        nearestBall = null;
+
         foreach (GameObject ball in balls)
         {
             float distance = Vector3.Distance(transform.position, ball.transform.position);
