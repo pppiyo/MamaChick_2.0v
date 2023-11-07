@@ -18,8 +18,10 @@ public class JudgeEquation : MonoBehaviour
         return e.calculate();
     }
 
-    public bool CheckEquation(string equationStr, int varValue)
+    public bool CheckEquation(string equationStr, int varValuePassed)
     {
+        // variable Name overriding caused memory leak errors
+        varValue = varValuePassed;
         if (equationStr.Trim().ToLower() == "even")
         {
             return varValue % 2 == 0;
@@ -30,6 +32,7 @@ public class JudgeEquation : MonoBehaviour
         }
 
         var match = Regex.Match(equationStr, @"(.+)(<=|>=|<|>|!=|==)([^=]+)");
+        Debug.Log(match.Success);
         if (!match.Success)
             return false;
 
@@ -40,8 +43,8 @@ public class JudgeEquation : MonoBehaviour
         double leftValue = Evaluate(leftExpr);
         double rightValue = Evaluate(rightExpr);
 
-        // Debug.Log("left:"+ leftValue);
-        // Debug.Log("right:"+ rightValue);
+        Debug.Log("left:"+ leftValue);
+        Debug.Log("right:"+ rightValue);
 
         switch (operatorStr)
         {

@@ -107,7 +107,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &-1875227431620451980
 CapsuleCollider2D:
@@ -144,12 +144,13 @@ MonoBehaviour:
   xObject: {fileID: 8912069458882757949}
   WheelManager: {fileID: 0}
   operatorID: 0
-  rightBound: 40
-  leftBound: -10
   gravityDirection: 0
   hintText: {fileID: 0}
   SceneLoader: {fileID: 0}
   isGrounded: 0
+  ground: {fileID: 0}
+  rightBound: 40
+  leftBound: -10
 --- !u!1001 &5361902882650600056
 PrefabInstance:
   m_ObjectHideFlags: 0

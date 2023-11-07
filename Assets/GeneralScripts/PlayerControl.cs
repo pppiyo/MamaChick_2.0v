@@ -42,6 +42,7 @@ public class PlayerControl : MonoBehaviour
     private Collider2D currentCollidingObject = null;
     //test_ball
     public static GameObject nearestBall;
+    public static GameObject nearestNumber = null;
     private bool canTeleport = true;
 
 
@@ -98,25 +99,33 @@ public class PlayerControl : MonoBehaviour
     {
 
         KeepPlayerInBound();
+        
+        CalculateNearestNumber();
 
-
-
-        if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E))
+        if (nearestNumber!= null && Input.GetKeyDown(KeyCode.E))
         {
             // Grab the Number object's text
-            numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
+            numberTextGameObject = nearestNumber.transform.Find("Number_Text").gameObject;
             numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
             int increaseX = int.Parse(numberText); // number for the value on the Number object
-
+            // Debug.Log(increaseX);
+            
             // Use Regex.IsMatch to check if the text in the GameObject in currentCollidingObject contains a number
             if (Regex.IsMatch(numberText, @"\d"))
             // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
             {
                 UpdateScore(increaseX);
                 resolvePlatforms();
+                // Debug.Log(currentX);
+
+                // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
                 if (tutorialCheck == null)
-                    Destroy(currentCollidingObject.gameObject);
-                currentCollidingObject = null; // Clear the collider reference after processing
+                    Destroy(nearestNumber);
+                else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
+                {
+                    nearestNumber.SetActive(false);
+                }
+                nearestNumber = null; // Clear the collider reference after processing
             }
         }
         // Detect player input for horizontal movement.
@@ -131,8 +140,6 @@ public class PlayerControl : MonoBehaviour
 
         // // Move the character
         // transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
-
-
 
 
         // Check if the player is changing direction.
@@ -153,14 +160,14 @@ public class PlayerControl : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
-
+            
 
         // Jump With Impulse Force 
         if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)))
         {
             if (gravityDirection == 1)
                 playerRB.AddForce(force, ForceMode2D.Impulse);
-            else
+            else if(GlobalVariables.gravityLevel)
                 playerRB.AddForce((float)-0.7 * force, ForceMode2D.Impulse);
         }
 
@@ -179,7 +186,7 @@ public class PlayerControl : MonoBehaviour
         // Flip Gravity
         if (currentX >= 0)
             Physics2D.gravity = invertedGravity;
-        else
+        else if(GlobalVariables.gravityLevel)
             Physics2D.gravity = (float)-0.5 * invertedGravity;
 
         // Change Operator from arrow keys
@@ -225,17 +232,34 @@ public class PlayerControl : MonoBehaviour
     // Sets the platform logic at start and whenever currentX changes
     public void resolvePlatforms()
     {
+        Renderer renderer = GetComponent<Renderer>();
         // Check all platforms and separate solid platforms
         // Debug.Log("Resolving platforms");
         foreach (GameObject platform in platforms)
         {
+            SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
             if (CanPassPlatform(platform))
+
             {
                 DisableLayerCollision(platform);
+                if (spriteRenderer != null)
+                {
+                    // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
+                    Color transparentColor = new Color(1, 1, 1, 0.5f);
+                    // 设置SpriteRenderer的颜色为我们创建的透明颜色
+                    spriteRenderer.color = transparentColor;
+                }
             }
             else
             {
                 EnableLayerCollision(platform);
+                if (spriteRenderer != null)
+                {
+                    // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
+                    Color transparentColor = new Color(1, 1, 1, 1);
+                    // 设置SpriteRenderer的颜色为我们创建的透明颜色
+                    spriteRenderer.color = transparentColor;
+                }
             }
         }
     }
@@ -309,35 +333,42 @@ public class PlayerControl : MonoBehaviour
                 break;
         }
 
-        if (result < 0)
+        // Only is Gravity for the level is activated
+        if (GlobalVariables.gravityLevel)
         {
-            // Flip Gravity Logic;
-            if (previousResult >= 0)
+            if (result < 0)
             {
-                hintDisplay += "\n Flipping Gravity!";
-                gravityDirection = gravityDirection * -1;
-                ShowHint(hintDisplay);
+                // Flip Gravity Logic;
+                if (previousResult >= 0)
+                {
+                    hintDisplay += "\n Flipping Gravity!";
+                    gravityDirection = gravityDirection * -1;
+                    ShowHint(hintDisplay);
+                }
+                else
+                {
+                    ShowHint(hintDisplay);
+                }
             }
             else
             {
-                ShowHint(hintDisplay);
-            }
-        }
-        else
-        {
-            // Flip Gravity Logic;
-            if (previousResult < 0)
-            {
-                hintDisplay += "\n Flipping Gravity!";
-                gravityDirection = gravityDirection * -1;
-                ShowHint(hintDisplay);
-            }
-            else
-            {
-                ShowHint(hintDisplay);
+                // Flip Gravity Logic;
+                if (previousResult < 0)
+                {
+                    hintDisplay += "\n Flipping Gravity!";
+                    gravityDirection = gravityDirection * -1;
+                    ShowHint(hintDisplay);
+                }
+                else
+                {
+                    ShowHint(hintDisplay);
+                }
             }
         }
 
+        // added?
+        ShowHint(hintDisplay);
+        
         StartCoroutine(HideHint(1));
 
         return false;
@@ -362,7 +393,7 @@ public class PlayerControl : MonoBehaviour
     private IEnumerator TeleportCooldown()
     {
         canTeleport = false; // 禁止传送
-        yield return new WaitForSeconds(1); // 等待1秒
+        yield return new WaitForSeconds(2); // 等待1秒
         canTeleport = true; // 重新启用传送
     }
 
@@ -413,7 +444,6 @@ public class PlayerControl : MonoBehaviour
             isGrounded = true;
         }
 
-
         if (obstacle.gameObject.CompareTag("Goal"))
         {
             // Debug.Log("Goal");
@@ -429,6 +459,11 @@ public class PlayerControl : MonoBehaviour
 
         // if Player collides with a mutate platform
         if (obstacle.gameObject.CompareTag("Platform_Solid"))
+        {
+            isGrounded = true;
+        }
+
+        if (obstacle.gameObject.CompareTag("Elevator"))
         {
             isGrounded = true;
         }
@@ -538,10 +573,12 @@ public class PlayerControl : MonoBehaviour
     void OnTriggerEnter2D(Collider2D obstacle)
     {
         //update score
-        if (obstacle.gameObject.CompareTag("Number"))
-        {
-            currentCollidingObject = obstacle; // Store the collider for use in Update
-        }
+
+        // if (obstacle.gameObject.CompareTag("Number"))
+        // {
+        //     currentCollidingObject = obstacle; // Store the collider for use in Update
+        // }
+        
         if (obstacle.gameObject.CompareTag("Portal"))
         {
             TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
@@ -600,6 +637,7 @@ public class PlayerControl : MonoBehaviour
             nearbyTeleporterDestination = null;
             StartCoroutine(HideHint(0));
         }
+        // currentCollidingObject = null;
     }
 
     void DisableLayerCollision(GameObject Platform)
@@ -627,7 +665,7 @@ public class PlayerControl : MonoBehaviour
 
             // 设置JudgeEquation组件的equationText属性为障碍物上的方程
             judge.equationText = obstacleEquationText;
-
+            
             // 设置JudgeEquation的targetObject为碰撞的障碍物
             judge.targetObject = obstacle.gameObject;
 
@@ -638,6 +676,7 @@ public class PlayerControl : MonoBehaviour
 
             if (judge.playerEquationText != null)
             {
+                Debug.Log(obstacleEquationText.text);
                 judge.varValue = int.Parse(judge.playerEquationText.text);
             }
             // Debug.Log(judge.varValue);
@@ -657,9 +696,36 @@ public class PlayerControl : MonoBehaviour
 
     //test_ball
 
+    void CalculateNearestNumber()
+    {
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Number");
+
+        if (balls.Length == 0)
+        {
+            // 如果没有球体对象，不执行任何操作
+            return;
+        }
+
+        // 计算最近的球体对象
+        float minDistance = 1.5f;
+        foreach (GameObject ball in balls)
+        {
+            float distance = Vector3.Distance(transform.position, ball.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestNumber = ball;
+            }
+        }
+
+        // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
+        
+
+    }
+
     void PickupNearestNumber()
     {
-        GameObject[] balls = GameObject.FindGameObjectsWithTag("Test_ball");
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Number");
 
         if (balls.Length == 0)
         {

@@ -1,67 +1,99 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Elevator : MonoBehaviour
 {
-    [SerializeField]
-    private float moveSpeed = 2.0f; // vertical speed of elevator
+    public float targetHeight;
+    
+    public float moveSpeed;
 
-    [SerializeField]
-    private int condition = 1; // ?
-    private GameObject SceneLoader;
-    public GameObject lowerPlatform; // Reference to the platform that gives the lower boundary of the elevator
-    public GameObject upperPlatform; // Reference to the platform that gives the upper boundary of the elevator
-    private float upperBoundary; // y position of the upper boundary
-    private float lowerBoundary; // y position of the lower boundary
-    private int direction = 1; // up: 1, down: -1 
-    private Vector2 currentPosition; // current position of the elevator
+    public int direction; //1:up, 2: down
 
-    void Start()
-    {
-        SceneLoader = GameObject.Find("SceneManager");
-        GetBoundary();
-    }
+    private bool isMoving = false;
 
-    // Get the upper and lower double boundaries of the elevator
-    private void GetBoundary()
-    {
-        if (upperBoundary != null || lowerBoundary != null)
-        {
-            Transform upperPlatformTransform = upperPlatform.transform;
-            Transform lowerPlatformTransform = lowerPlatform.transform;
-
-            // Calculate the left and right boundaries of the platform
-            upperBoundary = upperPlatformTransform.position.y;
-            lowerBoundary = lowerPlatformTransform.position.y;
-        }
-    }
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Get current position
-        currentPosition = transform.position;
-        // Debug.Log("currentPosition: " + currentPosition);
-
-        // Update current position with time
-        currentPosition.y += moveSpeed * direction * Time.deltaTime;
-        transform.position = currentPosition;
-
-        // // 检查是否达到边界，如果是，改变方向
-        if (currentPosition.y <= lowerBoundary)
-        {
-            direction = 1; // face down
-        }
-        else if (currentPosition.y >= upperBoundary)
-        {
-            direction = -1; // face up
-        }
-    }
+    private Collision2D ball;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        ball = collision;
+        if ((collision.gameObject.CompareTag("Number")) && !isMoving)
+        {
+            // 如果碰到的物体的标签是"number" 且电梯没有在移动中
+            // 在这里可以添加你的电梯升高的代码
+            if(CanTakeElevator(gameObject))
+                StartCoroutine(MoveElevator());
+            Destroy(collision.gameObject);
+            Debug.Log(CanTakeElevator(gameObject));
+        }
     }
+
+    private IEnumerator MoveElevator()  
+    {
+        isMoving = true;
+        // float targetHeight = 8f; // 电梯目标高度
+        // float moveSpeed = 2f; // 升降速度
+
+        if(direction == 1){
+            while (transform.position.y < targetHeight)
+            {
+                // 在这里更新电梯的高度
+                Vector3 newPosition = transform.position + Vector3.up * moveSpeed * Time.deltaTime;
+                transform.position = new Vector3(transform.position.x, Mathf.Min(newPosition.y, targetHeight), transform.position.z);
+                yield return null;
+            }
+        }
+
+        else if(direction == 2){
+            while (transform.position.y > targetHeight)
+            {
+                // 在这里更新电梯的高度
+                Vector3 newPosition = transform.position + Vector3.down * moveSpeed * Time.deltaTime;
+                transform.position = new Vector3(transform.position.x, Mathf.Max(newPosition.y, targetHeight), transform.position.z);
+                yield return null;
+            }
+        }
+        
+
+        isMoving = false;
+    }
+
+        bool CanTakeElevator(GameObject obstacle)
+        {
+            bool pass = false;
+
+            // Platform Equation Logic
+            TextMeshPro obstacleEquationText = obstacle.GetComponentInChildren<TextMeshPro>();
+            if (obstacleEquationText != null && obstacleEquationText.text.Length != 0)
+            {
+                GameObject obj = GameObject.Find("EquationManager");
+
+                JudgeEquation judge = obj.GetComponent<JudgeEquation>();
+
+                // 设置JudgeEquation组件的equationText属性为障碍物上的方程
+                judge.equationText = obstacleEquationText;
+                
+                // 设置JudgeEquation的targetObject为碰撞的障碍物
+                judge.targetObject = obstacle.gameObject;
+
+                
+                judge.playerEquationText = ball.gameObject.GetComponentInChildren<TextMeshPro>();
+                // Debug.Log(judge.playerEquationText.text);
+
+                if (judge.playerEquationText != null)
+                {
+                    Debug.Log(obstacleEquationText.text);
+                    judge.varValue = int.Parse(judge.playerEquationText.text);
+                }
+                // Debug.Log(judge.varValue);
+
+                // 调用EvaluateFromTextMeshPro方法来检查玩家的数值是否满足方程
+                pass = judge.EvaluateFromTextMeshPro(); // if 
+            }
+            return pass;
+        }
+
+
+    
 }

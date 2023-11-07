@@ -24,6 +24,7 @@ TagManager:
   - Plat_Modify
   - Test_ball
   - Monster2
+  - Elevator
   layers:
   - Default
   - TransparentFX
