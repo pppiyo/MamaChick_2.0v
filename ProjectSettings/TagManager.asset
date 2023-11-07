@@ -37,7 +37,7 @@ TagManager:
   - 'Number  '
   - Monster
   - Bullet
-  - 
+  - background
   - 
   - 
   - 
@@ -61,4 +61,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 1566343665
     locked: 0
