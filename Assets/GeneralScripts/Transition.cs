@@ -118,7 +118,7 @@ public class Transition : MonoBehaviour
             GlobalVariables.curLevel = "tutorial 3";
             GlobalVariables.gravityLevel = false;
             GlobalVariables.platformMap = new Dictionary<string, int>();
-            SceneManager.LoadScene("_Tutorial3");
+            SceneManager.LoadScene("_Tutorial3_Old");
     }
 
     public void LoadTutorial4()
