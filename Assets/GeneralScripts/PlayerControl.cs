@@ -234,7 +234,7 @@ public class PlayerControl : MonoBehaviour
 
             // 设置球体位置为玩家头部位置
             nearestBall.transform.position = playerHeadPosition;
-
+            GlobalVariables.numbersGrabbed++;
         }
 
         

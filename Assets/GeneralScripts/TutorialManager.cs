@@ -539,7 +539,7 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 1:
                 // picked up logic
-                if (true)
+                if (GlobalVariables.numbersGrabbed > 0)
                 {
                     JumpInstruction.SetActive(false);
                     level3Stage0 = 2;
@@ -548,7 +548,7 @@ public class TutorialManager : MonoBehaviour
             case 2:
                 OperationInstruction.SetActive(true);
                 // shot logic
-                if (true)
+                if (GlobalVariables.numberShot > 0)
                 {
                     OperationInstruction.SetActive(false);
                     level3Stage0 = 3;

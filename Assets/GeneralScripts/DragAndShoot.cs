@@ -222,6 +222,7 @@ public class DragAndShoot : MonoBehaviour
             Shoot();
             screenLine.enabled = false;
             line.enabled = false;
+            GlobalVariables.numberShot++;
         }
         else
         {
@@ -232,6 +233,7 @@ public class DragAndShoot : MonoBehaviour
                 Shoot();
                 screenLine.enabled = false;
                 line.enabled = false;
+                GlobalVariables.numberShot++;
             }
         }
     }

@@ -32,4 +32,7 @@ public static class GlobalVariables
 
     public static int inverseTimes;
 
+    public static int numbersGrabbed = 0;
+
+    public static int numberShot = 0;
 }

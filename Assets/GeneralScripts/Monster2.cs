@@ -17,7 +17,7 @@ public class Monster2 : MonoBehaviour
     private GameObject[] allPlatforms;
     private int direction = 1; // up: 1, down: -1 
 
-    public TMP_Text numberText;  // Reference to the TMP_Text component with the number.
+    private TMP_Text numberText;  // Reference to the TMP_Text component with the number.
     public float scaleMultiplier = 0.1f;  // Adjust this to control the scaling rate.
 
     private Vector3 initialScale;
@@ -25,17 +25,9 @@ public class Monster2 : MonoBehaviour
     private Vector3 initialPosition;
     private float yOffset;
 
+    private int MAX = 40;
+    private int actualValue = 0;
 
-
-
-    // private TMP_Text numberText;
-    // private string monsterText;
-    // // private TMP_Text textComponent;
-
-    // private int currentNumber;
-    // [SerializeField] private float scaleMultiplier = 0.02f;  // Adjust this to control the scaling rate.
-
-    // private float originalBottom;
     // private Vector3 originalSize;
 
     void Start()
@@ -77,91 +69,91 @@ public class Monster2 : MonoBehaviour
 
     }
 
-private void UpdateSize()
-{
-    if (int.TryParse(numberText.text, out int number))
+    private void UpdateSize()
     {
-        // Calculate the new scale based on the number for both width and height.
-        float scaleFactor = number * scaleMultiplier;
+        if (int.TryParse(numberText.text, out int number))
+        {
+            if (number <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else if (number > MAX)
+            {
+                number = MAX;
+            }
 
-        // Apply the scale factor to the initial scale.
-        Vector3 newScale = new Vector3(initialScale.x * scaleFactor, initialScale.y * scaleFactor, initialScale.z);
+            actualValue = number;
+            // Calculate the new scale based on the number for both width and height.
+            float scaleFactor = number * scaleMultiplier;
 
-        // Set the new scale to the transform.
-        transform.localScale = newScale;
+            // Apply the scale factor to the initial scale.
+            Vector3 newScale = new Vector3(initialScale.x * scaleFactor, initialScale.y * scaleFactor, initialScale.z);
 
-        // Since we are scaling uniformly and the pivot is at the center, the object will grow equally in all directions.
-        // To keep the bottom in the same position, we need to move the object up by half the increased height.
-        float heightIncrease = (initialScale.y * scaleFactor) - initialScale.y;
-        float newYPosition = initialPosition.y + heightIncrease / 2;
+            // Set the new scale to the transform.
+            transform.localScale = newScale;
 
-        // Set the new position to the transform.
-        transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
+            // Since we are scaling uniformly and the pivot is at the center, the object will grow equally in all directions.
+            // To keep the bottom in the same position, we need to move the object up by half the increased height.
+            float heightIncrease = (initialScale.y * scaleFactor) - initialScale.y;
+            float newYPosition = initialPosition.y + heightIncrease / 2;
+
+            // Set the new position to the transform.
+            transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
+        }
+        else
+        {
+            Debug.LogError("Failed to parse the number.");
+        }
     }
-    else
-    {
-        Debug.LogError("Failed to parse the number.");
-    }
-}
-
-
-
-    // private void UpdateSize()
-    // {
-    //     // GetComponent<TMP_Text>().fontSize = currentNumber * scaleMultiplier;
-
-    //     // Parse the number from the TMP_Text component.
-    //     if (int.TryParse(numberText.text, out int number))
-    //     {
-    //         // Calculate the new scale factor based on the number.
-    //         float scaleFactor = number * scaleMultiplier;
-
-    //         // Update the GameObject's scale.
-    //         transform.localScale = new Vector3(initialScale.x + scaleFactor, initialScale.y + scaleFactor, initialScale.z);
-
-    //         // Calculate the position adjustment to maintain the bottom on the ground.
-    //         float newHeight = initialHeight * scaleFactor;
-    //         yOffset = (newHeight - initialHeight) / 2.0f;
-
-    //         // Adjust the GameObject's position to keep the bottom on the ground.
-    //         // transform.position = new Vector3(initialPosition.x, initialPosition.y + yOffset, initialPosition.z);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("Failed to parse the number.");
-    //     }
-
-    // }
 
     private void UpdateMovement()
     {
+        if (actualValue == MAX)
+        {
+            // Debug.Log("actualValue: " + actualValue);
+            return;
+        }
+
+        else
+        {
+            Vector2 currentPosition = transform.position;
+            // Debug.Log("currentPosition: " + currentPosition);
+
+            // // 根据方向和速度更新位置
+            currentPosition.x += moveSpeed * direction * Time.deltaTime;
+            currentPosition.y += yOffset;
+            transform.position = currentPosition;
+
+            // // 检查是否达到边界，如果是，改变方向
+            if (currentPosition.x <= leftBoundary)
+            {
+                direction = 1; // 向右
+            }
+            else if (currentPosition.x >= rightBoundary)
+            {
+                direction = -1; // 向左
+            }
+        }
         // 获取当前位置
-        Vector2 currentPosition = transform.position;
-        // Debug.Log("currentPosition: " + currentPosition);
 
-        // // 根据方向和速度更新位置
-        currentPosition.x += moveSpeed * direction * Time.deltaTime;
-        currentPosition.y += yOffset;
-        transform.position = currentPosition;
-
-        // // 检查是否达到边界，如果是，改变方向
-        if (currentPosition.x <= leftBoundary)
-        {
-            direction = 1; // 向右
-        }
-        else if (currentPosition.x >= rightBoundary)
-        {
-            direction = -1; // 向左
-        }
     }
 
 
+    // private void OnCollisionEnter2D(Collision2D other)
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Debug.Log("hi");
+        if (other.gameObject.CompareTag("Elevator2"))
+        {
+            Debug.Log("monster2 collided with elevator2");
+            Destroy(other.gameObject);
+        }
         if (other.gameObject.CompareTag("Player"))
         {
             Destroy(other.gameObject);
         }
+
+        // if (other.gameObject.CompareTag("Elevator2"))
     }
 
     private void GetBoundary()
