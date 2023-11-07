@@ -42,6 +42,7 @@ public class PlayerControl : MonoBehaviour
     private Collider2D currentCollidingObject = null;
     //test_ball
     public static GameObject nearestBall;
+    public static GameObject nearestNumber = null;
     private bool canTeleport = true;
 
 
@@ -98,11 +99,12 @@ public class PlayerControl : MonoBehaviour
     {
 
         KeepPlayerInBound();
+        CalculateNearestNumber();
 
-        if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E))
+        if (nearestNumber!= null && Input.GetKeyDown(KeyCode.E))
         {
             // Grab the Number object's text
-            numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
+            numberTextGameObject = nearestNumber.transform.Find("Number_Text").gameObject;
             numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
             int increaseX = int.Parse(numberText); // number for the value on the Number object
             // Debug.Log(increaseX);
@@ -117,12 +119,12 @@ public class PlayerControl : MonoBehaviour
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
                 if (tutorialCheck == null)
-                    Destroy(currentCollidingObject.gameObject);
+                    Destroy(nearestNumber);
                 else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
                 {
-                    currentCollidingObject.gameObject.SetActive(false);
+                    nearestNumber.SetActive(false);
                 }
-                currentCollidingObject = null; // Clear the collider reference after processing
+                nearestNumber = null; // Clear the collider reference after processing
             }
         }
         // Detect player input for horizontal movement.
@@ -434,7 +436,7 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        // // Score update
+        // Score update
         // if (obstacle.gameObject.CompareTag("Number"))
         // {
         //     increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value); // number for the value on the Number object
@@ -572,10 +574,10 @@ public class PlayerControl : MonoBehaviour
     void OnTriggerEnter2D(Collider2D obstacle)
     {
         //update score
-        if (obstacle.gameObject.CompareTag("Number"))
-        {
-            currentCollidingObject = obstacle; // Store the collider for use in Update
-        }
+        // if (obstacle.gameObject.CompareTag("Number"))
+        // {
+        //     currentCollidingObject = obstacle; // Store the collider for use in Update
+        // }
         if (obstacle.gameObject.CompareTag("Portal"))
         {
             TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
@@ -634,7 +636,7 @@ public class PlayerControl : MonoBehaviour
             nearbyTeleporterDestination = null;
             StartCoroutine(HideHint(0));
         }
-        currentCollidingObject = null;
+        // currentCollidingObject = null;
     }
 
     void DisableLayerCollision(GameObject Platform)
@@ -692,6 +694,33 @@ public class PlayerControl : MonoBehaviour
     }
 
     //test_ball
+
+    void CalculateNearestNumber()
+    {
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Number");
+
+        if (balls.Length == 0)
+        {
+            // 如果没有球体对象，不执行任何操作
+            return;
+        }
+
+        // 计算最近的球体对象
+        float minDistance = 1.5f;
+        foreach (GameObject ball in balls)
+        {
+            float distance = Vector3.Distance(transform.position, ball.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestNumber = ball;
+            }
+        }
+
+        // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
+        
+
+    }
 
     void PickupNearestNumber()
     {
