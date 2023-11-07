@@ -36,7 +36,7 @@ public class DragAndShoot : MonoBehaviour
 
     void Start()
     {
-        textTransform = transform.Find("Number_Text"); 
+        textTransform = transform.Find("Number_Text");
 
         rb = GetComponent<Rigidbody2D>();
 
@@ -52,7 +52,7 @@ public class DragAndShoot : MonoBehaviour
         // 获取 GameObject 上的 Rigidbody2D 和 Collider2D 组件
         rb2d = GetComponent<Rigidbody2D>();
         col2d = GetComponent<Collider2D>();
-        
+
     }
 
     void Update()
@@ -105,7 +105,7 @@ public class DragAndShoot : MonoBehaviour
         {
             //test_ball
             PlayerControl.nearestBall = null;
-            
+
             // if (EventSystem.current.currentSelectedGameObject) return;  //ENABLE THIS IF YOU DONT WANT TO IGNORE UI
             MouseRelease();
 
@@ -121,23 +121,44 @@ public class DragAndShoot : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D platforms)
-    {
-        // Debug.Log(col2d.enabled);
-        if ((platforms.gameObject.CompareTag("Platform_Solid") || platforms.gameObject.CompareTag("Platform_Mutate") ||platforms.gameObject.CompareTag("Ground")) && PlayerControl.nearestBall == null)
-        {
-            foreach (ContactPoint2D hit in platforms.contacts)
-            {
-                if (hit.normal == Vector2.up)
-                {
-                    rb2d.simulated = false;
-                    col2d.isTrigger = true;
-                }
-            }
-            // rb2d.simulated = false;
-            // col2d.enabled = false;
-        }
-    }
+    // void OnCollisionEnter2D(Collision2D platforms)
+    // {
+    //     // Debug.Log(col2d.enabled);
+    //     if ((platforms.gameObject.CompareTag("Platform_Solid") || platforms.gameObject.CompareTag("Platform_Mutate") || platforms.gameObject.CompareTag("Ground")) && PlayerControl.nearestBall == null)
+    //     {
+    //         foreach (ContactPoint2D hit in platforms.contacts)
+    //         {
+    //             if (hit.normal == Vector2.up)
+    //             {
+    //                 rb2d.simulated = false;
+    //                 col2d.isTrigger = true;
+    //             }
+    //         }
+    //         // rb2d.simulated = false;
+    //         // col2d.enabled = false;
+    //     }
+    // }
+
+    // void OnCollisionExit2D(Collision2D platforms)
+    // {
+    //     // Debug.Log(col2d.enabled);
+    //     if ((platforms.gameObject.CompareTag("Platform_Solid") || platforms.gameObject.CompareTag("Platform_Mutate") || platforms.gameObject.CompareTag("Ground")))
+    //     {
+    //         foreach (ContactPoint2D hit in platforms.contacts)
+    //         {
+    //             if (hit.normal == Vector2.up)
+    //             {
+    //                 rb2d.simulated = false;
+    //                 col2d.isTrigger = false;
+    //             }
+    //         }
+    //         Debug.Log("exit");
+    //         // rb2d.simulated = false;
+    //         // col2d.enabled = true;
+    //         // col2d.isTrigger = false;
+
+    //     }
+    // }
 
     // MOUSE INPUTS
     void MouseClick()

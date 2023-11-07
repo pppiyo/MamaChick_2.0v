@@ -27,28 +27,23 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Check if the bullet is off-screen and destroy it.
-        void DestroyOutOfBounds()
-        {
-            if (transform.position.x < -20 || transform.position.x > 20) // destroy it when out of the scene
-            {
-                Destroy(gameObject);
-            }
-        }
 
-        if (!GetComponent<Renderer>().isVisible)
-        {
-            Destroy(gameObject);
-        }
     }
 
 
-    private void OnTriggerEnter2D(Collider2D obstacle)
+    private void OnCollisionEnter2D(Collision2D obstacle)
+    // private void OnTriggerEnter2D(Collider2D obstacle)
     {
         // Debug.Log("!!!!!!! number and bullet collided!!!!!: " + player);
         if (obstacle.gameObject.CompareTag("Gun"))
         { return; }
 
+
+        // If the bullet collides with a platform, destroy bullet.
+        if (obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate"))
+        {
+            Destroy(gameObject);
+        }
 
         if (obstacle.gameObject.CompareTag("Number") || obstacle.gameObject.CompareTag("Monster2"))
         {
@@ -110,12 +105,12 @@ public class BulletController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Platform_Solid") || other.gameObject.CompareTag("Platform_Mutate"))
-        {
-            Destroy(gameObject);
-        }
-    }
+    // private void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if (other.gameObject.CompareTag("Platform_Solid") || other.gameObject.CompareTag("Platform_Mutate"))
+    //     {
+    //         Destroy(gameObject);
+    //     }
+    // }
 
 }

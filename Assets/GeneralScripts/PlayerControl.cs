@@ -39,10 +39,11 @@ public class PlayerControl : MonoBehaviour
     private GameObject tutorialCheck;
     private GameObject numberTextGameObject;
     private string numberText;
-    private Collider2D currentCollidingObject = null;
+    // private Collider2D currentCollidingObject = null;
+    private Collision2D currentCollidingObject;
     //test_ball
     public static GameObject nearestBall;
-    public static GameObject nearestNumber = null;
+    // public static GameObject nearestNumber = null;
     private bool canTeleport = true;
 
 
@@ -99,16 +100,19 @@ public class PlayerControl : MonoBehaviour
     {
 
         KeepPlayerInBound();
-        nearestNumber = null;
-        CalculateNearestNumber();
-        if (nearestNumber!= null && Input.GetKeyDown(KeyCode.E))
+        // nearestNumber = null;
+        // CalculateNearestNumber();
+
+        if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E))
         {
             // Grab the Number object's text
-            numberTextGameObject = nearestNumber.transform.Find("Number_Text").gameObject;
+            // numberTextGameObject = nearestNumber.transform.Find("Number_Text").gameObject;
+            numberTextGameObject = currentCollidingObject.gameObject.transform.Find("Number_Text").gameObject;
+
             numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
             int increaseX = int.Parse(numberText); // number for the value on the Number object
-            // Debug.Log(increaseX);
-            
+                                                   // Debug.Log(increaseX);
+
             // Use Regex.IsMatch to check if the text in the GameObject in currentCollidingObject contains a number
             if (Regex.IsMatch(numberText, @"\d"))
             // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
@@ -119,27 +123,18 @@ public class PlayerControl : MonoBehaviour
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
                 if (tutorialCheck == null || GlobalVariables.curLevel == "tutorial 5")
-                    Destroy(nearestNumber);
+                    Destroy(currentCollidingObject.gameObject);
                 /* else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
                 {
                     nearestNumber.SetActive(false);
                 } */
-                nearestNumber = null; // Clear the collider reference after processing
+                // nearestNumber = null; // Clear the collider reference after processing
+                currentCollidingObject = null;
             }
         }
-        nearestNumber = null;
-        // Detect player input for horizontal movement.
-        // float horizontalInput = Input.GetAxis("Horizontal");
 
         // Use "Horizontal" and "HorizontalAlt" axes for input
         float horizontalInput = Input.GetAxis("Horizontal");
-
-        // // Calculate movement vector
-        // Vector3 moveDirection = new Vector3(horizontalInput, 0, 0);
-        // moveDirection.Normalize(); // Ensure it's a unit vector
-
-        // // Move the character
-        // transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
 
 
         // Check if the player is changing direction.
@@ -160,14 +155,14 @@ public class PlayerControl : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
-            
+
 
         // Jump With Impulse Force 
         if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)))
         {
             if (gravityDirection == 1)
                 playerRB.AddForce(force, ForceMode2D.Impulse);
-            else if(GlobalVariables.gravityLevel)
+            else if (GlobalVariables.gravityLevel)
                 playerRB.AddForce((float)-0.7 * force, ForceMode2D.Impulse);
         }
 
@@ -186,7 +181,7 @@ public class PlayerControl : MonoBehaviour
         // Flip Gravity
         if (currentX >= 0)
             Physics2D.gravity = invertedGravity;
-        else if(GlobalVariables.gravityLevel)
+        else if (GlobalVariables.gravityLevel)
             Physics2D.gravity = (float)-0.5 * invertedGravity;
 
         // Change Operator from arrow keys
@@ -220,16 +215,17 @@ public class PlayerControl : MonoBehaviour
         if (nearestBall != null)
         {
             // 获取玩家头部位置
-            Vector3 playerHeadPosition = transform.position + new Vector3(0, 2, 0); // 假设头部相对于玩家位置的偏移是 (0, 2, 0)
+            Vector3 playerHeadPosition = transform.position + new Vector3(0, 1, 0); // 假设头部相对于玩家位置的偏移是 (0, 2, 0)
 
             // 设置球体位置为玩家头部位置
             nearestBall.transform.position = playerHeadPosition;
 
         }
-
     }
 
+
     // Sets the platform logic at start and whenever currentX changes
+    // Change the transparency of the platform based on whether the player can pass through it
     public void resolvePlatforms()
     {
         Renderer renderer = GetComponent<Renderer>();
@@ -368,7 +364,7 @@ public class PlayerControl : MonoBehaviour
 
         // added?
         ShowHint(hintDisplay);
-        
+
         StartCoroutine(HideHint(1));
 
         return false;
@@ -397,8 +393,14 @@ public class PlayerControl : MonoBehaviour
         canTeleport = true; // 重新启用传送
     }
 
-    void OnCollisionEnter2D(Collision2D obstacle)
+    private void OnCollisionEnter2D(Collision2D obstacle)
     {
+        if (obstacle.gameObject.CompareTag("Number"))
+        {
+            // Debug.Log("Found a number, set currentCollidingObject!");
+            currentCollidingObject = obstacle; // Store the collider for use in Update
+        }
+
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
         {
             TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
@@ -430,12 +432,12 @@ public class PlayerControl : MonoBehaviour
 
             StartCoroutine(HideHint(1)); // Hide the hint after a delay
         }
+
         // Tutorial You do not kill anyone
         if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
         {
             SceneLoader.GetComponent<Transition>().LoadGameOverLost();
         }
-
 
         // 如果玩家与一个障碍物碰撞
         if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination"))
@@ -467,6 +469,7 @@ public class PlayerControl : MonoBehaviour
         {
             isGrounded = true;
         }
+
 
         // platforms that provide direct calculation
         // if(obstacle.gameObject.CompareTag("Plat_Modify"))
@@ -562,83 +565,99 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination"))
             isGrounded = false;
 
-        if (obstacle.gameObject.CompareTag("Portal"))
-        {
-            StartCoroutine(HideHint(0)); // Hide the hint immediately
-        }
-    }
-
-
-    //teleporter
-    void OnTriggerEnter2D(Collider2D obstacle)
-    {
-        //update score
-
-        // if (obstacle.gameObject.CompareTag("Number"))
+        // if (obstacle.gameObject.CompareTag("Portal"))
         // {
-        //     currentCollidingObject = obstacle; // Store the collider for use in Update
+        //     StartCoroutine(HideHint(0)); // Hide the hint immediately
         // }
-        
-        if (obstacle.gameObject.CompareTag("Portal"))
-        {
-            TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
-            GameObject obj = GameObject.Find("EquationManager");
-            JudgeEquation judge = obj.GetComponent<JudgeEquation>();
-            TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
 
-            if (portalEquationText == null || portalEquationText.text.Length == 0 || playerEquationText != null)
-            {
-                bool equationSatisfied = true;
-
-                if (portalEquationText != null && portalEquationText.text.Length > 0)
-                {
-                    int playerNumber;
-                    if (int.TryParse(playerEquationText.text, out playerNumber))
-                    {
-                        equationSatisfied = judge.CheckEquation(portalEquationText.text, playerNumber);
-                    }
-                    else
-                    {
-                        equationSatisfied = false;
-                    }
-                }
-
-                if (equationSatisfied)
-                {
-                    ShowHint("Press 'E' to teleport");
-                }
-                else
-                {
-                    ShowHint("Your point doesn't satisfy the condition");
-                }
-
-                if (equationSatisfied)
-                {
-                    string pairName = obstacle.gameObject.name.EndsWith("1") ?
-                        obstacle.gameObject.name.Replace("1", "2") :
-                        obstacle.gameObject.name.Replace("2", "1");
-                    GameObject pairPortal = GameObject.Find(pairName);
-                    if (pairPortal != null)
-                    {
-                        nearbyTeleporterDestination = pairPortal.transform;  // set paired portal
-                    }
-                }
-
-            }
-        }
-
-    }
-
-
-    void OnTriggerExit2D(Collider2D obstacle)
-    {
         if (obstacle.gameObject.CompareTag("Portal"))
         {
             nearbyTeleporterDestination = null;
             StartCoroutine(HideHint(0));
         }
-        // currentCollidingObject = null;
     }
+
+
+    //teleporter
+    // void OnTriggerEnter2D(Collider2D obstacle)
+    // {
+    //     //update score
+
+    //     // if (obstacle.gameObject.CompareTag("Number"))
+    //     // {
+    //     //     currentCollidingObject = obstacle; // Store the collider for use in Update
+    //     // }
+
+    //     if (obstacle.gameObject.CompareTag("Portal"))
+    //     {
+    //         TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
+    //         GameObject obj = GameObject.Find("EquationManager");
+    //         JudgeEquation judge = obj.GetComponent<JudgeEquation>();
+    //         TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
+
+    //         if (portalEquationText == null || portalEquationText.text.Length == 0 || playerEquationText != null)
+    //         {
+    //             bool equationSatisfied = true;
+
+    //             if (portalEquationText != null && portalEquationText.text.Length > 0)
+    //             {
+    //                 int playerNumber;
+    //                 if (int.TryParse(playerEquationText.text, out playerNumber))
+    //                 {
+    //                     equationSatisfied = judge.CheckEquation(portalEquationText.text, playerNumber);
+    //                 }
+    //                 else
+    //                 {
+    //                     equationSatisfied = false;
+    //                 }
+    //             }
+
+    //             if (equationSatisfied)
+    //             {
+    //                 ShowHint("Press 'E' to teleport");
+    //             }
+    //             else
+    //             {
+    //                 ShowHint("Your point doesn't satisfy the condition");
+    //             }
+
+    //             if (equationSatisfied)
+    //             {
+    //                 string pairName = obstacle.gameObject.name.EndsWith("1") ?
+    //                     obstacle.gameObject.name.Replace("1", "2") :
+    //                     obstacle.gameObject.name.Replace("2", "1");
+    //                 GameObject pairPortal = GameObject.Find(pairName);
+    //                 if (pairPortal != null)
+    //                 {
+    //                     nearbyTeleporterDestination = pairPortal.transform;  // set paired portal
+    //                 }
+    //             }
+
+    //         }
+    //     }
+
+    // }
+
+
+    // private void OnCollisionExit2D(Collision2D obstacle)
+    // {
+    //     if (obstacle.gameObject.CompareTag("Portal"))
+    //     {
+    //         nearbyTeleporterDestination = null;
+    //         StartCoroutine(HideHint(0));
+    //     }
+    //     // currentCollidingObject = null;
+    // }
+
+    // void OnTriggerExit2D(Collider2D obstacle)
+    // {
+    //     if (obstacle.gameObject.CompareTag("Portal"))
+    //     {
+    //         nearbyTeleporterDestination = null;
+    //         StartCoroutine(HideHint(0));
+    //     }
+    //     // currentCollidingObject = null;
+    // }
 
     void DisableLayerCollision(GameObject Platform)
     {
@@ -665,7 +684,7 @@ public class PlayerControl : MonoBehaviour
 
             // 设置JudgeEquation组件的equationText属性为障碍物上的方程
             judge.equationText = obstacleEquationText;
-            
+
             // 设置JudgeEquation的targetObject为碰撞的障碍物
             judge.targetObject = obstacle.gameObject;
 
@@ -676,7 +695,7 @@ public class PlayerControl : MonoBehaviour
 
             if (judge.playerEquationText != null)
             {
-                Debug.Log(obstacleEquationText.text);
+                // Debug.Log(obstacleEquationText.text);
                 judge.varValue = int.Parse(judge.playerEquationText.text);
             }
             // Debug.Log(judge.varValue);
@@ -696,32 +715,32 @@ public class PlayerControl : MonoBehaviour
 
     //test_ball
 
-    void CalculateNearestNumber()
-    {
-        nearestNumber = null;
-        GameObject[] balls = GameObject.FindGameObjectsWithTag("Number");
+    // void CalculateNearestNumber()
+    // {
+    //     nearestNumber = null;
+    //     GameObject[] balls = GameObject.FindGameObjectsWithTag("Number");
 
-        if (balls.Length == 0)
-        {
-            // 如果没有球体对象，不执行任何操作
-            return;
-        }
+    //     if (balls.Length == 0)
+    //     {
+    //         // 如果没有球体对象，不执行任何操作
+    //         return;
+    //     }
 
-        // 计算最近的球体对象
-        float minDistance = 1.0f;
-        foreach (GameObject ball in balls)
-        {
-            float distance = Vector3.Distance(transform.position, ball.transform.position);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                nearestNumber = ball;
-            }
-        }
-        // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
-        
+    //     // 计算最近的球体对象
+    //     float minDistance = 1.0f;
+    //     foreach (GameObject ball in balls)
+    //     {
+    //         float distance = Vector3.Distance(transform.position, ball.transform.position);
+    //         if (distance < minDistance)
+    //         {
+    //             minDistance = distance;
+    //             nearestNumber = ball;
+    //         }
+    //     }
+    //     // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
 
-    }
+
+    // }
 
     void PickupNearestNumber()
     {

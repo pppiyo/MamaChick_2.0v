@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -2154441211164078070}
   - component: {fileID: 1363818860122925819}
   - component: {fileID: -9209176709302779994}
+  - component: {fileID: -8660901927314135632}
   m_Layer: 8
   m_Name: Number
   m_TagString: Number
@@ -128,7 +129,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4609709761923799660}
   m_BodyType: 0
-  m_Simulated: 0
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -138,7 +139,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!120 &-2154441211164078070
 LineRenderer:
@@ -383,6 +384,18 @@ MonoBehaviour:
   shootWhileMoving: 1
   forwardDraging: 0
   showLineOnScreen: 1
+--- !u!114 &-8660901927314135632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609709761923799660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66869b38b1c4a49598e995e704118e03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8588997315289453578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -404,7 +417,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_text
-      value: 4
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279034602
       objectReference: {fileID: 0}
     - target: {fileID: 5597275541861515571, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.size

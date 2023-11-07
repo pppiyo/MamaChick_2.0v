@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4178418558984182771}
   - component: {fileID: 2299653145791943690}
   - component: {fileID: 5126432043501442972}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Monster2
   m_TagString: Monster2
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1
   condition: 1
+  numberText: {fileID: 0}
   scaleMultiplier: 0.1
 --- !u!1001 &5319393703572329143
 PrefabInstance:
