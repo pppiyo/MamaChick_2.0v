@@ -116,7 +116,7 @@ public class TutorialManager : MonoBehaviour
         Platform_1_10 = GameObject.Find("Platform_1_10");
 
         // Level 4 is simple in text for now
-        if (GlobalVariables.curLevel == "tutorial 5")
+        if (GlobalVariables.curLevel == "tutorial 5" || GlobalVariables.curLevel == "tutorial 3")
         {
             return;
         }

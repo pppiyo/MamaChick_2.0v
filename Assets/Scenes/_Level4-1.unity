@@ -991,7 +991,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.139635, y: -4.7000003, z: -10}
+  m_LocalPosition: {x: -7.8039145, y: -4.7000003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1162,12 +1162,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5066772804156039853, guid: 773a19477782342849644ecb562b39b5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.74154
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066772804156039853, guid: 773a19477782342849644ecb562b39b5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5066772804156039853, guid: 773a19477782342849644ecb562b39b5, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 9054097055201622418, guid: 773a19477782342849644ecb562b39b5, type: 3}
       propertyPath: m_text
       value: -3*x+4 == 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054097055201622418, guid: 773a19477782342849644ecb562b39b5, type: 3}
+      propertyPath: m_fontSize
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9054097055201622418, guid: 773a19477782342849644ecb562b39b5, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 773a19477782342849644ecb562b39b5, type: 3}
