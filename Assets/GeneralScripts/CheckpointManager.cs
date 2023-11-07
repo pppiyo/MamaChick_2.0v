@@ -85,7 +85,7 @@ public class CheckpointManager : MonoBehaviour
             }
         }
 
-        if (GlobalVariables.curLevel == "tutorial 5" && obstacle.gameObject.CompareTag("Spike"))
+        if (GlobalVariables.curLevel == "tutorial 3" && obstacle.gameObject.CompareTag("Spike"))
         {
             switch (obstacle.gameObject.transform.parent.name)
             {
