@@ -23,6 +23,7 @@ TagManager:
   - Checkpoint
   - Plat_Modify
   - Test_ball
+  - Elevator
   layers:
   - Default
   - TransparentFX
