@@ -22,4 +22,7 @@ public static class GlobalVariables
 
     public static bool gravityLevel = false;
 
+    public static int numbersGrabbed = 0;
+
+    public static int numberShot = 0;
 }
