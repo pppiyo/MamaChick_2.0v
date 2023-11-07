@@ -11,18 +11,27 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/_LevelSelection.unity
     guid: 9e8885c7e5fea448c8fd4d8943de77a1
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial3.unity
+    guid: 61484eb4381d947efa29fc3b03f93a17
   - enabled: 0
     path: Assets/Scenes/_Level1.unity
     guid: 326d18e054e07144eaa3f4807ca60fe1
   - enabled: 0
     path: Assets/Scenes/_Level2.unity
     guid: 778fd9ba041024cceafcc4c9bdf4537f
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial_Portal_Geng.unity
+    guid: c4fe3c58818ac4c53b14d9ede52ee26b
   - enabled: 0
     path: Assets/Scenes/_Level1_Gun_Amy.unity
     guid: 92785159ad9384e87b213c2a3d739246
   - enabled: 1
     path: Assets/Scenes/_Game Over_Won.unity
     guid: 3cc54aae47b124d11bae60e51f9fb7ec
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial5_geng.unity
+    guid: 6eb3168790e644dd3a25162e9ee9852e
   - enabled: 0
     path: Assets/Scenes/_Level2.unity
     guid: 778fd9ba041024cceafcc4c9bdf4537f
