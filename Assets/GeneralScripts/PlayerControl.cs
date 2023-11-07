@@ -128,7 +128,7 @@ public class PlayerControl : MonoBehaviour
                 // Debug.Log(currentX);
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
-                if (tutorialCheck == null || GlobalVariables.curLevel == "tutorial 3")
+                if (tutorialCheck == null || GlobalVariables.curLevel == "tutorial 3" || GlobalVariables.curLevel == "tutorial 5")
                     Destroy(nearestNumber);
                 /* else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
                 {

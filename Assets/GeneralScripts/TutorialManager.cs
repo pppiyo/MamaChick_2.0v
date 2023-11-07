@@ -68,6 +68,10 @@ public class TutorialManager : MonoBehaviour
     private int level4Stage0;
     private bool gravityFlipped;
 
+    // Variables for level 5 tracking 
+    private int level5Stage0;
+    private int level5Stage1;
+
     //Miscelleneous Variables for different functions
     private bool shouldWait;
 
@@ -101,6 +105,10 @@ public class TutorialManager : MonoBehaviour
         level3Stage0 = 0;
         level3Stage1 = 0;
         elevator_1_1 = GameObject.Find("Elevator_1_1");
+
+        // Level 5 Initialisation
+        level5Stage0 = 0;
+        level5Stage1 = 0;
 
         // Initialise Level Components
         Akey = GameObject.Find("Akey");
@@ -148,25 +156,25 @@ public class TutorialManager : MonoBehaviour
         tutorialElements = GameObject.FindGameObjectsWithTag("Tutorial_object");
         foreach (GameObject obj in tutorialElements)
         {
-            if(GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4")
+            if(GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4" && GlobalVariables.curLevel != "tutorial 5")
                 obj.SetActive(false);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Platform_Solid");
         foreach (GameObject obj in tutorialElements)
         {
-            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4")
+            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4" && GlobalVariables.curLevel != "tutorial 5")
                 obj.SetActive(false);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Platform_Mutate");
         foreach (GameObject obj in tutorialElements)
         {
-            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4")
+            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4" && GlobalVariables.curLevel != "tutorial 5")
                 obj.SetActive(false);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Checkpoint");
         foreach (GameObject obj in tutorialElements)
         {
-            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4")
+            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4" && GlobalVariables.curLevel != "tutorial 5")
                 obj.SetActive(false);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Goal");
@@ -619,6 +627,61 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+
+    void activateLevel5Stage0()
+    {
+        JumpInstruction.SetActive(true);
+        OperationInstruction.SetActive(false);
+        SpikeInstruction.SetActive(false);
+        level5Stage0 = 1;
+    }
+
+    void deactivateLevel5Stage0()
+    {
+
+    }
+
+    void level5Manager()
+    {
+        switch (level5Stage0)
+        {
+            case 0:
+                activateLevel5Stage0();
+                break;
+            case 1:
+                if(Player.transform.Find("Gun") && Input.GetKeyDown(KeyCode.F))
+                {
+                    JumpInstruction.SetActive(false);
+                    level5Stage0 = 2;
+                }
+                break;
+            case 2:
+                if(Player.GetComponent<PlayerControl>().currentX == 0 && Input.GetKeyDown(KeyCode.F))
+                {
+                    OperationInstruction.SetActive(true);
+                    level5Stage0 = 3;
+                }
+                break;
+            case 3:
+                if(Player.GetComponent<PlayerControl>().currentX != 0)
+                {
+                    OperationInstruction.SetActive(false);
+                    level5Stage0 = 4;
+                }
+                    break;
+            case 4:
+                if(Player.transform.position.x > 19 && Player.transform.position.y > 3)
+                {
+                    SpikeInstruction.SetActive(true);
+                    level5Stage0 = 5;
+                }
+                break;
+            case 5:
+                SpikeInstruction.SetActive(true);
+                break;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -635,6 +698,9 @@ public class TutorialManager : MonoBehaviour
                 break;
             case "tutorial 4":
                 level4Manager();
+                break;
+            case "tutorial 5":
+                level5Manager();
                 break;
             default:
                 break;

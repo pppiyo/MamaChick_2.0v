@@ -105,6 +105,11 @@ public class CheckpointManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
+        if (GlobalVariables.curLevel == "tutorial 5" && obstacle.gameObject.CompareTag("Spike"))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
     
     // Update is called once per frame
