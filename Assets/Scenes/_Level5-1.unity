@@ -409,7 +409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178418558984182770, guid: 8d66249e9aac74db3941f029fccf6f92, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.68
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 4178418558984182770, guid: 8d66249e9aac74db3941f029fccf6f92, type: 3}
       propertyPath: m_LocalPosition.y
@@ -464,6 +464,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &357945496 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4178418558984182768, guid: 8d66249e9aac74db3941f029fccf6f92, type: 3}
+  m_PrefabInstance: {fileID: 645191497}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &357945501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357945496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c93f3eb3a8ffa415eba0743056d9e60f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  condition: 1
+  scaleMultiplier: 0.1
 --- !u!1001 &373699239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -931,7 +951,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5425367, y: 0.9500003, z: -10}
+  m_LocalPosition: {x: -6.6989555, y: 0.9500003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1109,7 +1129,8 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5126432043501442972, guid: 8d66249e9aac74db3941f029fccf6f92, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8d66249e9aac74db3941f029fccf6f92, type: 3}
 --- !u!1001 &666570504
 PrefabInstance:
