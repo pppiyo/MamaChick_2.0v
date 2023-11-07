@@ -99,6 +99,8 @@ public class PlayerControl : MonoBehaviour
 
         KeepPlayerInBound();
 
+
+
         if (currentCollidingObject != null && Input.GetKeyDown(KeyCode.E))
         {
             // Grab the Number object's text
@@ -118,7 +120,20 @@ public class PlayerControl : MonoBehaviour
             }
         }
         // Detect player input for horizontal movement.
+        // float horizontalInput = Input.GetAxis("Horizontal");
+
+        // Use "Horizontal" and "HorizontalAlt" axes for input
         float horizontalInput = Input.GetAxis("Horizontal");
+
+        // // Calculate movement vector
+        // Vector3 moveDirection = new Vector3(horizontalInput, 0, 0);
+        // moveDirection.Normalize(); // Ensure it's a unit vector
+
+        // // Move the character
+        // transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
+
+
+
 
         // Check if the player is changing direction.
         if ((horizontalInput < 0 && facingRight) || (horizontalInput > 0 && !facingRight))

@@ -5,17 +5,16 @@ using UnityEngine;
 public class Monster2Movement : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed = 1.0f; // 移动速度
-    private float leftBoundary; // 左边界
-    private float rightBoundary; // 右边界
+    private float moveSpeed = 1.0f; // speed of Monster2 movement
+    private float leftBoundary; // movement left boundary: align with left edge of platform the monster is on
+    private float rightBoundary; // // movement right boundary: align with left edge of platform the monster is on
     [SerializeField]
-    private int condition = 1;
+    private int condition = 1; // ?
     private GameObject SceneLoader;
     private GameObject nearestPlatform; // Reference to the platform the monster is on
     private GameObject[] allPlatforms;
 
-
-    private int direction = 1; // 初始方向为向右
+    private int direction = 1; // direction -- 1: right; -1: left
 
     void Start()
     {
@@ -26,22 +25,17 @@ public class Monster2Movement : MonoBehaviour
 
     private void GetBoundary()
     {
-        if (nearestPlatform == !null)
+        if (nearestPlatform != null)
         {
             Transform platformTransform = nearestPlatform.transform;
-            // Debug.Log("platformTransform: " + platformTransform.transform);
-            Renderer platformRenderer = nearestPlatform.GetComponent<Renderer>();
 
-            Vector3 monster2Size = renderer.bounds.size;
+            Renderer platformRenderer = nearestPlatform.GetComponent<Renderer>();
+            Renderer monsterRenderer = gameObject.GetComponent<Renderer>();
 
             // Calculate the left and right boundaries of the platform
-            leftBoundary = platformTransform.position.x - platformRenderer.bounds.size.x / 2;
-            // leftBoundary = platformTransform.position.x - platformRenderer.bounds.size.x / 2 + monster2Size.x / 2;
-            rightBoundary = platformTransform.position.x + platformRenderer.bounds.size.x / 2;
-            // rightBoundary = platformTransform.position.x + platformRenderer.bounds.size.x / 2 - monster2Size.x / 2;
+            leftBoundary = platformTransform.position.x - platformRenderer.bounds.size.x / 2 + monsterRenderer.bounds.size.x / 2;
+            rightBoundary = platformTransform.position.x + platformRenderer.bounds.size.x / 2 - monsterRenderer.bounds.size.x / 2;
         }
-
-
     }
 
 
@@ -50,7 +44,6 @@ public class Monster2Movement : MonoBehaviour
         GameObject[] allPlatforms = GameObject.FindGameObjectsWithTag("Platform_Solid");
 
         // // GameObject[] mutate_platforms = GameObject.FindGameObjectsWithTag("Platform_Mutate");
-
 
         float minDistance = float.MaxValue;
 
@@ -63,8 +56,6 @@ public class Monster2Movement : MonoBehaviour
                 nearestPlatform = tmpPlatform;
             }
         }
-
-
     }
 
 
@@ -91,71 +82,5 @@ public class Monster2Movement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            PlayerControl playerControl = collision.gameObject.GetComponent<PlayerControl>();
-            switch (condition)
-            {
-                case 1:
-                    // 当expression等于value1时执行的代码
-                    if (playerControl.currentX < 15)
-                    {
-                        Destroy(gameObject);
-                    }
-                    else
-                    {
-                        Destroy(collision.gameObject);
-                    }
-                    break; // 如果不使用break语句，将继续执行下一个case（如果条件匹配）。
-                case 2:
-                    // 当expression等于value2时执行的代码
-                    if (playerControl.currentX % 2 == 1)
-                    {
-                        Destroy(gameObject);
-                    }
-                    else
-                    {
-                        Destroy(collision.gameObject);
-                    }
-                    break;
-                case 3:
-                    // 当expression等于value2时执行的代码
-                    if (playerControl.currentX % 2 == 0)
-                    {
-                        Destroy(gameObject);
-                    }
-                    else
-                    {
-                        Destroy(collision.gameObject);
-                    }
-                    break;
-                case 4:
-                    // 当expression等于value2时执行的代码
-                    if (playerControl.currentX < 10)
-                    {
-                        Destroy(gameObject);
-                    }
-                    else
-                    {
-                        Destroy(collision.gameObject);
-                    }
-                    break;
-                case 5:
-                    // 当expression等于value2时执行的代码
-                    if (playerControl.currentX < 0)
-                    {
-                        Destroy(gameObject);
-                    }
-                    else
-                    {
-                        Destroy(collision.gameObject);
-                    }
-                    break;
-
-                default:
-                    // 当expression与任何case都不匹配时执行的默认代码块
-                    break;
-            }
-        }
     }
 }

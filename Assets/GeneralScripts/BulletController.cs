@@ -50,10 +50,18 @@ public class BulletController : MonoBehaviour
         { return; }
 
 
-        if (obstacle.gameObject.CompareTag("Number"))
+        if (obstacle.gameObject.CompareTag("Number") || obstacle.gameObject.CompareTag("Monster2"))
         {
+            GameObject numberText = null;
             // Debug.Log("Number collided by bullet");
-            GameObject numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
+            if (obstacle.gameObject.CompareTag("Number"))
+            {
+                numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
+            }
+            if (obstacle.gameObject.CompareTag("Monster2"))
+            {
+                numberText = obstacle.gameObject.transform.Find("Monster_Text").gameObject;
+            }
 
             TMP_Text textComponent = numberText.GetComponent<TMP_Text>();
             // Debug.Log("Number collided: " + textComponent.text);
@@ -100,5 +108,13 @@ public class BulletController : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Platform_Solid") || other.gameObject.CompareTag("Platform_Mutate"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
