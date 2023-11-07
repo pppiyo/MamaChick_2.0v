@@ -691,7 +691,7 @@ public class PlayerControl : MonoBehaviour
     private void ReturnToMainMenu()
     {
         // 加载主菜单场景，假设场景的名字为"MainMenu"
-        SceneLoader.GetComponent<Transition>().LoadMainMenu();
+        SceneLoader.GetComponent<Transition>().LoadGameOverWon();
     }
 
     //test_ball
@@ -734,7 +734,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // 计算最近的球体对象
-        float minDistance = float.MaxValue;
+        float minDistance = 1.5f;
         nearestBall = null;
 
         foreach (GameObject ball in balls)
