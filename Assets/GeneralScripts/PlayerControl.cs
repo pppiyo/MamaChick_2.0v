@@ -8,8 +8,14 @@ using TMPro;
 using UnityEngine.EventSystems;
 
 
+
+
+
 public class PlayerControl : MonoBehaviour
 {
+    
+
+
     private bool facingRight = true; // To keep track of the player's facing direction.
     public float horizontalInput;
     public float speed;
@@ -226,6 +232,8 @@ public class PlayerControl : MonoBehaviour
             nearestBall.transform.position = playerHeadPosition;
 
         }
+
+        
 
     }
 
