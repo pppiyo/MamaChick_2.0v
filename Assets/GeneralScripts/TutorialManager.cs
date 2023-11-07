@@ -48,6 +48,8 @@ public class TutorialManager : MonoBehaviour
     private GameObject Stage5Objects;
     private GameObject Platform_1_7;
     private GameObject Platform_1_8;
+    private GameObject Platform_1_9;
+    private GameObject Platform_1_10;
     private GameObject Destination;
 
     // Variables for level 2 tracking
@@ -56,7 +58,15 @@ public class TutorialManager : MonoBehaviour
     public GameObject Number2_1;
     public GameObject Number2_2;
     public GameObject Number3_1;
-    private GameObject Platform_1_9;
+
+    // Variables for level 3 tracking 
+    public int level3Stage0;
+    public int level3Stage1;
+    public GameObject elevator_1_1;
+
+    // Variables for level 4 tracking
+    private int level4Stage0;
+    private bool gravityFlipped;
 
     //Miscelleneous Variables for different functions
     private bool shouldWait;
@@ -87,6 +97,11 @@ public class TutorialManager : MonoBehaviour
         level2Stage1 = 0;
         Platform_1_9 = GameObject.Find("Platform_1_9");
 
+        // Level 3 Initialisation
+        level3Stage0 = 0;
+        level3Stage1 = 0;
+        elevator_1_1 = GameObject.Find("Elevator_1_1");
+
         // Initialise Level Components
         Akey = GameObject.Find("Akey");
         Dkey = GameObject.Find("Dkey");
@@ -111,7 +126,14 @@ public class TutorialManager : MonoBehaviour
         EpressInstruction = GameObject.Find("EpressInstruction");
         Platform_1_7 = GameObject.Find("Platform_1_7");
         Platform_1_8 = GameObject.Find("Platform_1_8");
+        Platform_1_9 = GameObject.Find("Platform_1_9");
+        Platform_1_10 = GameObject.Find("Platform_1_10");
 
+        // Level 4 is simple in text for now
+        if (GlobalVariables.curLevel == "tutorial 5")
+        {
+            return;
+        }
         // Hide all the tutorial elements initially
         tutorialElements = GameObject.FindGameObjectsWithTag("Tutorial_key");
         foreach (GameObject obj in tutorialElements)
@@ -126,27 +148,31 @@ public class TutorialManager : MonoBehaviour
         tutorialElements = GameObject.FindGameObjectsWithTag("Tutorial_object");
         foreach (GameObject obj in tutorialElements)
         {
-            obj.SetActive(false);
+            if(GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4")
+                obj.SetActive(false);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Platform_Solid");
         foreach (GameObject obj in tutorialElements)
         {
-            obj.SetActive(false);
+            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4")
+                obj.SetActive(false);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Platform_Mutate");
         foreach (GameObject obj in tutorialElements)
         {
-            obj.SetActive(false);
+            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4")
+                obj.SetActive(false);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Checkpoint");
         foreach (GameObject obj in tutorialElements)
         {
-            obj.SetActive(false);
+            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4")
+                obj.SetActive(false);
         }
-        tutorialElements = GameObject.FindGameObjectsWithTag("Destination");
+        tutorialElements = GameObject.FindGameObjectsWithTag("Goal");
         foreach (GameObject obj in tutorialElements)
         {
-            obj.SetActive(true);
+                obj.SetActive(true);
         }
 
         // Miscelleneous Objects
@@ -270,6 +296,7 @@ public class TutorialManager : MonoBehaviour
         Platform_1_7.SetActive(true);
         Platform_1_8.SetActive(true);
         Platform_1_9.SetActive(true);
+        Platform_1_10.SetActive(true);
         Destination.SetActive(true);
         level1Stage4 = 5;
     }
@@ -409,6 +436,7 @@ public class TutorialManager : MonoBehaviour
     {
         Platform_1_1.SetActive(true);
         Platform_1_3.SetActive(true);
+        Platform_1_10.SetActive(true);
         JumpInstruction.SetActive(true);
         Checkpoint1.SetActive(true);
         level2Stage0 = 1;
@@ -456,10 +484,9 @@ public class TutorialManager : MonoBehaviour
                 break;
             case 2:
                 if (!Number2_1.activeSelf && !Number2_2.activeSelf && !Number3_1.activeSelf)
-                {
+                {/*
                     if (Player.GetComponent<PlayerControl>().currentX < 9)
                     {
-                        Debug.Log("PLayerrrr");
                         Player.transform.position = GameObject.Find("Checkpoint1").transform.position;
                         Player.GetComponent<PlayerControl>().currentX = 0;
                         GameObject.Find("Player_Number").GetComponent<TMP_Text>().text = "0";
@@ -467,12 +494,11 @@ public class TutorialManager : MonoBehaviour
                         Number2_1.SetActive(true);
                         Number2_2.SetActive(true);
                         Number3_1.SetActive(true);
-                    }
+                    }*/
                 }
                 if (Player.transform.position.x > 60)
                 {
                     SpikeInstruction.SetActive(false);
-                    Debug.Log("ehewdg");
                     deactivateLevel2Stage0();
                 }
                 break;
@@ -480,7 +506,6 @@ public class TutorialManager : MonoBehaviour
                 switch (level2Stage1)
                 {
                     case 0:
-                        Debug.Log("ehewdg");
                         activateLevel2Stage1();
                         break;
                     case 1:
@@ -496,32 +521,102 @@ public class TutorialManager : MonoBehaviour
 
     void activateLevel3Stage0()
     {
-
+        JumpInstruction.SetActive(true);
+        level3Stage0 = 1;
     }
 
     void deactivateLevel3Stage0()
     {
-
+        
     }
 
     void level3Manager()
     {
+        switch (level3Stage0)
+        {
+            case 0:
+                activateLevel3Stage0();
+                break;
+            case 1:
+                // picked up logic
+                if (true)
+                {
+                    JumpInstruction.SetActive(false);
+                    level3Stage0 = 2;
+                }
+                break;
+            case 2:
+                OperationInstruction.SetActive(true);
+                // shot logic
+                if (true)
+                {
+                    OperationInstruction.SetActive(false);
+                    level3Stage0 = 3;
+                }
+                break;
+            case 3:
+                switch (level3Stage1)
+                {
+                    case 0:
+                        if(Player.transform.position.x > 2 && Player.transform.position.y > 7)
+                        {
+                            PlatformInstruction.SetActive(true);
+                            level3Stage1 = 1;
+                        }
+                        break;
+                    case 1:
+                        // Platform Moved Logic
+                        if (elevator_1_1.transform.position.y <= 9)
+                        {
+                            PlatformInstruction.SetActive(false);
+                            level3Stage1 = 3;
+                        }
+                        break;
+                    case 3:
+                        if(Player.transform.position.x > 20)
+                        {
+                            SpikeInstruction.SetActive(true);
+                        }
+                        if(Player.transform.position.x > 40)
+                        {
+                            SpikeInstruction.SetActive(false);
+                        }
+                        break;
+                }
+                break;
 
-    }
-
-    void activateLevel4Stage0()
-    {
-
-    }
-
-    void deactivateLevel4Stage0()
-    {
-
+        }
     }
 
     void level4Manager()
     {
-
+        switch (level4Stage0)
+        {
+            case 0:
+                JumpInstruction.SetActive(true);
+                if(Player.GetComponent<PlayerControl>().currentX < 0)
+                {
+                    JumpInstruction.SetActive(false);
+                    level4Stage0 = 1;
+                }
+                break;
+            case 1:
+                if(Player.transform.position.x > 8)
+                {
+                    OperationInstruction.SetActive(true);
+                    level4Stage0 = 2;
+                }
+                break;
+            case 2:
+                if(Player.GetComponent<PlayerControl>().currentX >= 0)
+                {
+                    OperationInstruction.SetActive(false);
+                    level4Stage0 = 3;
+                }
+                break;
+            case 4:
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -542,7 +637,6 @@ public class TutorialManager : MonoBehaviour
                 level4Manager();
                 break;
             default:
-                level2Manager();
                 break;
         }
     }

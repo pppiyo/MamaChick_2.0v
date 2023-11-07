@@ -62,4 +62,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Nithesh_MainMenu.unity
     guid: d3d01e41a225346b7bd5183dd02ee29c
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial5.unity
+    guid: 6eb3168790e644dd3a25162e9ee9852e
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial3.unity
+    guid: e4204b19b55190647a910d893d5ab280
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial4.unity
+    guid: 95815fe6c16bd2a48938ca6b3f7d9a98
+  - enabled: 1
+    path: Assets/Scenes/_Level4-1.unity
+    guid: 3194f6f269cd722489a1800032437b46
   m_configObjects: {}

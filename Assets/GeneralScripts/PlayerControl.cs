@@ -105,9 +105,8 @@ public class PlayerControl : MonoBehaviour
     {
 
         KeepPlayerInBound();
-        
+        nearestNumber = null;
         CalculateNearestNumber();
-
         if (nearestNumber!= null && Input.GetKeyDown(KeyCode.E))
         {
             // Grab the Number object's text
@@ -125,15 +124,16 @@ public class PlayerControl : MonoBehaviour
                 // Debug.Log(currentX);
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
-                if (tutorialCheck == null)
+                if (tutorialCheck == null || GlobalVariables.curLevel == "tutorial 3")
                     Destroy(nearestNumber);
-                else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
+                /* else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
                 {
                     nearestNumber.SetActive(false);
-                }
+                } */
                 nearestNumber = null; // Clear the collider reference after processing
             }
         }
+        nearestNumber = null;
         // Detect player input for horizontal movement.
         // float horizontalInput = Input.GetAxis("Horizontal");
 
@@ -706,6 +706,7 @@ public class PlayerControl : MonoBehaviour
 
     void CalculateNearestNumber()
     {
+        nearestNumber = null;
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Number");
 
         if (balls.Length == 0)
@@ -715,7 +716,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // 计算最近的球体对象
-        float minDistance = 1.5f;
+        float minDistance = 1.0f;
         foreach (GameObject ball in balls)
         {
             float distance = Vector3.Distance(transform.position, ball.transform.position);
@@ -725,7 +726,6 @@ public class PlayerControl : MonoBehaviour
                 nearestNumber = ball;
             }
         }
-
         // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
         
 
@@ -742,7 +742,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // 计算最近的球体对象
-        float minDistance = float.MaxValue;
+        float minDistance = 1.5f;
         nearestBall = null;
 
         foreach (GameObject ball in balls)

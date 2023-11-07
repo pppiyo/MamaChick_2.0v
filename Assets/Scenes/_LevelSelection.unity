@@ -369,6 +369,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadTutorial2
       objectReference: {fileID: 0}
+    - target: {fileID: 2430907528036398751, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_text
+      value: JOHNWICK TUTORIAL
+      objectReference: {fileID: 0}
     - target: {fileID: 2507657869412551331, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -671,7 +675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6878257570614724314, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_text
-      value: John Wick Tutorial
+      value: Interstellar Tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 6878257570614724314, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_fontSize
