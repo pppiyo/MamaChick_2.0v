@@ -397,6 +397,22 @@ PrefabInstance:
       propertyPath: m_text
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5597275541861515571, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597275541861515571, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].time
+      value: 0.95238096
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597275541861515571, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.28378296
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597275541861515571, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[1].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8821883836249200090, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
