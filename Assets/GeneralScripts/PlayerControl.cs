@@ -469,6 +469,11 @@ public class PlayerControl : MonoBehaviour
             isGrounded = true;
         }
 
+        if (obstacle.gameObject.CompareTag("Elevator"))
+        {
+            isGrounded = true;
+        }
+
         // platforms that provide direct calculation
         // if(obstacle.gameObject.CompareTag("Plat_Modify"))
         // {
