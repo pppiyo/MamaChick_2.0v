@@ -21,7 +21,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4388556524763799107, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
       propertyPath: m_Name
-      value: Platform_Elevator
+      value: Elevator2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4388556524763799107, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
+      propertyPath: m_TagString
+      value: Elevator2
       objectReference: {fileID: 0}
     - target: {fileID: 4388556524763799117, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
       propertyPath: m_RootOrder

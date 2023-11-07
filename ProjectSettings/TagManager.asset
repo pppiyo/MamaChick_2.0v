@@ -25,6 +25,7 @@ TagManager:
   - Test_ball
   - Monster2
   - Elevator
+  - Elevator2
   layers:
   - Default
   - TransparentFX
