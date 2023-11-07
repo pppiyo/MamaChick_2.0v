@@ -223,17 +223,34 @@ public class PlayerControl : MonoBehaviour
     // Sets the platform logic at start and whenever currentX changes
     public void resolvePlatforms()
     {
+        Renderer renderer = GetComponent<Renderer>();
         // Check all platforms and separate solid platforms
         // Debug.Log("Resolving platforms");
         foreach (GameObject platform in platforms)
         {
+            SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
             if (CanPassPlatform(platform))
+
             {
                 DisableLayerCollision(platform);
+                if (spriteRenderer != null)
+                {
+                    // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
+                    Color transparentColor = new Color(1, 1, 1, 0.5f);
+                    // 设置SpriteRenderer的颜色为我们创建的透明颜色
+                    spriteRenderer.color = transparentColor;
+                }
             }
             else
             {
                 EnableLayerCollision(platform);
+                if (spriteRenderer != null)
+                {
+                    // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
+                    Color transparentColor = new Color(1, 1, 1, 1);
+                    // 设置SpriteRenderer的颜色为我们创建的透明颜色
+                    spriteRenderer.color = transparentColor;
+                }
             }
         }
     }
