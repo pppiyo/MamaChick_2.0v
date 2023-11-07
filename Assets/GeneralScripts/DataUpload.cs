@@ -14,11 +14,19 @@ public class GameReport
     public string level;
     public bool success;
     public string userID;
+    public string failReason;
     public int collisions;
+    public int monsterKilled;
     [SerializeField]
     public List<int> numbers = new List<int>();
     [SerializeField]
     public List<string> names = new List<string>();
+    [SerializeField]
+    public List<int> op_times = new List<int>();
+    [SerializeField]
+    public List<string> portal_names = new List<string>();
+    public List<int> portal_uses = new List<int>();
+    
     public string mode;
 
     public GameReport()
@@ -30,10 +38,21 @@ public class GameReport
         userID = GlobalVariables.userID;
         collisions = GlobalVariables.collisions;
         mode = GlobalVariables.mode;
+        failReason = GlobalVariables.failReason;
+        monsterKilled = GlobalVariables.monsterKilled;
         foreach (var keyValuePair in GlobalVariables.platformMap)
         {
             names.Add(keyValuePair.Key);
             numbers.Add(keyValuePair.Value);
+        }
+        foreach (var keyValuePair in GlobalVariables.opTimesMap)
+        {
+            op_times.Add(keyValuePair.Value);
+        }
+        foreach (var keyValuePair in GlobalVariables.portUses)
+        {
+            portal_names.Add(keyValuePair.Key);
+            portal_uses.Add(keyValuePair.Value);
         }
     }
 }
@@ -49,15 +68,10 @@ public class DataUpload : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GlobalVariables.win)
-        {
-            PostToDB();
-            GlobalVariables.win = false;
-            GlobalVariables.collisions = 0;
-        }
+        
     }
 
-    private void PostToDB()
+    public void PostToDB()
     {
         GameReport gameReport = new GameReport();
         Debug.Log("restClient");
