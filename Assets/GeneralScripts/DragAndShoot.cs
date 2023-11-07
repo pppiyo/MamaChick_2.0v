@@ -25,11 +25,18 @@ public class DragAndShoot : MonoBehaviour
     Vector2 targetPosition;
     Vector2 startMousePos;
     Vector2 currentMousePos;
+    private Transform textTransform;
 
     bool canShoot = true;
 
+    //test_ball
+
+    private Rigidbody2D rb2d;
+    private Collider2D col2d;
+
     void Start()
     {
+        textTransform = transform.Find("Number_Text"); 
 
         rb = GetComponent<Rigidbody2D>();
 
@@ -40,12 +47,30 @@ public class DragAndShoot : MonoBehaviour
             direction = transform.GetChild(0);
             screenLine = direction.GetComponent<LineRenderer>();
         }
+
+        //test_ball
+        // 获取 GameObject 上的 Rigidbody2D 和 Collider2D 组件
+        rb2d = GetComponent<Rigidbody2D>();
+        col2d = GetComponent<Collider2D>();
         
     }
 
     void Update()
     {
         //test_ball
+
+        if (textTransform != null)
+        {
+            textTransform.position = transform.position; // 保持 text 与 ball 位置一致
+        }
+
+        // if (transform.position.y < -3.9f && PlayerControl.nearestBall == null)
+        // {
+        //     // 切换 Rigidbody2D 和 Collider2D 的勾选状态
+        //     rb2d.simulated = false;
+        //     col2d.enabled = false;
+        //     Debug.Log(rb2d.simulated);
+        // }
 
         if (PlayerControl.nearestBall == null)
         {
@@ -60,6 +85,11 @@ public class DragAndShoot : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // if (EventSystem.current.currentSelectedGameObject) return;  //ENABLE THIS IF YOU DONT WANT TO IGNORE UI
+            // 切换 Rigidbody2D 和 Collider2D 的勾选状态
+            rb2d.simulated = true;
+            col2d.enabled = true;
+            col2d.isTrigger = false;
+            // Debug.Log(rb2d.simulated);
             MouseClick();
         }
         if (Input.GetMouseButton(0))
@@ -88,6 +118,24 @@ public class DragAndShoot : MonoBehaviour
         {
             rb.velocity = new Vector2(0, 0); //ENABLE THIS IF YOU WANT THE BALL TO STOP IF ITS MOVING SO SLOW
             canShoot = true;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D platforms)
+    {
+        // Debug.Log(col2d.enabled);
+        if ((platforms.gameObject.CompareTag("Platform_Solid") || platforms.gameObject.CompareTag("Platform_Mutate") ||platforms.gameObject.CompareTag("Ground")) && PlayerControl.nearestBall == null)
+        {
+            foreach (ContactPoint2D hit in platforms.contacts)
+            {
+                if (hit.normal == Vector2.up)
+                {
+                    rb2d.simulated = false;
+                    col2d.isTrigger = true;
+                }
+            }
+            // rb2d.simulated = false;
+            // col2d.enabled = false;
         }
     }
 
