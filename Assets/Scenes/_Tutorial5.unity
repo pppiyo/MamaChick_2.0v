@@ -2237,11 +2237,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2102698221132056292, guid: fa875f878bb4341be8c9217c7af30215, type: 3}
   m_PrefabInstance: {fileID: 1649712257}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1818552479 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4388556524763799107, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
-  m_PrefabInstance: {fileID: 439578400}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1830882875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2572,11 +2567,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2125716397 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4388556524763799107, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
-  m_PrefabInstance: {fileID: 453531241}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &118280965096126163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2912,7 +2902,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5294aa591c04c1da413610ff699bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
-  condition: 1
-  lowerPlatform: {fileID: 2125716397}
-  upperPlatform: {fileID: 1818552479}
