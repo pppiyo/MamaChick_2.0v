@@ -191,8 +191,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.01058197
-        value: 0.54795426
+        time: 0
+        value: 0.13750821
         inSlope: -0.20332317
         outSlope: -0.20332317
         tangentMode: 0
@@ -200,8 +200,17 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.30112597
-        value: 0.48541105
+        time: 0.26875138
+        value: 0.10628603
+        inSlope: -0.74565786
+        outSlope: -0.74565786
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.36294952
+        value: 0.06003654
         inSlope: -0.38841432
         outSlope: -0.38841432
         tangentMode: 0
@@ -209,14 +218,23 @@ LineRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.89946926
-        value: 0.2027036
+        time: 0.92876613
+        value: 0.02359593
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
         outWeight: 0
+      - serializedVersion: 3
+        time: 0.99128103
+        value: 0.026117876
+        inSlope: 1.1852696
+        outSlope: 1.1852696
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 1
+        outWeight: 1
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -307,8 +325,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.02116394
-        value: 0.33783722
+        time: 0.0016403198
+        value: 0.10649109
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -316,7 +334,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.8412698
+        time: 0.8900674
         value: 0
         inSlope: 0.13097717
         outSlope: 0.13097717
@@ -405,6 +423,10 @@ PrefabInstance:
     - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_text
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279034602
       objectReference: {fileID: 0}
     - target: {fileID: 5597275541861515571, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.size
