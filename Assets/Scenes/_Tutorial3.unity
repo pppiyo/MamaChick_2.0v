@@ -2920,15 +2920,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156084627592, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388362156084627598, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
+      propertyPath: m_text
+      value: THROW NUMBERS AT BLUE ELEVATOR PLATFORMS
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156240684584, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388362156240684590, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
+      propertyPath: m_text
+      value: 'MOUSE-CLICK: DRAG AND SHOOT'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388362156526890643, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
+      propertyPath: m_text
+      value: TRY CREATING NEW PATHS
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156526890733, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156563794562, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_Pivot.x
@@ -3020,7 +3032,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5388362157470085745, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388362157470085751, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
+      propertyPath: m_text
+      value: PRESS P TO PICK NUMBERS
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}

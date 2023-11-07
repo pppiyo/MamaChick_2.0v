@@ -675,7 +675,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6878257570614724314, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_text
-      value: John Wick Tutorial
+      value: Interstellar Tutorial
       objectReference: {fileID: 0}
     - target: {fileID: 6878257570614724314, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_fontSize
