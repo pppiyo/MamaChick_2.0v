@@ -434,19 +434,19 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        // Score update
-        if (obstacle.gameObject.CompareTag("Number"))
-        {
-            increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value); // number for the value on the Number object
-            UpdateScore(increaseX);
-            resolvePlatforms();
-            if (tutorialCheck == null)
-                Destroy(obstacle.gameObject);
-            if(GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
-            {
-                obstacle.gameObject.SetActive(false);
-            }
-        }
+        // // Score update
+        // if (obstacle.gameObject.CompareTag("Number"))
+        // {
+        //     increaseX = int.Parse(Regex.Match(obstacle.gameObject.name, @"\d+$").Value); // number for the value on the Number object
+        //     UpdateScore(increaseX);
+        //     resolvePlatforms();
+        //     if (tutorialCheck == null)
+        //         Destroy(obstacle.gameObject);
+        //     if(GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
+        //     {
+        //         obstacle.gameObject.SetActive(false);
+        //     }
+        // }
 
         if (obstacle.gameObject.CompareTag("Goal"))
         {
@@ -695,7 +695,7 @@ public class PlayerControl : MonoBehaviour
 
     void PickupNearestNumber()
     {
-        GameObject[] balls = GameObject.FindGameObjectsWithTag("Test_ball");
+        GameObject[] balls = GameObject.FindGameObjectsWithTag("Number");
 
         if (balls.Length == 0)
         {

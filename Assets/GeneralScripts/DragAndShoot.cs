@@ -160,6 +160,10 @@ public class DragAndShoot : MonoBehaviour
                 startMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             }
         }
+        if (textTransform != null)
+        {
+            textTransform.position = transform.position; // 保持 text 与 ball 位置一致
+        }
     }
 
     void MouseDrag()
@@ -202,6 +206,10 @@ public class DragAndShoot : MonoBehaviour
                         screenLine.enabled = true;
                 }
             }
+        }
+        if (textTransform != null)
+        {
+            textTransform.position = transform.position; // 保持 text 与 ball 位置一致
         }
     }
 
