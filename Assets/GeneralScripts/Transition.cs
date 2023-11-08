@@ -188,9 +188,11 @@ public class Transition : MonoBehaviour
         GlobalVariables.opTimesMap = new Dictionary<string, int>();
         GlobalVariables.failReason = "";
         GlobalVariables.portUses = new Dictionary<string, int>();
+        GlobalVariables.stageTimes = new Dictionary<string, int>();
         GlobalVariables.monsterKilled = 0;
         GlobalVariables.inverseTimes = 0;
         GlobalVariables.gravityLevel = false;
+        GlobalVariables.numRestart = 0;
     }
 
 }
