@@ -10,6 +10,7 @@ public class RetryButton : MonoBehaviour
     public void RestartGame()
     {
         // Reload the current scene
+        GlobalVariables.numRestart++;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     // Start is called before the first frame update
