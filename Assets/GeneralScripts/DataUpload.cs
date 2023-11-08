@@ -26,6 +26,9 @@ public class GameReport
     [SerializeField]
     public List<string> portal_names = new List<string>();
     public List<int> portal_uses = new List<int>();
+    public List<string> stage_names = new List<string>();
+    public List<int> stage_times = new List<int>();
+    public int numRestart;
     
     public string mode;
 
@@ -40,6 +43,7 @@ public class GameReport
         mode = GlobalVariables.mode;
         failReason = GlobalVariables.failReason;
         monsterKilled = GlobalVariables.monsterKilled;
+        numRestart = GlobalVariables.numRestart;
         foreach (var keyValuePair in GlobalVariables.platformMap)
         {
             names.Add(keyValuePair.Key);
@@ -53,6 +57,11 @@ public class GameReport
         {
             portal_names.Add(keyValuePair.Key);
             portal_uses.Add(keyValuePair.Value);
+        }
+        foreach (var keyValuePair in GlobalVariables.stageTimes)
+        {
+            stage_names.Add(keyValuePair.Key);
+            stage_times.Add(keyValuePair.Value);
         }
     }
 }

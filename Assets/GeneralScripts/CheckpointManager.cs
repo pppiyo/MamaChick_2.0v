@@ -49,9 +49,11 @@ public class CheckpointManager : MonoBehaviour
             switch (obstacle.gameObject.transform.parent.name)
             {
                 case "Stage3":
+                    increaseStage("Stage3");
                     transform.position = GameObject.Find("Checkpoint1").transform.position;
                     break;
                 case "Stage4":
+                    increaseStage("Stage4");
                     transform.position = GameObject.Find("Checkpoint2").transform.position;
                     fakePlatformInstruction.SetActive(true);
                     AddInstruction.SetActive(true);
@@ -61,6 +63,7 @@ public class CheckpointManager : MonoBehaviour
                     MenuWheel.SetActive(true);
                     break;
                 case "Stage5":
+                    increaseStage("Stage5");
                     transform.position = GameObject.Find("Checkpoint3").transform.position;
                     GameObject.Find("Player").GetComponent<PlayerControl>().currentX = 0;
                     GameObject.Find("Player_Number").GetComponent<TMP_Text>().text = "0";
@@ -74,12 +77,15 @@ public class CheckpointManager : MonoBehaviour
             switch (obstacle.gameObject.transform.parent.name)
             {
                 case "Stage0":
+                    increaseStage("Stage0");
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                     break;
                 case "Stage4":
+                    increaseStage("Stage4");
                     transform.position = GameObject.Find("Checkpoint1").transform.position;
                     break;
                 case "Stage5":
+                    increaseStage("Stage5");
                     transform.position = GameObject.Find("Checkpoint2").transform.position;
                     break;
             }
@@ -90,9 +96,11 @@ public class CheckpointManager : MonoBehaviour
             switch (obstacle.gameObject.transform.parent.name)
             {
                 case "Stage0":
+                    increaseStage("Stage0");
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                     break;
                 case "Stage4":
+                    increaseStage("Stage4");
                     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                     GameObject.Find("TutorialInstructions").GetComponent<TutorialManager>().level3Stage0 = 3;
                     GameObject.Find("TutorialInstructions").GetComponent<TutorialManager>().level3Stage1 = 3;
@@ -103,11 +111,13 @@ public class CheckpointManager : MonoBehaviour
 
         if(GlobalVariables.curLevel == "tutorial 4" && obstacle.gameObject.CompareTag("Spike"))
         {
+            increaseStage("Stage_Tutorial4");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         if (GlobalVariables.curLevel == "tutorial 5" && obstacle.gameObject.CompareTag("Spike"))
         {
+            increaseStage("Stage_Tutorial5");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
@@ -119,6 +129,18 @@ public class CheckpointManager : MonoBehaviour
         {
             case "tutorial":
                 break;
+        }
+    }
+
+    void increaseStage(string stageName)
+    {
+        if (GlobalVariables.stageTimes.ContainsKey(stageName))
+        {
+            GlobalVariables.stageTimes[stageName]++;
+        }
+        else
+        {
+            GlobalVariables.stageTimes[stageName] = 1;
         }
     }
 }

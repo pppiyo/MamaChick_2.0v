@@ -35,4 +35,8 @@ public static class GlobalVariables
     public static int numbersGrabbed = 0;
 
     public static int numberShot = 0;
+
+    public static int numRestart = 0;
+    
+    public static Dictionary<string, int> stageTimes = new Dictionary<string, int>();
 }
