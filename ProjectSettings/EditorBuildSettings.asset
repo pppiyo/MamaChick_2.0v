@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Nithesh_MainMenu.unity
+    guid: d3d01e41a225346b7bd5183dd02ee29c
+  - enabled: 0
     path: Assets/Scenes/_MainMenu.unity
     guid: a6c1d8280cf4a45d7b5b1e94d71260bf
   - enabled: 1
@@ -59,9 +62,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/_Level2-1.unity
     guid: 4ff81f241c51b4d33b2cf4ade408650d
-  - enabled: 1
-    path: Assets/Scenes/Nithesh_MainMenu.unity
-    guid: d3d01e41a225346b7bd5183dd02ee29c
   - enabled: 0
     path: Assets/Scenes/_Tutorial5.unity
     guid: 6eb3168790e644dd3a25162e9ee9852e
