@@ -24,7 +24,7 @@ public static class GlobalVariables
     
     public static Dictionary<string, int> portUses = new Dictionary<string, int>();
 
-    public static string mode = "test";
+    public static string mode = "Plat Test 1";
 
     public static bool gravityLevel = false;
     
