@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3083645663318245275, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0135221
+      objectReference: {fileID: 0}
+    - target: {fileID: -3083645663318245275, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.006761074
+      objectReference: {fileID: 0}
+    - target: {fileID: -3083645663318245275, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4388556524763799106, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
       propertyPath: m_Color.b
       value: 0.9150943

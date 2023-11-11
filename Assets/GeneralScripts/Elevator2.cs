@@ -5,7 +5,7 @@ using UnityEngine;
 public class Elevator2 : MonoBehaviour
 {
     [SerializeField]
-    private float moveSpeed = 2.0f; // vertical speed of elevator
+    private float moveSpeed = 3.0f; // vertical speed of elevator
 
     [SerializeField]
     private int condition = 1; // ?
@@ -64,7 +64,7 @@ public class Elevator2 : MonoBehaviour
     // private void OnTriggerEnter2D(Collider2D collision)
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Debug.Log("Monster2 collided with elevator2");
+        Debug.Log("Monster2 collided with elevator2");
         // if (collision.gameObject.CompareTag("Monster2"))
         // {
         //     if (collision.gameObject.transform.position.y > transform.position.y)

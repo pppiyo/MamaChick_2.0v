@@ -51,7 +51,6 @@ public class Monster2 : MonoBehaviour
     private void GetnumberText()
     {
         numberText = gameObject.transform.Find("Monster_Text").GetComponent<TMP_Text>();
-        // numberTextTMP = gameObject.transform.Find("Number_Text").gameObject.GetComponent<TMP_Text>();
 
         // Ensure you have a reference to the Text component.
         if (numberText == null)
