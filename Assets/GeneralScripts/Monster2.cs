@@ -45,7 +45,10 @@ public class Monster2 : MonoBehaviour
 
     void Update()
     {
-        number = int.Parse(numberText.text);
+        if (numberText)
+        {
+            number = int.Parse(numberText.text);
+        }
         UpdateSize();
         UpdateMovement();
     }

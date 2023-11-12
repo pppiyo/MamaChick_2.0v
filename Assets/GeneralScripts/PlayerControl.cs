@@ -630,7 +630,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (equationSatisfied)
                 {
-                    ShowHint("Press 'E' to teleport");
+                    // ShowHint("Press 'E' to teleport");
                 }
                 else
                 {
