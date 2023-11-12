@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Nithesh_MainMenu.unity
     guid: d3d01e41a225346b7bd5183dd02ee29c
   - enabled: 0
     path: Assets/Scenes/_MainMenu.unity
     guid: a6c1d8280cf4a45d7b5b1e94d71260bf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_LevelSelection.unity
     guid: 9e8885c7e5fea448c8fd4d8943de77a1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Tutorial3_Old.unity
     guid: 61484eb4381d947efa29fc3b03f93a17
   - enabled: 0
@@ -23,13 +23,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/_Level2.unity
     guid: 778fd9ba041024cceafcc4c9bdf4537f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Tutorial_Portal_Geng.unity
     guid: c4fe3c58818ac4c53b14d9ede52ee26b
   - enabled: 0
     path: Assets/Scenes/_Level1_Gun_Amy.unity
     guid: 92785159ad9384e87b213c2a3d739246
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Game Over_Won.unity
     guid: 3cc54aae47b124d11bae60e51f9fb7ec
   - enabled: 0
@@ -41,43 +41,46 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/_Level3.unity
     guid: 6b54d3fe82d62aa459089d0c4b3e9d25
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Tutorial1.unity
     guid: 2d5d5e30315537448931fa27900b854b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Tutorial2.unity
     guid: 23282c22aba94734cbc7f0376c299cfe
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Level1-1.unity
     guid: 26e27823453fa4673aa24cc2d40e8549
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Game Over_Lost.unity
     guid: 1f10125fae2334aa38d12a24affa59c1
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Level1-2.unity
     guid: cf56892ddee63410faf78856942efd4d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Level2-2.unity
     guid: caa05dd78e09d4608934ea26c05f40ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Level2-1.unity
     guid: 4ff81f241c51b4d33b2cf4ade408650d
   - enabled: 0
     path: Assets/Scenes/_Tutorial5.unity
     guid: 6eb3168790e644dd3a25162e9ee9852e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Tutorial3.unity
     guid: e4204b19b55190647a910d893d5ab280
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Tutorial4.unity
     guid: 95815fe6c16bd2a48938ca6b3f7d9a98
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Level4-2.unity
     guid: 3194f6f269cd722489a1800032437b46
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Tutorial5__.unity
     guid: 003983d3aeb234feaaee694746e92414
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Level3-1.unity
     guid: ee122fd5bc54fd0438d6d155fb43f1d3
+  - enabled: 1
+    path: Assets/Scenes/_Level5-2.unity
+    guid: 70e2a2e77a2c44350ac182c7c3d29b87
   m_configObjects: {}
