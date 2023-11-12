@@ -168,14 +168,12 @@ public class TutorialManager : MonoBehaviour
         tutorialElements = GameObject.FindGameObjectsWithTag("Platform_Mutate");
         foreach (GameObject obj in tutorialElements)
         {
-            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4" && GlobalVariables.curLevel != "tutorial 5")
-                obj.SetActive(false);
+            obj.SetActive(true);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Checkpoint");
         foreach (GameObject obj in tutorialElements)
         {
-            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4" && GlobalVariables.curLevel != "tutorial 5")
-                obj.SetActive(false);
+            obj.SetActive(true);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Goal");
         foreach (GameObject obj in tutorialElements)
@@ -305,7 +303,6 @@ public class TutorialManager : MonoBehaviour
         Platform_1_8.SetActive(true);
         Platform_1_9.SetActive(true);
         Platform_1_10.SetActive(true);
-        Destination.SetActive(true);
         level1Stage4 = 5;
     }
 
