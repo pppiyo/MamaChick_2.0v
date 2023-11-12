@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class GunController : MonoBehaviour
 {
@@ -9,14 +12,20 @@ public class GunController : MonoBehaviour
     public GameObject bulletSubPrefab;
     public GameObject bulletMultiplyPrefab;
     public GameObject bulletDividePrefab;
-
     private GameObject bulletPrefab;
     private GameObject bullet;
+    // public DragAndShoot dragAndShoot;
     private float cooldown = 0.5f;
     private bool isEquipped = false;
+    // private GameObject numberPrefab = null;
+    private int shootCnt = 0;
+    public int maxBulletCnt = 10;
 
     void Start()
     {
+        // numberBalls = GameObject.Find("Number");
+        // numberPrefab = LoadPrefab("Assets/Prefabs/Number.prefab");
+
     }
 
     void Update()
@@ -24,15 +33,35 @@ public class GunController : MonoBehaviour
         //Press 'F' to shoot
         if (isEquipped && Input.GetKeyDown(KeyCode.F) && cooldown <= 0)
         {
-            player.HideHint(1);
-            SpawnBullet(GetPlayerFacingDirection());
-            cooldown = 0.5f;
+            // numberPrefab.GetComponent<Rigidbody2D>().isKinematic = true;
+            // numberPrefab.GetComponent<Collider2D>().isTrigger = true;
+
+            if (shootCnt == maxBulletCnt)
+            {
+                player.ShowHint("No Bullet Left");
+                StartCoroutine(player.HideHint(3));
+                return;
+            }
+            else
+            {
+                shootCnt += 1;
+                SpawnBullet(GetPlayerFacingDirection());
+                cooldown = 0.5f;
+
+                player.ShowHint("You have " + (maxBulletCnt - shootCnt) + " bullets left");
+                StartCoroutine(player.HideHint(3));
+                player.HideHint(1);
+            }
         }
         else
         {
             cooldown -= Time.deltaTime;
+            // numberPrefab.GetComponent<Rigidbody2D>().isKinematic = false;
+            // numberPrefab.GetComponent<Collider2D>().isTrigger = false;
         }
     }
+
+
 
     // If the gun collides with player, destroy the gun
     void OnTriggerEnter2D(Collider2D other)
@@ -58,6 +87,7 @@ public class GunController : MonoBehaviour
 
         return playerDirection;
     }
+
 
     // spawn bullet at the player/gun's facing position
     void SpawnBullet(Vector2 facingDirection)
@@ -127,4 +157,11 @@ public class GunController : MonoBehaviour
             return null;
         }
     }
+
+    // #if UNITY_EDITOR
+    //     GameObject LoadPrefab(string path)
+    //     {
+    //         return AssetDatabase.LoadAssetAtPath<GameObject>(path);
+    //     }
+    // #endif
 }

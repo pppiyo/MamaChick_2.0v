@@ -12,6 +12,9 @@ public class BulletController : MonoBehaviour
 
     private int MaxNumber = int.MaxValue;
     private int MinNumber = int.MinValue;
+    // code for avoiding conflict with Drag and shoot
+    // private GameObject nearestNumber = null;
+
 
     private void Start()
     {
@@ -29,19 +32,14 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // // Check if the bullet is off-screen and destroy it.
-        // void DestroyOutOfBounds()
-        // {
-        //     if (transform.position.x < -20 || transform.position.x > 20) // destroy it when out of the scene
-        //     {
-        //         Destroy(gameObject);
-        //     }
-        // }
+        // nearestNumber = null;
 
         if (!GetComponent<Renderer>().isVisible)
         {
             Destroy(gameObject);
         }
+
+        // nearestNumber = FindNearestNumber();
     }
 
 
@@ -49,8 +47,6 @@ public class BulletController : MonoBehaviour
     {
         if (obstacle.gameObject.CompareTag("Gun"))
         { return; }
-
-
 
 
         if (obstacle.gameObject.CompareTag("Number") || obstacle.gameObject.CompareTag("Monster2"))
@@ -64,6 +60,7 @@ public class BulletController : MonoBehaviour
             }
             if (obstacle.gameObject.CompareTag("Monster2"))
             {
+                Debug.Log("Bullet collided with Monster2");
                 numberText = obstacle.gameObject.transform.Find("Monster_Text").gameObject;
             }
 
