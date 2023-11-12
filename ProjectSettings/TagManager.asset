@@ -26,6 +26,7 @@ TagManager:
   - Monster2
   - Elevator
   - Elevator2
+  - HiddenBox
   layers:
   - Default
   - TransparentFX
