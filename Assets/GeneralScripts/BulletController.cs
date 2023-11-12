@@ -16,6 +16,12 @@ public class BulletController : MonoBehaviour
     private GameObject[] allNumbers = null;
     private float minDistance = 1.0f;
     private GameObject numberText = null;
+    private GameObject playerTextGameObject = null;
+    private TMP_Text playerText = null;
+    private int number = 0;
+    private int playerNumber = 0;
+    private int result = 0;
+    private GameObject monster = null;
 
 
     private void Start()
@@ -23,6 +29,10 @@ public class BulletController : MonoBehaviour
         // Get the name of the prefab instance by accessing the name property of the GameObject.
         prefabName = gameObject.name;
         nearestNumber = null;
+        player = GameObject.Find("Player");
+        playerTextGameObject = player.transform.Find("Player_Number").gameObject;
+        playerText = playerTextGameObject.GetComponent<TMP_Text>();
+
     }
 
 
@@ -58,71 +68,10 @@ public class BulletController : MonoBehaviour
         { return; }
 
 
-        if (obstacle.gameObject.CompareTag("Number") || obstacle.gameObject.CompareTag("Monster2"))
+        if (obstacle.gameObject.CompareTag("Monster2"))
         {
-            GameObject numberText = null;
-
-            if (obstacle.gameObject.CompareTag("Number"))
-            {
-                // Debug.Log("Bullet collided with Number");
-                numberText = obstacle.gameObject.transform.Find("Number_Text").gameObject;
-            }
-            if (obstacle.gameObject.CompareTag("Monster2"))
-            {
-                // Debug.Log("Bullet collided with Monster2");
-                numberText = obstacle.gameObject.transform.Find("Monster_Text").gameObject;
-            }
-
-            TMP_Text textComponent = numberText.GetComponent<TMP_Text>();
-
-            if (textComponent != null)
-            {
-                player = GameObject.Find("Player");
-
-                GameObject playerTextGameObject = player.transform.Find("Player_Number").gameObject;
-                TMP_Text playerText = playerTextGameObject.GetComponent<TMP_Text>();
-
-                int number = int.Parse(textComponent.text);
-                int playerNumber = int.Parse(playerText.text);
-                int result = 0;
-
-                if (prefabName == "BulletAdd(Clone)")
-                {
-                    result = playerNumber + number;
-                }
-                else if (prefabName == "BulletSub(Clone)")
-                {
-                    result = playerNumber - number;
-                }
-                else if (prefabName == "BulletMultiply(Clone)")
-                {
-                    result = playerNumber * number;
-                }
-                else if (prefabName == "BulletDivide(Clone)")
-                {
-                    if (number != 0)
-                    {
-                        result = playerNumber / number;
-                    }
-                    else
-                    {
-                        result = MaxNumber;
-                    }
-                }
-
-                if (result > MaxNumber)
-                {
-                    textComponent.text = MaxNumber.ToString();
-                }
-                else if (result < MinNumber)
-                {
-                    textComponent.text = MinNumber.ToString();
-                }
-                else
-                {
-                    textComponent.text = result.ToString();
-                }
-            }
+            monster = obstacle.gameObject;
+            UpdateMonster2NumberText();
         }
 
         Destroy(gameObject);
@@ -130,10 +79,11 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Platform_Solid") || other.gameObject.CompareTag("Platform_Mutate"))
+        if (other.gameObject.CompareTag("Platform_Solid") || other.gameObject.CompareTag("Platform_Mutate") || other.gameObject.CompareTag("Elevator2"))
         {
             Destroy(gameObject);
         }
+
     }
 
 
@@ -217,6 +167,60 @@ public class BulletController : MonoBehaviour
         }
     }
 
+    private void UpdateMonster2NumberText()
+    {
+        numberText = monster.gameObject.transform.Find("Monster_Text").gameObject;
+        Debug.Log("numberText: " + numberText);
+        TMP_Text textComponent = numberText.GetComponent<TMP_Text>();
 
+        if (textComponent != null)
+        {
+            player = GameObject.Find("Player");
+
+            GameObject playerTextGameObject = player.transform.Find("Player_Number").gameObject;
+            TMP_Text playerText = playerTextGameObject.GetComponent<TMP_Text>();
+
+            int number = int.Parse(textComponent.text);
+            int playerNumber = int.Parse(playerText.text);
+            int result = 0;
+
+            if (prefabName == "BulletAdd(Clone)")
+            {
+                result = playerNumber + number;
+            }
+            else if (prefabName == "BulletSub(Clone)")
+            {
+                result = playerNumber - number;
+            }
+            else if (prefabName == "BulletMultiply(Clone)")
+            {
+                result = playerNumber * number;
+            }
+            else if (prefabName == "BulletDivide(Clone)")
+            {
+                if (number != 0)
+                {
+                    result = playerNumber / number;
+                }
+                else
+                {
+                    result = MaxNumber;
+                }
+            }
+
+            if (result > MaxNumber)
+            {
+                textComponent.text = MaxNumber.ToString();
+            }
+            else if (result < MinNumber)
+            {
+                textComponent.text = MinNumber.ToString();
+            }
+            else
+            {
+                textComponent.text = result.ToString();
+            }
+        }
+    }
 
 }

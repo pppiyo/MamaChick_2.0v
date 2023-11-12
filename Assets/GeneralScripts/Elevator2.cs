@@ -64,19 +64,18 @@ public class Elevator2 : MonoBehaviour
     // private void OnTriggerEnter2D(Collider2D collision)
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Monster2 collided with elevator2");
-        // if (collision.gameObject.CompareTag("Monster2"))
-        // {
-        //     if (collision.gameObject.transform.position.y > transform.position.y)
-        //     {
-        //         lowerBoundary = collision.gameObject.transform.position.y - collision.gameObject.transform.localScale.y / 2;
-        //     }
-        //     else
-        //     {
-        //         upperBoundary = collision.gameObject.transform.position.y + collision.gameObject.transform.localScale.y / 2;
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player collided with elevator2");
+            // 检查碰撞对象是否是从下方碰撞
+        }
+        if (collision.gameObject.CompareTag("Monster2"))
+        {
+            Debug.Log("Monster2 collided with elevator2");
+            // Destroy(collision.gameObject);
+            // 检查碰撞对象是否是从下方碰撞
+        }
 
-        //     }
-        // }
-        // Debug.Log("Player collided with elevator");
+
     }
 }

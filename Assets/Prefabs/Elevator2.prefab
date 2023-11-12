@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4388556524763799107, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
       propertyPath: m_Name
-      value: Platform_Elevator
+      value: Elevator2
       objectReference: {fileID: 0}
     - target: {fileID: 4388556524763799117, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
       propertyPath: m_RootOrder
@@ -81,3 +81,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
+--- !u!1 &6690616296352989491 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4388556524763799107, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
+  m_PrefabInstance: {fileID: 6935139883502247792}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4142306813403725395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690616296352989491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb6934569366b4775b31c2dccd843cac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 3
+  condition: 1
+  lowerPlatform: {fileID: 0}
+  upperPlatform: {fileID: 0}

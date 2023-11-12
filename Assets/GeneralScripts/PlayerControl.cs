@@ -457,7 +457,7 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
         {
             GlobalVariables.failReason = "killedBySpike " + obstacle.gameObject.name;
-            SceneLoader.GetComponent<Transition>().LoadGameOverLost();
+            // SceneLoader.GetComponent<Transition>().LoadGameOverLost();
         }
 
 

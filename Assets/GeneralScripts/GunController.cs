@@ -23,8 +23,6 @@ public class GunController : MonoBehaviour
 
     void Start()
     {
-        // numberBalls = GameObject.Find("Number");
-        // numberPrefab = LoadPrefab("Assets/Prefabs/Number.prefab");
 
     }
 
@@ -50,7 +48,7 @@ public class GunController : MonoBehaviour
 
                 player.ShowHint("You have " + (maxBulletCnt - shootCnt) + " bullets left");
                 StartCoroutine(player.HideHint(3));
-                player.HideHint(1);
+                // player.HideHint(1);
             }
         }
         else
