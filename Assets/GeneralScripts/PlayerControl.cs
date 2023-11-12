@@ -125,7 +125,7 @@ public class PlayerControl : MonoBehaviour
             // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
             {
                 UpdateScore(increaseX);
-                resolvePlatforms();
+                // resolvePlatforms();
                 // Debug.Log(currentX);
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
@@ -575,6 +575,8 @@ public class PlayerControl : MonoBehaviour
         }
 
         xBoard.text = currentX.ToString();
+
+        resolvePlatforms();
     }
 
 
