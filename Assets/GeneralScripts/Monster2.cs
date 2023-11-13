@@ -136,11 +136,12 @@ public class Monster2 : MonoBehaviour
         if (other.gameObject.CompareTag("Elevator2"))
         {
             Debug.Log("monster2 collided with elevator2");
-            Destroy(other.gameObject);
+            Destroy(gameObject);
         }
 
         if (other.gameObject.CompareTag("Player"))
         {
+            killedByMonster(other.gameObject);
             Destroy(other.gameObject);
         }
 
@@ -241,5 +242,11 @@ public class Monster2 : MonoBehaviour
                 nearestPlatform = tmpPlatform;
             }
         }
+    }
+
+    private void killedByMonster(GameObject gameObject)
+    {
+        GlobalVariables.failReason = "killedByMonster " + gameObject.name;
+        SceneLoader.GetComponent<Transition>().LoadGameOverLost();
     }
 }

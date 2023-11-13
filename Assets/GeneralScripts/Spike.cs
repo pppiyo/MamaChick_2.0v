@@ -18,6 +18,10 @@ public class Spike : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
-        Destroy(obstacle.gameObject);
+        if (obstacle.gameObject.tag == "Player")
+        {
+            Destroy(obstacle.gameObject);
+
+        }
     }
 }

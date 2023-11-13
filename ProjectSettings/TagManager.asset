@@ -27,6 +27,8 @@ TagManager:
   - Elevator
   - Elevator2
   - Spike2
+  - HiddenBox
+  - MagicGate
   layers:
   - Default
   - TransparentFX

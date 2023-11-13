@@ -50,7 +50,7 @@ public class PlayerControl : MonoBehaviour
     public static GameObject nearestBall;
     public static GameObject nearestNumber = null;
     private bool canTeleport = true;
-
+    // private bool isCooldown = false; //magic gate cooldown
 
     // Parameters to keep the player in bound
     public Transform ground; // Reference to the ground object.
@@ -58,6 +58,7 @@ public class PlayerControl : MonoBehaviour
     private Collider2D groundCollider;
     public float rightBound;
     public float leftBound;
+
 
 
     void Start()
@@ -414,6 +415,9 @@ public class PlayerControl : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
+
+
+
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
         {
             TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
@@ -457,7 +461,7 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
         {
             GlobalVariables.failReason = "killedBySpike " + obstacle.gameObject.name;
-            // SceneLoader.GetComponent<Transition>().LoadGameOverLost();
+            SceneLoader.GetComponent<Transition>().LoadGameOverLost();
         }
 
 
@@ -597,6 +601,19 @@ public class PlayerControl : MonoBehaviour
     //teleporter
     void OnTriggerEnter2D(Collider2D obstacle)
     {
+        if (obstacle.gameObject.CompareTag("MagicGate"))
+        {
+            TMP_Text tmpText = obstacle.gameObject.GetComponentInChildren<TMP_Text>();
+            if (tmpText != null)
+            {
+                string operationText = tmpText.text;
+                PerformOperation(operationText);
+            }
+            xBoard.text = currentX.ToString();
+            Destroy(obstacle.gameObject);
+            // isCooldown = true; // Activate cooldown
+            // Invoke("ResetCooldown", 1f); // Reset cooldown after 1 second
+        }
         //update score
 
         // if (obstacle.gameObject.CompareTag("Number"))
@@ -835,5 +852,41 @@ public class PlayerControl : MonoBehaviour
         // Update the player's position.
         transform.position = newPosition;
     }
+
+    //magic gate function
+    private void PerformOperation(string text)
+    {
+        if (text.Length > 1 && (text[0] == '+' || text[0] == '-' || text[0] == '*' || text[0] == '/'))
+        {
+            char operation = text[0];
+            if (int.TryParse(text.Substring(1), out int number))
+            {
+                Debug.Log(number);
+                switch (operation)
+                {
+                    case '+':
+                        currentX += number;
+                        break;
+                    case '-':
+                        currentX -= number;
+                        break;
+                    case '*':
+                        currentX *= number;
+                        break;
+                    case '/':
+                        if (number != 0) // Avoid division by zero
+                            currentX /= number;
+                        break;
+                }
+            }
+            Debug.Log(currentX);
+        }
+    }
+
+    //magic gate cooldown
+    // private void ResetCooldown()
+    // {
+    //     isCooldown = false; // Reset the cooldown flag
+    // }
 
 }
