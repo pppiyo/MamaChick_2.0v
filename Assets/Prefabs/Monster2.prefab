@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4178418558984182771}
   - component: {fileID: 2299653145791943690}
   - component: {fileID: 5126432043501442972}
+  - component: {fileID: -3820135245217699546}
   m_Layer: 0
   m_Name: Monster2
   m_TagString: Monster2
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4178418558984182768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.66329, y: 13.3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -128,6 +129,18 @@ MonoBehaviour:
   moveSpeed: 1
   condition: 1
   scaleMultiplier: 0.1
+--- !u!114 &-3820135245217699546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178418558984182768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8781e0226a2384702bf0242b57d101d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5319393703572329143
 PrefabInstance:
   m_ObjectHideFlags: 0

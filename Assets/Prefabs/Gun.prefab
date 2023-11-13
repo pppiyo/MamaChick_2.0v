@@ -262,6 +262,7 @@ MonoBehaviour:
   bulletSubPrefab: {fileID: 8876105860029309486, guid: 2ad7fbcd6e88e4fc49cdfe850c100d39, type: 3}
   bulletMultiplyPrefab: {fileID: 8876105860029309486, guid: 9e1cababb89d84df0b6989090cdef0ae, type: 3}
   bulletDividePrefab: {fileID: 8876105860029309486, guid: 322ed60273ec84e72a4ccbc3c037a0e6, type: 3}
+  maxBulletCnt: 10
 --- !u!1 &9098340597880739568
 GameObject:
   m_ObjectHideFlags: 0

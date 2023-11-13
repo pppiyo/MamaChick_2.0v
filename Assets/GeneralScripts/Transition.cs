@@ -30,52 +30,52 @@ public class Transition : MonoBehaviour
     public void LoadLevel2_1()
     {
         globalVariablesReset();
-        GlobalVariables.curLevel = "level 2";
+        GlobalVariables.curLevel = "_Level2-1";
         SceneManager.LoadScene("_Level2-1");
     }
     public void LoadLevel2_2()
     {
         globalVariablesReset();
-        GlobalVariables.curLevel = "level 2";
+        GlobalVariables.curLevel = "_Level2-2";
         SceneManager.LoadScene("_Level2-2");
     }
     public void LoadLevel3_1()
     {
         globalVariablesReset();
-        GlobalVariables.curLevel = "level 3-1";
+        GlobalVariables.curLevel = "_Level3-1";
         GlobalVariables.gravityLevel = false;
         SceneManager.LoadScene("_Level3-1");
     }
     public void LoadLevel3_2()
     {
         globalVariablesReset();
-        GlobalVariables.curLevel = "level 2";
+        GlobalVariables.curLevel = "_Level3-2";
         SceneManager.LoadScene("_Level3-2");
     }
     public void LoadLevel4_1()
     {
         globalVariablesReset();
-        GlobalVariables.curLevel = "level4-1";
+        GlobalVariables.curLevel = "_Level4-1";
         GlobalVariables.gravityLevel = true;
         SceneManager.LoadScene("_Level4-1");
     }
     public void LoadLevel4_2()
     {
         globalVariablesReset();
-        GlobalVariables.curLevel = "level 2";
+        GlobalVariables.curLevel = "_Level4-2";
         GlobalVariables.gravityLevel = true;
         SceneManager.LoadScene("_Level4-2");
     }
     public void LoadLevel5_1()
     {
         globalVariablesReset();
-        GlobalVariables.curLevel = "level 2";
+        GlobalVariables.curLevel = "_Level5-1";
         SceneManager.LoadScene("_Level5-1");
     }
     public void LoadLevel5_2()
     {
         globalVariablesReset();
-        GlobalVariables.curLevel = "level 2";
+        GlobalVariables.curLevel = "_Level5-2";
         SceneManager.LoadScene("_Level5-2");
     }
     // public void LoadLevel3()
@@ -166,7 +166,7 @@ public class Transition : MonoBehaviour
                 LoadLevel2_2();
                 break;
             case "_Level3-1":
-                LoadLevel1_1();
+                LoadLevel3_1();
                 break;
             // case "_Level1-2":
             //     LoadLevel1_2();
@@ -178,6 +178,53 @@ public class Transition : MonoBehaviour
                 LoadLevel4_2();
                 break;
         }
+    }
+
+    public void NextLevel()
+    {
+            switch (GlobalVariables.curLevel)
+            {
+                case "tutorial 1":
+                    LoadLevel1_1();
+                    break;
+                case "tutorial 2":
+                    LoadLevel2_1();
+                    break;
+                case "tutorial 3":
+                    LoadLevel3_1();
+                    break;
+                case "tutorial 4":
+                    LoadLevel4_1();
+                    break;
+                case "tutorial 5":
+                    LoadLevels();
+                    break;
+
+                case "_Level1-1":
+                    LoadLevel1_2();
+                    break;
+                case "_Level1-2":
+                    LoadLevel2_1();
+                    break;
+                case "_Level2-1":
+                    LoadLevel2_2();
+                    break;
+                case "_Level2-2":
+                    LoadLevel3_1();
+                    break;
+                case "_Level3-1":
+                    LoadLevel4_1();
+                    break;
+                // case "_Level1-2":
+                //     LoadLevel1_2();
+                //     break;
+                case "_Level4-1":
+                    LoadLevel4_2();
+                    break;
+                case "_Level4-2":
+                    LoadLevels();
+                    break;
+            }
     }
     
     public void globalVariablesReset()
