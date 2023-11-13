@@ -26,7 +26,6 @@ TagManager:
   - Monster2
   - Elevator
   - Elevator2
-  - Spike2
   - HiddenBox
   - MagicGate
   layers:

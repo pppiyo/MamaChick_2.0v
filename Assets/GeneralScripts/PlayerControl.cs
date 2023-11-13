@@ -13,9 +13,6 @@ using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour
 {
-
-
-
     private bool facingRight = true; // To keep track of the player's facing direction.
     public float horizontalInput;
     public float speed;
@@ -79,8 +76,7 @@ public class PlayerControl : MonoBehaviour
             GlobalVariables.platformMap[obj.name] = 0;
         }
         string[] ops = { "+", "-", "*", "/" };
-        foreach (string op in ops)
-        {
+        foreach (string op in ops) {
             GlobalVariables.opTimesMap[op] = 0;
         }
         playerRB = GetComponent<Rigidbody2D>();
@@ -113,20 +109,20 @@ public class PlayerControl : MonoBehaviour
         KeepPlayerInBound();
         nearestNumber = null;
         CalculateNearestNumber();
-        if (nearestNumber != null && Input.GetKeyDown(KeyCode.E))
+        if (nearestNumber!= null && Input.GetKeyDown(KeyCode.E))
         {
             // Grab the Number object's text
             numberTextGameObject = nearestNumber.transform.Find("Number_Text").gameObject;
             numberText = numberTextGameObject.GetComponent<TMP_Text>().text;
             int increaseX = int.Parse(numberText); // number for the value on the Number object
-                                                   // Debug.Log(increaseX);
-
+            // Debug.Log(increaseX);
+            
             // Use Regex.IsMatch to check if the text in the GameObject in currentCollidingObject contains a number
             if (Regex.IsMatch(numberText, @"\d"))
             // if (Regex.IsMatch(currentCollidingObject.gameObject.name, @"\d"))
             {
                 UpdateScore(increaseX);
-                // resolvePlatforms();
+                resolvePlatforms();
                 // Debug.Log(currentX);
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
@@ -172,14 +168,14 @@ public class PlayerControl : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             transform.Translate(Vector2.right * Time.deltaTime * (speed) * horizontalInput);
-
+            
 
         // Jump With Impulse Force 
         if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)))
         {
             if (gravityDirection == 1)
                 playerRB.AddForce(force, ForceMode2D.Impulse);
-            else if (GlobalVariables.gravityLevel)
+            else if(GlobalVariables.gravityLevel)
                 playerRB.AddForce((float)-0.7 * force, ForceMode2D.Impulse);
         }
 
@@ -198,7 +194,7 @@ public class PlayerControl : MonoBehaviour
         // Flip Gravity
         if (currentX >= 0)
             Physics2D.gravity = invertedGravity;
-        else if (GlobalVariables.gravityLevel)
+        else if(GlobalVariables.gravityLevel)
             Physics2D.gravity = (float)-0.5 * invertedGravity;
 
         // Change Operator from arrow keys
@@ -239,7 +235,7 @@ public class PlayerControl : MonoBehaviour
             GlobalVariables.numbersGrabbed++;
         }
 
-
+        
 
     }
 
@@ -384,7 +380,7 @@ public class PlayerControl : MonoBehaviour
 
         // added?
         ShowHint(hintDisplay);
-
+        
         StartCoroutine(HideHint(1));
 
         return false;
@@ -416,7 +412,7 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionEnter2D(Collision2D obstacle)
     {
 
-
+        
 
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
         {
@@ -457,7 +453,7 @@ public class PlayerControl : MonoBehaviour
 
             StartCoroutine(HideHint(1)); // Hide the hint after a delay
         }
-        // // Tutorial You do not kill anyone
+        // Tutorial You do not kill anyone
         if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
         {
             GlobalVariables.failReason = "killedBySpike " + obstacle.gameObject.name;
@@ -477,18 +473,23 @@ public class PlayerControl : MonoBehaviour
             // Debug.Log("Goal");
             ReturnToMainMenu();
         }
-
-        // if Player collides with a platform
-        if (obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2"))
+        // if Player collides with a mutate platform
+        if (obstacle.gameObject.CompareTag("Platform_Mutate"))
         {
             isGrounded = true;
         }
 
-        if (obstacle.gameObject.CompareTag("Spike2"))
+
+        // if Player collides with a mutate platform
+        if (obstacle.gameObject.CompareTag("Platform_Solid"))
         {
             isGrounded = true;
         }
 
+        if (obstacle.gameObject.CompareTag("Elevator"))
+        {
+            isGrounded = true;
+        }
 
         // platforms that provide direct calculation
         // if(obstacle.gameObject.CompareTag("Plat_Modify"))
@@ -579,16 +580,13 @@ public class PlayerControl : MonoBehaviour
         }
 
         xBoard.text = currentX.ToString();
-
-        resolvePlatforms();
     }
 
 
     void OnCollisionExit2D(Collision2D obstacle)
     {
         // Jump Disabled
-        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination") || obstacle.gameObject.CompareTag("Spike2"))
-            // if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2") || obstacle.gameObject.CompareTag("Spike2"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination"))
             isGrounded = false;
 
         if (obstacle.gameObject.CompareTag("Portal"))
@@ -620,7 +618,7 @@ public class PlayerControl : MonoBehaviour
         // {
         //     currentCollidingObject = obstacle; // Store the collider for use in Update
         // }
-
+        
         if (obstacle.gameObject.CompareTag("Portal"))
         {
             TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
@@ -647,7 +645,7 @@ public class PlayerControl : MonoBehaviour
 
                 if (equationSatisfied)
                 {
-                    // ShowHint("Press 'E' to teleport");
+                    ShowHint("Press 'E' to teleport");
                 }
                 else
                 {
@@ -707,7 +705,7 @@ public class PlayerControl : MonoBehaviour
 
             // 设置JudgeEquation组件的equationText属性为障碍物上的方程
             judge.equationText = obstacleEquationText;
-
+            
             // 设置JudgeEquation的targetObject为碰撞的障碍物
             judge.targetObject = obstacle.gameObject;
 
@@ -761,7 +759,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
         // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
-
+        
 
     }
 
