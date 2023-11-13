@@ -35,8 +35,8 @@ public class Monster2Movement : MonoBehaviour
         SceneLoader = GameObject.Find("SceneManager");
         GetnumberText();
         GetInitialPositionPosition();
-        leftBoundary = 14.0f;
-        rightBoundary = 28.0f;
+        leftBoundary = 20.0f;
+        rightBoundary = 30.0f;
     }
 
 
@@ -51,7 +51,6 @@ public class Monster2Movement : MonoBehaviour
     private void GetnumberText()
     {
         numberText = gameObject.transform.Find("Monster_Text").GetComponent<TMP_Text>();
-        // numberTextTMP = gameObject.transform.Find("Number_Text").gameObject.GetComponent<TMP_Text>();
 
         // Ensure you have a reference to the Text component.
         if (numberText == null)

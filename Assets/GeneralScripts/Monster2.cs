@@ -17,26 +17,40 @@ public class Monster2 : MonoBehaviour
     private GameObject[] allPlatforms;
     private int direction = 1; // up: 1, down: -1 
 
-    private TMP_Text numberText;  // Reference to the TMP_Text component with the number.
     public float scaleMultiplier = 0.1f;  // Adjust this to control the scaling rate.
-
+    private int MaxNumber = int.MaxValue;
+    private int MinNumber = int.MinValue;
     private Vector3 initialScale;
     private float initialHeight;
     private Vector3 initialPosition;
     private float yOffset;
+    private GameObject player;
+    private TMP_Text numberText; // Reference to the TMP_Text component with the number.
+    private int number; // The real value of the monster.
+    private int MAX_SIZE_NUMBER = 40; // the max size facotr monster2 can get. (in terms of appearance cannot be bigger than this number's corresponding size)
 
-    private int MAX = 40;
-    private int actualValue = 0;
-
-    // private Vector3 originalSize;
 
     void Start()
     {
         SceneLoader = GameObject.Find("SceneManager");
-        GetnumberText();
+        player = GameObject.Find("Player");
+
+        GetNumberText(); // get the number of the monster from the text component
+
         GetInitialPositionPosition();
         FindNearestPlatform();
         GetBoundary();
+    }
+
+
+    void Update()
+    {
+        if (numberText)
+        {
+            number = int.Parse(numberText.text);
+        }
+        UpdateSize();
+        UpdateMovement();
     }
 
 
@@ -48,10 +62,10 @@ public class Monster2 : MonoBehaviour
         initialPosition = transform.position;
     }
 
-    private void GetnumberText()
+    // Get TMP_Text on Monster2
+    private void GetNumberText()
     {
         numberText = gameObject.transform.Find("Monster_Text").GetComponent<TMP_Text>();
-        // numberTextTMP = gameObject.transform.Find("Number_Text").gameObject.GetComponent<TMP_Text>();
 
         // Ensure you have a reference to the Text component.
         if (numberText == null)
@@ -62,58 +76,113 @@ public class Monster2 : MonoBehaviour
     }
 
 
-    void Update()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        UpdateSize();
-        UpdateMovement();
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            string prefabName = other.gameObject.name;
+
+            // Debug.Log("prefab name is: " + prefabName);
+            Debug.Log("monster 2 Text: " + number);
+
+            // get player number text // good
+            string playerText = player.transform.Find("Player_Number").gameObject.GetComponent<TMP_Text>().text;
+            int playerNumber = int.Parse(playerText); // good
+
+            int result = 0;
+
+            if (prefabName == "BulletAdd(Clone)")
+            {
+                result = playerNumber + number;
+            }
+            else if (prefabName == "BulletSub(Clone)")
+            {
+                result = playerNumber - number;
+            }
+            else if (prefabName == "BulletMultiply(Clone)")
+            {
+                result = playerNumber * number;
+            }
+            else if (prefabName == "BulletDivide(Clone)")
+            {
+                if (number != 0)
+                {
+                    result = playerNumber / number;
+                }
+                else
+                {
+                    result = MaxNumber;
+                }
+            }
+            // // Debug.Log(result);
+
+            if (result > MaxNumber)
+            {
+                numberText.text = MaxNumber.ToString();
+            }
+            else if (result > 0 && result <= MaxNumber)
+            {
+                numberText.text = result.ToString();
+            }
+            else
+            {
+                numberText.text = "0";
+            }
+
+            Destroy(other.gameObject);
+        }
+
+        // Debug.Log("hi");
+        if (other.gameObject.CompareTag("Elevator2"))
+        {
+            Debug.Log("monster2 collided with elevator2");
+            Destroy(gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Player"))
+        {
+            killedByMonster(other.gameObject);
+            Destroy(other.gameObject);
+        }
 
     }
+
+
 
     private void UpdateSize()
     {
-        if (int.TryParse(numberText.text, out int number))
+        int sizeNumber = number;
+        if (number > MAX_SIZE_NUMBER)
         {
-            if (number <= 0)
-            {
-                Destroy(gameObject);
-            }
-            else if (number > MAX)
-            {
-                number = MAX;
-            }
-
-            actualValue = number;
-            // Calculate the new scale based on the number for both width and height.
-            float scaleFactor = number * scaleMultiplier;
-
-            // Apply the scale factor to the initial scale.
-            Vector3 newScale = new Vector3(initialScale.x * scaleFactor, initialScale.y * scaleFactor, initialScale.z);
-
-            // Set the new scale to the transform.
-            transform.localScale = newScale;
-
-            // Since we are scaling uniformly and the pivot is at the center, the object will grow equally in all directions.
-            // To keep the bottom in the same position, we need to move the object up by half the increased height.
-            float heightIncrease = (initialScale.y * scaleFactor) - initialScale.y;
-            float newYPosition = initialPosition.y + heightIncrease / 2;
-
-            // Set the new position to the transform.
-            transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
+            sizeNumber = MAX_SIZE_NUMBER;
         }
-        else
-        {
-            Debug.LogError("Failed to parse the number.");
-        }
+
+        // Calculate the new scale based on the number for both width and height.
+        float scaleFactor = sizeNumber * scaleMultiplier;
+
+        // Apply the scale factor to the initial scale.
+        Vector3 newScale = new Vector3(initialScale.x * scaleFactor, initialScale.y * scaleFactor, initialScale.z);
+
+        // Set the new scale to the transform.
+        transform.localScale = newScale;
+
+        // Since we are scaling uniformly and the pivot is at the center, the object will grow equally in all directions.
+        // To keep the bottom in the same position, we need to move the object up by half the increased height.
+        float heightIncrease = (initialScale.y * scaleFactor) - initialScale.y;
+        float newYPosition = initialPosition.y + heightIncrease / 2;
+
+        // Set the new position to the transform.
+        transform.position = new Vector3(transform.position.x, newYPosition, transform.position.z);
     }
+
 
     private void UpdateMovement()
     {
-        if (actualValue == MAX)
+        if (number >= MAX_SIZE_NUMBER)
         {
             // Debug.Log("actualValue: " + actualValue);
             return;
         }
-
         else
         {
             Vector2 currentPosition = transform.position;
@@ -134,27 +203,8 @@ public class Monster2 : MonoBehaviour
                 direction = -1; // 向左
             }
         }
-        // 获取当前位置
-
     }
 
-
-    // private void OnCollisionEnter2D(Collision2D other)
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // Debug.Log("hi");
-        if (other.gameObject.CompareTag("Elevator2"))
-        {
-            Debug.Log("monster2 collided with elevator2");
-            Destroy(other.gameObject);
-        }
-        if (other.gameObject.CompareTag("Player"))
-        {
-            Destroy(other.gameObject);
-        }
-
-        // if (other.gameObject.CompareTag("Elevator2"))
-    }
 
     private void GetBoundary()
     {
@@ -192,5 +242,11 @@ public class Monster2 : MonoBehaviour
                 nearestPlatform = tmpPlatform;
             }
         }
+    }
+
+    private void killedByMonster(GameObject gameObject)
+    {
+        GlobalVariables.failReason = "killedByMonster " + gameObject.name;
+        SceneLoader.GetComponent<Transition>().LoadGameOverLost();
     }
 }
