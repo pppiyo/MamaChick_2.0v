@@ -8,6 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Nithesh_MainMenu.unity
     guid: 372f195b1a60e4c76a1390759ac4aa72
+    guid: 372f195b1a60e4c76a1390759ac4aa72
   - enabled: 0
     path: Assets/Scenes/_MainMenu.unity
     guid: c02eed60db95f4e16ae557b93ec09324
@@ -28,6 +29,7 @@ EditorBuildSettings:
     guid: 92785159ad9384e87b213c2a3d739246
   - enabled: 1
     path: Assets/Scenes/_Game Over_Won.unity
+    guid: 8f8870a4a054b478388ed724c1962662
     guid: 8f8870a4a054b478388ed724c1962662
   - enabled: 0
     path: Assets/Scenes/_Tutorial5_geng.unity
@@ -65,7 +67,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/_Tutorial5.unity
     guid: 6eb3168790e644dd3a25162e9ee9852e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/_Tutorial3.unity
     guid: 5200ad3b50c5c4384b28e56bd7a9f5bd
   - enabled: 1
@@ -87,6 +89,8 @@ EditorBuildSettings:
     path: Assets/Scenes/_Level5-1.unity
     guid: c171d95b1da224aa0a5116fc6b2f7059
   - enabled: 1
+    path: Assets/Scenes/_Level5-2.unity
+    guid: e270009dd70c14a359de492bbd5273f9
     path: Assets/Scenes/_Level5-2.unity
     guid: e270009dd70c14a359de492bbd5273f9
   m_configObjects: {}

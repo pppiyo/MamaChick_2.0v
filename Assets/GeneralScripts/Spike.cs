@@ -23,5 +23,6 @@ public class Spike : MonoBehaviour
         //     Destroy(obstacle.gameObject);
 
         // }
+
     }
 }
