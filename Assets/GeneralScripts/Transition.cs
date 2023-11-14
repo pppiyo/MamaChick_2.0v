@@ -83,12 +83,21 @@ public class Transition : MonoBehaviour
         globalVariablesReset();
         GlobalVariables.curLevel = "_Level5-2";
         SceneManager.LoadScene("_Level5-2");
+        GlobalVariables.gravityLevel = true;
     }
+    // public void LoadLevel5_3()
+    // {
+    //     globalVariablesReset();
+    //     GlobalVariables.curLevel = "_Level5-3";
+    //     SceneManager.LoadScene("_Level5-3");
+    //     GlobalVariables.gravityLevel = true;
+    // }
     public void LoadLevel5_4()
     {
         globalVariablesReset();
         GlobalVariables.curLevel = "_Level5-4";
         SceneManager.LoadScene("_Level5-4");
+        GlobalVariables.gravityLevel = true;
     }
     // public void LoadLevel3()
     // {
