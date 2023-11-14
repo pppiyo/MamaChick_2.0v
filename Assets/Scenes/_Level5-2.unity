@@ -2311,7 +2311,7 @@ PrefabInstance:
       objectReference: {fileID: 332606307}
     - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: jumpForce
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: SceneLoader
@@ -2375,7 +2375,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786336996122671707, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_GravityScale
-      value: 3.5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8786336996122671707, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_CollisionDetection

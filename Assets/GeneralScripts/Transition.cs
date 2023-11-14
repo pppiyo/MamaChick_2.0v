@@ -78,6 +78,12 @@ public class Transition : MonoBehaviour
         GlobalVariables.curLevel = "_Level5-2";
         SceneManager.LoadScene("_Level5-2");
     }
+    public void LoadLevel5_4()
+    {
+        globalVariablesReset();
+        GlobalVariables.curLevel = "_Level5-4";
+        SceneManager.LoadScene("_Level5-4");
+    }
     // public void LoadLevel3()
     // {
     //     GlobalVariables.curLevel = "level 3";
@@ -183,6 +189,9 @@ public class Transition : MonoBehaviour
             case "_Level5-2":
                 LoadLevel5_2();
                 break;
+            case "_Level5-4":
+                LoadLevel5_4();
+                break;
         }
     }
 
@@ -233,6 +242,9 @@ public class Transition : MonoBehaviour
             case "_Level5-1":
                 LoadLevel5_2();
                 break;
+            // case "_Level5-4":
+            //     LoadLevel5_5();
+            //     break;
         }
     }
 
