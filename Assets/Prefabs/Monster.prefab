@@ -152,6 +152,8 @@ MonoBehaviour:
   leftBoundary: -2.5
   rightBoundary: 2.5
   condition: 1
+  prefabList:
+  - {fileID: 4609709761923799660, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
 --- !u!114 &8492780493713140041
 MonoBehaviour:
   m_ObjectHideFlags: 0

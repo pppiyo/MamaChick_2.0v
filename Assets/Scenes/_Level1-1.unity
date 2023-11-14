@@ -578,7 +578,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351557972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -17.964687, y: -9.60111, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -977,7 +977,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.960205, y: -4.7000003, z: -10}
+  m_LocalPosition: {x: -0.2851925, y: 4.90111, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1655,7 +1655,7 @@ PrefabInstance:
       objectReference: {fileID: 1438361060}
     - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: jumpForce
-      value: 20
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: leftBound
@@ -1719,7 +1719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8786336996122671707, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_GravityScale
-      value: 3.5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8786336996122671707, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_CollisionDetection
