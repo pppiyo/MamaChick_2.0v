@@ -15,7 +15,7 @@ public class PlayerControl : MonoBehaviour
 {
 
 
-    public float powerUpDuration = 5f;
+    public float powerUpDuration = 50f;
     private bool powerUpActive = false;
     private float powerUpTimer = 0f;
 
@@ -115,14 +115,30 @@ public class PlayerControl : MonoBehaviour
 
         KeepPlayerInBound();
 
-        if (powerUpActive)
-        {
-            powerUpTimer += Time.deltaTime;
-            if (powerUpTimer >= powerUpDuration)
+       
+            // Handle player movement
+           
+
+            // Check for interaction keys (e.g., to pick up balls)
+            if (Input.GetKeyDown(KeyCode.E)) // Example key for picking up nearest ball
             {
-                DeactivatePowerUp();
+                
+                PickupNearestPowerUp(); // Picks up the nearest power-up ball
             }
-        }
+
+            // Power-up timer check
+            if (powerUpActive)
+            {
+                powerUpTimer += Time.deltaTime;
+                if (powerUpTimer >= powerUpDuration)
+                {
+                    DeactivatePowerUp();
+                    powerUpTimer = 0f;
+                }
+            }
+
+           
+
 
         nearestNumber = null;
         CalculateNearestNumber();
@@ -259,37 +275,35 @@ public class PlayerControl : MonoBehaviour
     // Sets the platform logic at start and whenever currentX changes
     public void resolvePlatforms()
     {
-        Renderer renderer = GetComponent<Renderer>();
-        // Check all platforms and separate solid platforms
-        // Debug.Log("Resolving platforms");
         foreach (GameObject platform in platforms)
         {
             SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
-            if (CanPassPlatform(platform))
-
+            Debug.Log("resolve called");
+            if (powerUpActive)
             {
-                DisableLayerCollision(platform);
-                if (spriteRenderer != null)
-                {
-                    // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
-                    Color transparentColor = new Color(1, 1, 1, 0.5f);
-                    // 设置SpriteRenderer的颜色为我们创建的透明颜色
-                    spriteRenderer.color = transparentColor;
-                }
+                Debug.Log("powerUpActive");
+                // During power-up, all platforms should be solid
+                spriteRenderer.color = new Color(1, 1, 1, 1); // Full opacity
+                EnableLayerCollision(platform);
             }
             else
             {
-                EnableLayerCollision(platform);
-                if (spriteRenderer != null)
+                // Normal platform behavior based on conditions
+                Debug.Log("powerDeActive");
+                if (CanPassPlatform(platform))
                 {
-                    // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
-                    Color transparentColor = new Color(1, 1, 1, 1);
-                    // 设置SpriteRenderer的颜色为我们创建的透明颜色
-                    spriteRenderer.color = transparentColor;
+                    DisableLayerCollision(platform);
+                    spriteRenderer.color = new Color(1, 1, 1, 0.5f); // Partial opacity
+                }
+                else
+                {
+                    EnableLayerCollision(platform);
+                    spriteRenderer.color = new Color(1, 1, 1, 1); // Full opacity
                 }
             }
         }
     }
+
 
 
     private void Flip()
@@ -429,12 +443,6 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionEnter2D(Collision2D obstacle)
     {
 
-        if (obstacle.gameObject.CompareTag("Green"))
-        {
-            ActivatePowerUp();
-            Destroy(obstacle.gameObject); // Optionally destroy the power-up object
-        }
-
 
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
         {
@@ -563,34 +571,16 @@ public class PlayerControl : MonoBehaviour
     {
         powerUpActive = true;
         powerUpTimer = 0f;
-
-        // Change all platforms to solid color
-        foreach (GameObject platform in platforms)
-        {
-            SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f); // Full opacity
-            }
-        }
+        resolvePlatforms();
     }
+
 
     void DeactivatePowerUp()
     {
         powerUpActive = false;
 
-        // Revert platform states based on the equation condition
-        foreach (GameObject platform in platforms)
-        {
-            SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
-            {
-                bool equationSatisfied = CanPassPlatform(platform); // Assuming you have a method to check this
-                spriteRenderer.color = equationSatisfied
-                    ? new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f) // Full opacity if satisfied
-                    : new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f); // Partial opacity if not
-            }
-        }
+        // Revert platforms back to their original states
+        resolvePlatforms();
     }
 
 
@@ -845,11 +835,8 @@ public class PlayerControl : MonoBehaviour
         // Pick up the nearest power-up ball
         if (nearestPowerUp != null)
         {
-            // You can perform custom operations here, like attaching the power-up to the player
-            // For example, you might want to move the power-up to the player's position or trigger its effect immediately
-            // Example: ActivatePowerUp();
-
-            // Optionally, you can destroy the power-up object if it's a one-time use
+            Debug.Log("ihihihihihi");
+            ActivatePowerUp();
             Destroy(nearestPowerUp);
         }
     }
