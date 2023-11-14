@@ -610,6 +610,7 @@ public class PlayerControl : MonoBehaviour
                 PerformOperation(operationText);
             }
             xBoard.text = currentX.ToString();
+            resolvePlatforms();
             Destroy(obstacle.gameObject);
             // isCooldown = true; // Activate cooldown
             // Invoke("ResetCooldown", 1f); // Reset cooldown after 1 second
@@ -879,7 +880,8 @@ public class PlayerControl : MonoBehaviour
                         break;
                 }
             }
-            Debug.Log(currentX);
+            // Debug.Log(currentX);
+            
         }
     }
 

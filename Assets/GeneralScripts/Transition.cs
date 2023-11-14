@@ -11,7 +11,7 @@ public class Transition : MonoBehaviour
     }
     public void LoadLevels()
     {
-        SceneManager.LoadScene("Nithesh_MainMenu");
+        SceneManager.LoadScene("_LevelSelection");
     }
 
     public void LoadLevel1_1()
@@ -144,7 +144,7 @@ public class Transition : MonoBehaviour
 
     public void LoadMainMenu()
     {
-        SceneManager.LoadScene("Nithesh_MainMenu");
+        SceneManager.LoadScene("_MainMenu");
     }
 
     public void LoadGameOverLost()
@@ -254,9 +254,9 @@ public class Transition : MonoBehaviour
             case "_Level5-1":
                 LoadLevel5_2();
                 break;
-            // case "_Level5-4":
-            //     LoadLevel5_5();
-            //     break;
+                // case "_Level5-4":
+                //     LoadLevel5_5();
+                //     break;
         }
     }
 
