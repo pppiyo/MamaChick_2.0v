@@ -8,82 +8,89 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Nithesh_MainMenu.unity
     guid: 372f195b1a60e4c76a1390759ac4aa72
+    guid: 372f195b1a60e4c76a1390759ac4aa72
   - enabled: 0
     path: Assets/Scenes/_MainMenu.unity
-    guid: a6c1d8280cf4a45d7b5b1e94d71260bf
-  - enabled: 0
+    guid: c02eed60db95f4e16ae557b93ec09324
+  - enabled: 1
     path: Assets/Scenes/_LevelSelection.unity
-    guid: 9e8885c7e5fea448c8fd4d8943de77a1
-  - enabled: 0
-    path: Assets/Scenes/_Tutorial3_Old.unity
-    guid: 61484eb4381d947efa29fc3b03f93a17
+    guid: 2fbb494b1b8534a44849713977fdca62
   - enabled: 0
     path: Assets/Scenes/_Level1.unity
-    guid: 326d18e054e07144eaa3f4807ca60fe1
+    guid: a409ba361e5a24d8cb598f5e262e6394
   - enabled: 0
     path: Assets/Scenes/_Level2.unity
-    guid: 778fd9ba041024cceafcc4c9bdf4537f
-  - enabled: 0
+    guid: 76287113696f04783843b4f42877bec1
+  - enabled: 1
     path: Assets/Scenes/_Tutorial_Portal_Geng.unity
-    guid: c4fe3c58818ac4c53b14d9ede52ee26b
+    guid: 3f395ca49c4fb495caa432cf9fc3c7df
   - enabled: 0
     path: Assets/Scenes/_Level1_Gun_Amy.unity
     guid: 92785159ad9384e87b213c2a3d739246
   - enabled: 1
     path: Assets/Scenes/_Game Over_Won.unity
     guid: 8f8870a4a054b478388ed724c1962662
+    guid: 8f8870a4a054b478388ed724c1962662
   - enabled: 0
     path: Assets/Scenes/_Tutorial5_geng.unity
     guid: 6eb3168790e644dd3a25162e9ee9852e
   - enabled: 0
     path: Assets/Scenes/_Level2.unity
-    guid: 778fd9ba041024cceafcc4c9bdf4537f
+    guid: 76287113696f04783843b4f42877bec1
   - enabled: 0
     path: Assets/Scenes/_Level3.unity
-    guid: 6b54d3fe82d62aa459089d0c4b3e9d25
-  - enabled: 0
+    guid: c48026522ca75428d9f1f8a6e874c996
+  - enabled: 1
     path: Assets/Scenes/_Tutorial1.unity
-    guid: 2d5d5e30315537448931fa27900b854b
-  - enabled: 0
+    guid: e5daadaf8db3545b98286da4dd4a9a2f
+  - enabled: 1
     path: Assets/Scenes/_Tutorial2.unity
-    guid: 23282c22aba94734cbc7f0376c299cfe
-  - enabled: 0
+    guid: c16465a6c2c85434e9a6c4a8460a4729
+  - enabled: 1
     path: Assets/Scenes/_Level1-1.unity
     guid: fb8a83b0caff64bed85e6cfdd54373ff
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/_Game Over_Lost.unity
-    guid: 1f10125fae2334aa38d12a24affa59c1
-  - enabled: 0
+    guid: 6e84680a3d1ce441cac95f6a6e4f9e9c
+  - enabled: 1
     path: Assets/Scenes/_Level1-2.unity
-    guid: cf56892ddee63410faf78856942efd4d
-  - enabled: 0
+    guid: 23af4cae5a9bc44eaadeb9d3cb66e16b
+  - enabled: 1
     path: Assets/Scenes/_Level2-2.unity
-    guid: caa05dd78e09d4608934ea26c05f40ab
-  - enabled: 0
+    guid: b5b32d84e87ca4b678e2fb1749382e46
+  - enabled: 1
     path: Assets/Scenes/_Level2-1.unity
-    guid: 4ff81f241c51b4d33b2cf4ade408650d
+    guid: 7dc40976529944fca846e61503680043
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial3_Old.unity
+    guid: 21366c3ee8c7b4339a3d5a5fc166db68
   - enabled: 0
     path: Assets/Scenes/_Tutorial5.unity
     guid: 6eb3168790e644dd3a25162e9ee9852e
   - enabled: 0
     path: Assets/Scenes/_Tutorial3.unity
-    guid: e4204b19b55190647a910d893d5ab280
-  - enabled: 0
-    path: Assets/Scenes/_Tutorial4.unity
-    guid: 95815fe6c16bd2a48938ca6b3f7d9a98
-  - enabled: 0
-    path: Assets/Scenes/_Level4-2.unity
-    guid: 3194f6f269cd722489a1800032437b46
-  - enabled: 0
-    path: Assets/Scenes/_Tutorial5__.unity
-    guid: 003983d3aeb234feaaee694746e92414
+    guid: 5200ad3b50c5c4384b28e56bd7a9f5bd
+  - enabled: 1
+    path: Assets/Scenes/_Level3-1.unity
+    guid: 34544c01bb23840f889b2c96e566733d
   - enabled: 1
     path: Assets/Scenes/_Level3-2.unity
     guid: dc580e8ea88be45a995f2af731933ecc
   - enabled: 1
+    path: Assets/Scenes/_Tutorial4.unity
+    guid: 7692e767cf0294d04a81f6bd4c42930d
+  - enabled: 1
+    path: Assets/Scenes/_Level4-2.unity
+    guid: 56ffbbceafa464f2ebed699e55c133ae
+  - enabled: 1
+    path: Assets/Scenes/_Tutorial5__.unity
+    guid: 003983d3aeb234feaaee694746e92414
+  - enabled: 1
     path: Assets/Scenes/_Level5-1.unity
     guid: c171d95b1da224aa0a5116fc6b2f7059
   - enabled: 1
+    path: Assets/Scenes/_Level5-2.unity
+    guid: e270009dd70c14a359de492bbd5273f9
     path: Assets/Scenes/_Level5-2.unity
     guid: e270009dd70c14a359de492bbd5273f9
   m_configObjects: {}
