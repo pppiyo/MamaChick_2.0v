@@ -115,25 +115,25 @@ public class Transition : MonoBehaviour
 
     public void LoadTutorial3()
     {
-            globalVariablesReset();
-            GlobalVariables.curLevel = "tutorial 3";
-            SceneManager.LoadScene("_Tutorial3");
+        globalVariablesReset();
+        GlobalVariables.curLevel = "tutorial 3";
+        SceneManager.LoadScene("_Tutorial3");
     }
 
     public void LoadTutorial4()
     {
-            globalVariablesReset();
-            GlobalVariables.curLevel = "tutorial 4";
-            GlobalVariables.gravityLevel = true;
-            SceneManager.LoadScene("_Tutorial4");
+        globalVariablesReset();
+        GlobalVariables.curLevel = "tutorial 4";
+        GlobalVariables.gravityLevel = true;
+        SceneManager.LoadScene("_Tutorial4");
     }
 
     public void LoadTutorial5()
     {
-            globalVariablesReset();
-            GlobalVariables.curLevel = "tutorial 5";
-            GlobalVariables.gravityLevel = false;
-            SceneManager.LoadScene("_Tutorial5__");
+        globalVariablesReset();
+        GlobalVariables.curLevel = "tutorial 5";
+        GlobalVariables.gravityLevel = false;
+        SceneManager.LoadScene("_Tutorial5__");
     }
 
 
@@ -175,9 +175,9 @@ public class Transition : MonoBehaviour
             case "_Level3-1":
                 LoadLevel3_1();
                 break;
-            // case "_Level1-2":
-            //     LoadLevel1_2();
-            //     break;
+            case "_Level3-2":
+                LoadLevel3_2();
+                break;
             case "_Level4-1":
                 LoadLevel4_1();
                 break;
@@ -187,59 +187,71 @@ public class Transition : MonoBehaviour
             case "_Level5-4":
                 LoadLevel5_4();
                 break;
+            case "_Level5-1":
+                LoadLevel5_1();
+                break;
+            case "_Level5-2":
+                LoadLevel5_2();
+                break;
         }
     }
 
     public void NextLevel()
     {
-            switch (GlobalVariables.curLevel)
-            {
-                case "tutorial 1":
-                    LoadLevel1_1();
-                    break;
-                case "tutorial 2":
-                    LoadLevel2_1();
-                    break;
-                case "tutorial 3":
-                    LoadLevel3_1();
-                    break;
-                case "tutorial 4":
-                    LoadLevel4_1();
-                    break;
-                case "tutorial 5":
-                    LoadLevels();
-                    break;
+        switch (GlobalVariables.curLevel)
+        {
+            case "tutorial 1":
+                LoadLevel1_1();
+                break;
+            case "tutorial 2":
+                LoadLevel2_1();
+                break;
+            case "tutorial 3":
+                LoadLevel3_1();
+                break;
+            case "tutorial 4":
+                LoadLevel4_1();
+                break;
+            case "tutorial 5":
+                LoadLevels();
+                break;
 
-                case "_Level1-1":
-                    LoadLevel1_2();
-                    break;
-                case "_Level1-2":
-                    LoadLevel2_1();
-                    break;
-                case "_Level2-1":
-                    LoadLevel2_2();
-                    break;
-                case "_Level2-2":
-                    LoadLevel3_1();
-                    break;
-                case "_Level3-1":
-                    LoadLevel4_1();
-                    break;
-                // case "_Level1-2":
-                //     LoadLevel1_2();
-                //     break;
-                case "_Level4-1":
-                    LoadLevel4_2();
-                    break;
-                case "_Level4-2":
-                    LoadLevels();
-                    break;
-                case "_Level5-4":
-                    LoadLevel5_4();
-                    break;
-            }
+            case "_Level1-1":
+                LoadLevel1_2();
+                break;
+            case "_Level1-2":
+                LoadLevel2_1();
+                break;
+            case "_Level2-1":
+                LoadLevel2_2();
+                break;
+            case "_Level2-2":
+                LoadLevel3_1();
+                break;
+            case "_Level3-1":
+                LoadLevel3_2();
+                break;
+            case "_Level3-2":
+                LoadLevel4_1();
+                break;
+            case "_Level4-1":
+                LoadLevel4_2();
+                break;
+            case "_Level4-2":
+                LoadLevel5_1();
+                break;
+            case "_Level5-1":
+                LoadLevel5_2();
+                break;
+            case "_Level5-2":
+                LoadLevel5_4();
+                break;
+            case "_Level5-4":
+                LoadLevels();
+                break;
+        }
     }
-    
+
     public void globalVariablesReset()
     {
         GlobalVariables.win = false;
