@@ -215,6 +215,12 @@ public class Transition : MonoBehaviour
             case "_Level4-2":
                 LoadLevel4_2();
                 break;
+            case "_Level4-3":
+                LoadLevel4_3();
+                break;
+            case "_Level4-4":
+                LoadLevel4_4();
+                break;
             case "_Level5-1":
                 LoadLevel5_1();
                 break;

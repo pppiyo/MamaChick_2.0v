@@ -415,7 +415,7 @@ public class PlayerControl : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
-
+        
 
 
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
@@ -464,9 +464,11 @@ public class PlayerControl : MonoBehaviour
             SceneLoader.GetComponent<Transition>().LoadGameOverLost();
         }
 
-
+        if(obstacle.gameObject.CompareTag("Elevator") ){
+            isGrounded = true;
+        }
         // 如果玩家与一个障碍物碰撞
-        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination") )
         {
             // Jump Enabled
             isGrounded = true;
@@ -594,6 +596,9 @@ public class PlayerControl : MonoBehaviour
         if (obstacle.gameObject.CompareTag("Portal"))
         {
             StartCoroutine(HideHint(0)); // Hide the hint immediately
+        }
+        if(obstacle.gameObject.CompareTag("Elevator") ){
+            isGrounded = false;
         }
     }
 
