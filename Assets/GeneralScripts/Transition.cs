@@ -72,6 +72,20 @@ public class Transition : MonoBehaviour
         GlobalVariables.gravityLevel = true;
         SceneManager.LoadScene("_Level4-2");
     }
+    public void LoadLevel4_3()
+    {
+        globalVariablesReset();
+        GlobalVariables.curLevel = "_Level4-3";
+        GlobalVariables.gravityLevel = true;
+        SceneManager.LoadScene("_Level4-3");
+    }
+    public void LoadLevel4_4()
+    {
+        globalVariablesReset();
+        GlobalVariables.curLevel = "_Level4-4";
+        GlobalVariables.gravityLevel = true;
+        SceneManager.LoadScene("_Level4-4");
+    }
     public void LoadLevel5_1()
     {
         globalVariablesReset();
@@ -83,12 +97,21 @@ public class Transition : MonoBehaviour
         globalVariablesReset();
         GlobalVariables.curLevel = "_Level5-2";
         SceneManager.LoadScene("_Level5-2");
+        GlobalVariables.gravityLevel = true;
+    }
+    public void LoadLevel5_3()
+    {
+        globalVariablesReset();
+        GlobalVariables.curLevel = "_Level5-3";
+        SceneManager.LoadScene("_Level5-3");
+        GlobalVariables.gravityLevel = true;
     }
     public void LoadLevel5_4()
     {
         globalVariablesReset();
         GlobalVariables.curLevel = "_Level5-4";
         SceneManager.LoadScene("_Level5-4");
+        GlobalVariables.gravityLevel = true;
     }
     // public void LoadLevel3()
     // {
@@ -198,6 +221,9 @@ public class Transition : MonoBehaviour
             case "_Level5-2":
                 LoadLevel5_2();
                 break;
+            case "_Level5-3":
+                LoadLevel5_3();
+                break;
             case "_Level5-4":
                 LoadLevel5_4();
                 break;
@@ -249,14 +275,26 @@ public class Transition : MonoBehaviour
                 LoadLevel4_2();
                 break;
             case "_Level4-2":
+                LoadLevel4_3();
+                break;
+            case "_Level4-3":
+                LoadLevel4_4();
+                break;
+            case "_Level4-4":
                 LoadLevel5_1();
                 break;
             case "_Level5-1":
                 LoadLevel5_2();
                 break;
-                // case "_Level5-4":
-                //     LoadLevel5_5();
-                //     break;
+            case "_Level5-2":
+                LoadLevel5_3();
+                break;
+            case "_Level5-3":
+                LoadLevel5_4();
+                break;
+            case "_Level5-4":
+                LoadMainMenu();
+                break;
         }
     }
 
