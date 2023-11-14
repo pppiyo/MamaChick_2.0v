@@ -7,15 +7,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-
-
-
-
 public class PlayerControl : MonoBehaviour
 {
-
-
-
     private bool facingRight = true; // To keep track of the player's facing direction.
     public float horizontalInput;
     public float speed;
@@ -479,16 +472,10 @@ public class PlayerControl : MonoBehaviour
         }
 
         // if Player collides with a platform
-        if (obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2"))
+        if (obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2") || obstacle.gameObject.CompareTag("Spike2"))
         {
             isGrounded = true;
         }
-
-        if (obstacle.gameObject.CompareTag("Spike2"))
-        {
-            isGrounded = true;
-        }
-
 
         // platforms that provide direct calculation
         // if(obstacle.gameObject.CompareTag("Plat_Modify"))
@@ -587,8 +574,7 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionExit2D(Collision2D obstacle)
     {
         // Jump Disabled
-        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination") || obstacle.gameObject.CompareTag("Spike2"))
-            // if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2") || obstacle.gameObject.CompareTag("Spike2"))
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination") || obstacle.gameObject.CompareTag("Spike2") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2"))
             isGrounded = false;
 
         if (obstacle.gameObject.CompareTag("Portal"))
