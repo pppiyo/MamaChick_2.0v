@@ -202,6 +202,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 3-3
       objectReference: {fileID: 0}
+    - target: {fileID: 5025852489960334305, guid: 207cc339f074847b5860616434d6f21d, type: 3}
+      propertyPath: m_Color.a
+      value: 0.1764706
+      objectReference: {fileID: 0}
     - target: {fileID: 5781200762208896012, guid: 207cc339f074847b5860616434d6f21d, type: 3}
       propertyPath: m_Name
       value: LevelSelectionUI

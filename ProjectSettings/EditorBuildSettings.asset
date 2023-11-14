@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/_MainMenu.unity
     guid: c02eed60db95f4e16ae557b93ec09324
+  - enabled: 0
+    path: Assets/Scenes/Nithesh_MainMenu.unity
+    guid: 372f195b1a60e4c76a1390759ac4aa72
   - enabled: 1
     path: Assets/Scenes/Nithesh_MainMenu.unity
     guid: 372f195b1a60e4c76a1390759ac4aa72
@@ -91,7 +94,7 @@ EditorBuildSettings:
     guid: e270009dd70c14a359de492bbd5273f9
   - enabled: 1
     path: Assets/Scenes/_Level4-1.unity
-    guid: 31d0be740c1f044e4ba01a535f27e007
+    guid: 2067f34aa9efb4d1f819bdd966ca1a54
   - enabled: 1
     path: Assets/Scenes/_Level5-4.unity
     guid: f6300c0746e994aa0b792239c3d7ed95
