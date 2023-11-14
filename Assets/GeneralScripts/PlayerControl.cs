@@ -15,6 +15,9 @@ public class PlayerControl : MonoBehaviour
 {
 
 
+    public float powerUpDuration = 5f;
+    private bool powerUpActive = false;
+    private float powerUpTimer = 0f;
 
     private bool facingRight = true; // To keep track of the player's facing direction.
     public float horizontalInput;
@@ -111,6 +114,16 @@ public class PlayerControl : MonoBehaviour
     {
 
         KeepPlayerInBound();
+
+        if (powerUpActive)
+        {
+            powerUpTimer += Time.deltaTime;
+            if (powerUpTimer >= powerUpDuration)
+            {
+                DeactivatePowerUp();
+            }
+        }
+
         nearestNumber = null;
         CalculateNearestNumber();
         if (nearestNumber != null && Input.GetKeyDown(KeyCode.E))
@@ -416,6 +429,11 @@ public class PlayerControl : MonoBehaviour
     void OnCollisionEnter2D(Collision2D obstacle)
     {
 
+        if (obstacle.gameObject.CompareTag("Green"))
+        {
+            ActivatePowerUp();
+            Destroy(obstacle.gameObject); // Optionally destroy the power-up object
+        }
 
 
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
@@ -540,6 +558,41 @@ public class PlayerControl : MonoBehaviour
 
 
     }
+
+    void ActivatePowerUp()
+    {
+        powerUpActive = true;
+        powerUpTimer = 0f;
+
+        // Change all platforms to solid color
+        foreach (GameObject platform in platforms)
+        {
+            SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f); // Full opacity
+            }
+        }
+    }
+
+    void DeactivatePowerUp()
+    {
+        powerUpActive = false;
+
+        // Revert platform states based on the equation condition
+        foreach (GameObject platform in platforms)
+        {
+            SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                bool equationSatisfied = CanPassPlatform(platform); // Assuming you have a method to check this
+                spriteRenderer.color = equationSatisfied
+                    ? new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f) // Full opacity if satisfied
+                    : new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f); // Partial opacity if not
+            }
+        }
+    }
+
 
     public void UpdateScore(int increaseX)
     {
@@ -763,6 +816,42 @@ public class PlayerControl : MonoBehaviour
         // 捡起最近的球体（你可以在这里执行自定义操作，例如改变球体的父对象）
 
 
+    }
+
+    void PickupNearestPowerUp()
+    {
+        GameObject[] powerUpBalls = GameObject.FindGameObjectsWithTag("Green");
+
+        if (powerUpBalls.Length == 0)
+        {
+            // No power-up balls in the scene, so do nothing
+            return;
+        }
+
+        // Find the nearest power-up ball
+        float minDistance = 1.5f; // Set an appropriate distance threshold
+        GameObject nearestPowerUp = null;
+
+        foreach (GameObject powerUpBall in powerUpBalls)
+        {
+            float distance = Vector3.Distance(transform.position, powerUpBall.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestPowerUp = powerUpBall;
+            }
+        }
+
+        // Pick up the nearest power-up ball
+        if (nearestPowerUp != null)
+        {
+            // You can perform custom operations here, like attaching the power-up to the player
+            // For example, you might want to move the power-up to the player's position or trigger its effect immediately
+            // Example: ActivatePowerUp();
+
+            // Optionally, you can destroy the power-up object if it's a one-time use
+            Destroy(nearestPowerUp);
+        }
     }
 
     void PickupNearestNumber()
