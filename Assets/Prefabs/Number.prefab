@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -2154441211164078070}
   - component: {fileID: 1363818860122925819}
   - component: {fileID: -9209176709302779994}
+  - component: {fileID: 5095094989748938325}
   m_Layer: 8
   m_Name: Number
   m_TagString: Number
@@ -365,6 +366,21 @@ MonoBehaviour:
   shootWhileMoving: 1
   forwardDraging: 0
   showLineOnScreen: 1
+--- !u!114 &5095094989748938325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4609709761923799660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d9615ee2d0cb4f8b999256b92d29d6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  respawnDelay: 3
+  maxRespawns: 3
+  isRespawnable: 0
 --- !u!1001 &8588997315289453578
 PrefabInstance:
   m_ObjectHideFlags: 0
