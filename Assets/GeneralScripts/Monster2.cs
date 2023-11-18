@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using System.Linq;
 using TMPro;
@@ -141,8 +142,15 @@ public class Monster2 : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            killedByMonster(other.gameObject);
-            Destroy(other.gameObject);
+            if(GlobalVariables.curLevel == "tutorial 5")
+            {
+                SceneManager.LoadScene("_Tutorial5__");
+            }
+            else
+            {
+                killedByMonster(other.gameObject);
+                Destroy(other.gameObject);
+            }
         }
 
     }
