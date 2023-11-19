@@ -107,6 +107,7 @@ public class PlayerControl : MonoBehaviour
         nearestNumber = null;
         CalculateNearestNumber();
         if (nearestNumber != null && Input.GetKeyDown(KeyCode.E))
+        // if (nearestNumber != null)
         {
             // Grab the Number object's text
             numberTextGameObject = nearestNumber.transform.Find("Number_Text").gameObject;
@@ -409,9 +410,6 @@ public class PlayerControl : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
-
-
-
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
         {
             TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
@@ -434,8 +432,8 @@ public class PlayerControl : MonoBehaviour
                     GlobalVariables.portUses[obstacle.gameObject.name] = 1;
                 }
                 string pairName = obstacle.gameObject.name.EndsWith("1") ?
-                                obstacle.gameObject.name.Replace("1", "2") :
-                                obstacle.gameObject.name.Replace("2", "1");
+                                    obstacle.gameObject.name.Replace("1", "2") :
+                                    obstacle.gameObject.name.Replace("2", "1");
                 GameObject pairPortal = GameObject.Find(pairName);
                 if (pairPortal != null)
                 {
@@ -443,6 +441,8 @@ public class PlayerControl : MonoBehaviour
                     ShowHint("Teleported!"); // Show confirmation hint
                     StartCoroutine(TeleportCooldown()); // 开始冷却计时
                 }
+                Transition teleportPauseScript = SceneLoader.GetComponent<Transition>();
+                StartCoroutine(teleportPauseScript.TeleportPause(2f));
             }
             else
             {
