@@ -106,7 +106,7 @@ public class PlayerControl : MonoBehaviour
         KeepPlayerInBound();
         nearestNumber = null;
         CalculateNearestNumber();
-        if (nearestNumber != null && Input.GetKeyDown(KeyCode.E))
+        if (nearestNumber != null )
         // if (nearestNumber != null)
         {
             // Grab the Number object's text
@@ -438,11 +438,12 @@ public class PlayerControl : MonoBehaviour
                 if (pairPortal != null)
                 {
                     transform.position = pairPortal.transform.position; // Teleport the player
-                    ShowHint("Teleported!"); // Show confirmation hint
+                    // Show confirmation hint
+                    ShowHint("Start Teleport!"); 
                     StartCoroutine(TeleportCooldown()); // 开始冷却计时
-                }
-                Transition teleportPauseScript = SceneLoader.GetComponent<Transition>();
-                StartCoroutine(teleportPauseScript.TeleportPause(2f));
+                    Transition teleportPauseScript = SceneLoader.GetComponent<Transition>();
+                    StartCoroutine(teleportPauseScript.TeleportPause(1.5f));
+                }                
             }
             else
             {
