@@ -1,14 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
+using UnityEngine.UI;
+
 
 public class Transition : MonoBehaviour
 {
+    // private GameObject pausePanel;
+    // private bool isUIPaused = false; // 标记是否处于UI暂停状态
     private GameObject DataUploader;
+    
     void Start()
-    {
+    {      
+        // pausePanel = GameObject.Find("PausePanel");
         DataUploader = GameObject.Find("DataUpload");
     }
+
     public void LoadLevels()
     {
         SceneManager.LoadScene("_LevelSelection");
@@ -302,6 +310,32 @@ public class Transition : MonoBehaviour
                 LoadMainMenu();
                 break;
         }
+    }
+
+    // public void PauseGame()
+    // {
+    //     Debug.Log(pausePanel.name);
+    //     pausePanel.SetActive(true);
+    //     Time.timeScale = 0f;
+    //     isUIPaused = true;
+    // }
+
+    // // hide pause panel
+    // public void ResumeGame()
+    // {
+    //     Time.timeScale = 1f;
+    //     isUIPaused = false;
+    //     pausePanel.SetActive(false);
+    // }
+
+
+   //pause for portal
+    public IEnumerator TeleportPause(float delay)
+    {
+        Time.timeScale = 0.3f;
+        yield return new WaitForSecondsRealtime(delay);
+        Time.timeScale = 1f;
+
     }
 
     public void globalVariablesReset()

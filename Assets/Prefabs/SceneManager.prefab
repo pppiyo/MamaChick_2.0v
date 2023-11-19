@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45d98a14e49d4b738117917ff23b167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pausePanel: {fileID: 4801557646768450852, guid: 6abb919123a3d4e15a926884003479a7, type: 3}
