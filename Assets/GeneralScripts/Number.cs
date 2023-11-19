@@ -4,39 +4,46 @@ using UnityEngine;
 
 public class Number : MonoBehaviour
 {
-    // Reference to the Rigidbody component
-    private Rigidbody2D rb;
+    public float respawnDelay = 3f; // 重生的延迟时间
+    public int maxRespawns = 3; // 最大重生次数
+    public bool isRespawnable = false; // 是否可重生
+    private Vector3 initialPosition; // 初始位置
+    private int respawnCount = 0; // 当前重生次数
+
 
     void Start()
     {
-        // Get the Rigidbody component on the prefab
-        rb = GetComponent<Rigidbody2D>();
-
+        initialPosition = transform.position; // 缓存游戏开始时的位置
     }
 
-    void Update()
+    public void Respawn()
     {
-        //Press 'F' to shoot
-        // if (Input.GetKeyDown(KeyCode.F))
-        // {
-        //     Debug.Log("F pressed");
-        //     if (rb != null)
-        //     {
-        //         // Disable physics simulation (make the Rigidbody kinematic)
-        //         rb.isKinematic = true;
-        //     }
-        // }
+        if (!isRespawnable)
+        {
+            Debug.Log("HI");
+            Destroy(gameObject);
+            return; // 如果不可重生，直接返回
+        }
+        else
+        {
+            if (respawnCount < maxRespawns)
+            {
+                gameObject.SetActive(false); // 禁用对象
+                Invoke(nameof(ResetPosition), respawnDelay); // 延迟调用以重生对象
+                respawnCount++; // 增加重生次数
+            }
+            else
+            {
+                Destroy(gameObject); // 达到最大重生次数，销毁对象
+            }
 
-        // //Press 'F' to shoot
-        // if (Input.GetKeyUp(KeyCode.F))
-        // {
-        //     if (rb != null)
-        //     {
-        //         // Enable physics simulation (make the Rigidbody kinematic)
-        //         rb.isKinematic = false;
-        //     }
-        // }
+        }
+    }
 
+    private void ResetPosition()
+    {
+        transform.position = initialPosition; // 重置位置到初始位置
+        gameObject.SetActive(true); // 重新激活对象
     }
 
 }

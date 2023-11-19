@@ -124,7 +124,8 @@ public class PlayerControl : MonoBehaviour
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
                 if (tutorialCheck == null || GlobalVariables.curLevel == "tutorial 3" || GlobalVariables.curLevel == "tutorial 5")
-                    Destroy(nearestNumber);
+                    nearestNumber.GetComponent<Number>().Respawn();
+                // Destroy(nearestNumber);
                 /* else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
                 {
                     nearestNumber.SetActive(false);
@@ -408,7 +409,7 @@ public class PlayerControl : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D obstacle)
     {
-        
+
 
 
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
@@ -457,11 +458,12 @@ public class PlayerControl : MonoBehaviour
             SceneLoader.GetComponent<Transition>().LoadGameOverLost();
         }
 
-        if(obstacle.gameObject.CompareTag("Elevator") ){
+        if (obstacle.gameObject.CompareTag("Elevator"))
+        {
             isGrounded = true;
         }
         // 如果玩家与一个障碍物碰撞
-        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination") )
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination"))
         {
             // Jump Enabled
             isGrounded = true;
@@ -583,7 +585,8 @@ public class PlayerControl : MonoBehaviour
         {
             StartCoroutine(HideHint(0)); // Hide the hint immediately
         }
-        if(obstacle.gameObject.CompareTag("Elevator") ){
+        if (obstacle.gameObject.CompareTag("Elevator"))
+        {
             isGrounded = false;
         }
     }
@@ -872,7 +875,7 @@ public class PlayerControl : MonoBehaviour
                 }
             }
             // Debug.Log(currentX);
-            
+
         }
     }
 
