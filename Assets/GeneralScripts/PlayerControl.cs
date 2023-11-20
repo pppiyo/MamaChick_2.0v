@@ -9,6 +9,10 @@ using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour
 {
+    public float powerUpDuration = 50f;
+    private bool powerUpActive = false;
+    private float powerUpTimer = 0f;
+
     private bool facingRight = true; // To keep track of the player's facing direction.
     public float horizontalInput;
     public float speed;
@@ -104,6 +108,24 @@ public class PlayerControl : MonoBehaviour
     {
 
         KeepPlayerInBound();
+
+        if (Input.GetKeyDown(KeyCode.E)) // Example key for picking up nearest ball
+        {
+
+            PickupNearestPowerUp(); // Picks up the nearest power-up ball
+        }
+
+        // Power-up timer check
+        if (powerUpActive)
+        {
+            powerUpTimer += Time.deltaTime;
+            if (powerUpTimer >= powerUpDuration)
+            {
+                DeactivatePowerUp();
+                powerUpTimer = 0f;
+            }
+        }
+
         nearestNumber = null;
         CalculateNearestNumber();
         if (nearestNumber != null )
@@ -247,29 +269,39 @@ public class PlayerControl : MonoBehaviour
         foreach (GameObject platform in platforms)
         {
             SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
-            if (CanPassPlatform(platform))
-
+            if(powerUpActive)
             {
-                DisableLayerCollision(platform);
-                if (spriteRenderer != null)
-                {
-                    // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
-                    Color transparentColor = new Color(1, 1, 1, 0.5f);
-                    // 设置SpriteRenderer的颜色为我们创建的透明颜色
-                    spriteRenderer.color = transparentColor;
-                }
+                spriteRenderer.color = new Color(1, 1, 1, 1);
+                EnableLayerCollision(platform);
             }
             else
             {
-                EnableLayerCollision(platform);
-                if (spriteRenderer != null)
+                if (CanPassPlatform(platform))
+
                 {
-                    // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
-                    Color transparentColor = new Color(1, 1, 1, 1);
-                    // 设置SpriteRenderer的颜色为我们创建的透明颜色
-                    spriteRenderer.color = transparentColor;
+                    DisableLayerCollision(platform);
+                    if (spriteRenderer != null)
+                    {
+                        // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
+                        Color transparentColor = new Color(1, 1, 1, 0.5f);
+                        // 设置SpriteRenderer的颜色为我们创建的透明颜色
+                        spriteRenderer.color = transparentColor;
+                    }
                 }
+                else
+                {
+                    EnableLayerCollision(platform);
+                    if (spriteRenderer != null)
+                    {
+                        // 创建一个新的颜色，RGBA为(1, 1, 1, 0)，其中RGB定义颜色（这里是白色），A（Alpha）是0表示完全透明
+                        Color transparentColor = new Color(1, 1, 1, 1);
+                        // 设置SpriteRenderer的颜色为我们创建的透明颜色
+                        spriteRenderer.color = transparentColor;
+                    }
+                }
+
             }
+            
         }
     }
 
@@ -532,6 +564,17 @@ public class PlayerControl : MonoBehaviour
 
 
     }
+    void ActivatePowerUp()
+    {
+        powerUpActive = true;
+        powerUpTimer = 0f;
+        resolvePlatforms();
+    }
+    void DeactivatePowerUp()
+    {
+        powerUpActive = false;
+        resolvePlatforms();
+    }
 
     public void UpdateScore(int increaseX)
     {
@@ -733,6 +776,39 @@ public class PlayerControl : MonoBehaviour
     }
 
     //test_ball
+    void PickupNearestPowerUp()
+    {
+        GameObject[] powerUpBalls = GameObject.FindGameObjectsWithTag("Green");
+
+        if (powerUpBalls.Length == 0)
+        {
+            // No power-up balls in the scene, so do nothing
+            return;
+        }
+
+        // Find the nearest power-up ball
+        float minDistance = 1.5f; // Set an appropriate distance threshold
+        GameObject nearestPowerUp = null;
+
+        foreach (GameObject powerUpBall in powerUpBalls)
+        {
+            float distance = Vector3.Distance(transform.position, powerUpBall.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestPowerUp = powerUpBall;
+            }
+        }
+
+        // Pick up the nearest power-up ball
+        if (nearestPowerUp != null)
+        {
+            Debug.Log("ihihihihihi");
+            ActivatePowerUp();
+            Destroy(nearestPowerUp);
+        }
+    }
+
 
     void CalculateNearestNumber()
     {
