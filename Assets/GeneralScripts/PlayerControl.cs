@@ -109,17 +109,21 @@ public class PlayerControl : MonoBehaviour
 
         KeepPlayerInBound();
 
-        if (Input.GetKeyDown(KeyCode.E)) // Example key for picking up nearest ball
-        {
+        // if (Input.GetKeyDown(KeyCode.E)) // Example key for picking up nearest ball
+        // {
 
-            PickupNearestPowerUp(); // Picks up the nearest power-up ball
-        }
+        PickupNearestPowerUp(); // Picks up the nearest power-up ball
+        // }
 
         // Power-up timer check
         if (powerUpActive)
         {
+
+            ShowHint("Power-upping!");
+            StartCoroutine(HideHint(7));
+
             powerUpTimer += Time.deltaTime;
-            Debug.Log("Power-up Timer: " + powerUpTimer + " / Duration: " + powerUpDuration);
+            // Debug.Log("Power-up Timer: " + powerUpTimer + " / Duration: " + powerUpDuration);
             if (powerUpTimer >= powerUpDuration)
             {
                 Debug.Log("Deactivating Power-up");
@@ -772,7 +776,6 @@ public class PlayerControl : MonoBehaviour
         // Pick up the nearest power-up ball
         if (nearestPowerUp != null)
         {
-            Debug.Log("ihihihihihi");
             ActivatePowerUp();
             Destroy(nearestPowerUp);
         }
