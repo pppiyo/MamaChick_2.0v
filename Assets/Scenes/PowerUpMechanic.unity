@@ -259,7 +259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4609709761923799663, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
       propertyPath: m_Color.r
-      value: 0.5452022
+      value: 0.44966638
       objectReference: {fileID: 0}
     - target: {fileID: 5095094989748938325, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
       propertyPath: isRespawnable
