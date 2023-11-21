@@ -109,6 +109,10 @@ public class PlayerControl : MonoBehaviour
 
         KeepPlayerInBound();
 
+      
+
+
+
         if (Input.GetKeyDown(KeyCode.E)) // Example key for picking up nearest ball
         {
 
