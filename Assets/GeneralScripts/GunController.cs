@@ -117,7 +117,7 @@ public class GunController : MonoBehaviour
 
             // Set the local position of the gun relative to the player (adjust these values as needed).
             gameObject.transform.localPosition = new Vector3(player.transform.position.x +
-            player.transform.localScale.x / 2 + gameObject.transform.localScale.x / 2 + 0.7f,
+            player.transform.localScale.x / 2 + gameObject.transform.localScale.x / 2 + 1.2f,
             player.transform.position.y, 0);
 
             // Set the gun's parent to the player's GameObject, making it move with the player.
