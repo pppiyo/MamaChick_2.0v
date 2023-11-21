@@ -130,7 +130,7 @@ public class PlayerControl : MonoBehaviour
 
         nearestNumber = null;
         CalculateNearestNumber();
-        if (nearestNumber != null )
+        if (nearestNumber != null)
         // if (nearestNumber != null)
         {
             // Grab the Number object's text
@@ -149,7 +149,9 @@ public class PlayerControl : MonoBehaviour
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
                 // if (tutorialCheck == null || GlobalVariables.curLevel == "tutorial 3" || GlobalVariables.curLevel == "tutorial 5")
-                nearestNumber.GetComponent<Number>().Respawn();
+                // unselected operator - do not use the number
+                if (operatorID != 4)
+                    nearestNumber.GetComponent<Number>().Respawn();
                 // Destroy(nearestNumber);
                 /* else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
                 {
@@ -271,7 +273,7 @@ public class PlayerControl : MonoBehaviour
         foreach (GameObject platform in platforms)
         {
             SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
-            if(powerUpActive)
+            if (powerUpActive)
             {
                 spriteRenderer.color = new Color(1, 1, 1, 1);
                 EnableLayerCollision(platform);
@@ -303,7 +305,7 @@ public class PlayerControl : MonoBehaviour
                 }
 
             }
-            
+
         }
     }
 
@@ -515,11 +517,11 @@ public class PlayerControl : MonoBehaviour
                 {
                     transform.position = pairPortal.transform.position; // Teleport the player
                     // Show confirmation hint
-                    ShowHint("Start Teleport!"); 
+                    ShowHint("Start Teleport!");
                     StartCoroutine(TeleportCooldown()); // 开始冷却计时
                     Transition teleportPauseScript = SceneLoader.GetComponent<Transition>();
                     StartCoroutine(teleportPauseScript.TeleportPause(1.5f));
-                }                
+                }
             }
             else
             {
@@ -562,7 +564,7 @@ public class PlayerControl : MonoBehaviour
     {
         Debug.Log("Activating Power-up, Duration: " + powerUpDuration);
         powerUpActive = true;
-        
+
         resolvePlatforms();
     }
     void DeactivatePowerUp()
