@@ -51,6 +51,7 @@ public class TutorialManager : MonoBehaviour
     private GameObject Platform_1_9;
     private GameObject Platform_1_10;
     private GameObject Destination;
+    private GameObject Stage4_1;
 
     // Variables for level 2 tracking
     private int level2Stage0;
@@ -136,6 +137,8 @@ public class TutorialManager : MonoBehaviour
         Platform_1_8 = GameObject.Find("Platform_1_8");
         Platform_1_9 = GameObject.Find("Platform_1_9");
         Platform_1_10 = GameObject.Find("Platform_1_10");
+        Stage4_1 = GameObject.Find("Stage4_1");
+        
 
         // Level 4 is simple in text for now
         if (GlobalVariables.curLevel == "tutorial 5")
@@ -220,6 +223,9 @@ public class TutorialManager : MonoBehaviour
         MoveInstruction.SetActive(true);
         level1Stage0 = 1;
         currentProgression = "";
+        Checkpoint1.SetActive(false);
+        Stage4_1.SetActive(true);
+        MenuWheel.SetActive(true);
     }
 
     void deactivateLevel1Stage0()
@@ -277,6 +283,8 @@ public class TutorialManager : MonoBehaviour
     {
         currentStage = "Level1Stage4";
         Stage4Objects.SetActive(true);
+        AddInstruction.SetActive(true);
+        UPkey.SetActive(true);
         level1Stage4 = 1;
     }
 
@@ -286,7 +294,6 @@ public class TutorialManager : MonoBehaviour
         fakePlatformInstruction = GameObject.Find("fakePlatformInstruction");
         AddInstruction.SetActive(false);
         EpressInstruction.SetActive(false);
-        fakePlatformInstruction.SetActive(false);
         level1Stage4 = 3;
     }
 
