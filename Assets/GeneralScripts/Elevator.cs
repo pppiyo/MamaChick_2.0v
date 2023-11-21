@@ -32,6 +32,7 @@ public class Elevator : MonoBehaviour
     private IEnumerator MoveElevator()  
     {
         isMoving = true;
+        Vector3 startPosition = transform.position;
         // float targetHeight = 8f; // 电梯目标高度
         // float moveSpeed = 2f; // 升降速度
 
@@ -51,6 +52,28 @@ public class Elevator : MonoBehaviour
                 // 在这里更新电梯的高度
                 Vector3 newPosition = transform.position + Vector3.down * moveSpeed * Time.deltaTime;
                 transform.position = new Vector3(transform.position.x, Mathf.Max(newPosition.y, targetHeight), transform.position.z);
+                yield return null;
+            }
+        }
+         yield return new WaitForSeconds(5f);
+    // Debug.Log(startPosition);
+
+    // back to original place
+        if (direction == 1)
+        {
+            while (transform.position.y > startPosition.y)
+            {
+                Vector3 newPosition = transform.position + Vector3.down * moveSpeed * Time.deltaTime;
+                transform.position = new Vector3(transform.position.x, Mathf.Max(newPosition.y, startPosition.y), transform.position.z);
+                yield return null;
+            }
+        }
+        else if (direction == 2)
+        {
+            while (transform.position.y < startPosition.y)
+            {
+                Vector3 newPosition = transform.position + Vector3.up * moveSpeed * Time.deltaTime;
+                transform.position = new Vector3(transform.position.x, Mathf.Min(newPosition.y, startPosition.y), transform.position.z);
                 yield return null;
             }
         }

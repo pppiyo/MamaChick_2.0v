@@ -748,6 +748,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5095094989748938325, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
+      propertyPath: maxRespawns
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095094989748938325, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
+      propertyPath: isRespawnable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
 --- !u!1001 &253113506
@@ -1252,7 +1260,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8940573, y: 2.9167628, z: -10}
+  m_LocalPosition: {x: -4.256564, y: 2.9128199, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1441,6 +1449,14 @@ PrefabInstance:
     - target: {fileID: 4609709761923799662, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095094989748938325, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
+      propertyPath: maxRespawns
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095094989748938325, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
+      propertyPath: isRespawnable
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
@@ -3150,6 +3166,14 @@ PrefabInstance:
     - target: {fileID: 4609709761923799662, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095094989748938325, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
+      propertyPath: maxRespawns
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5095094989748938325, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
+      propertyPath: isRespawnable
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04325a06cf3c040ec8d8482e448a6b95, type: 3}
@@ -5711,7 +5735,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101665317}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.194057, y: -6.5367627, z: 0}
+  m_LocalPosition: {x: -8.043436, y: -6.5328197, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
