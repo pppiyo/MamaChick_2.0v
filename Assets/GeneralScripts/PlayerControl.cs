@@ -134,7 +134,7 @@ public class PlayerControl : MonoBehaviour
 
         nearestNumber = null;
         CalculateNearestNumber();
-        if (nearestNumber != null )
+        if (nearestNumber != null)
         // if (nearestNumber != null)
         {
             // Grab the Number object's text
@@ -153,7 +153,9 @@ public class PlayerControl : MonoBehaviour
 
                 // Debug.Log(GameObject.FindGameObjectsWithTag("Ground"));
                 // if (tutorialCheck == null || GlobalVariables.curLevel == "tutorial 3" || GlobalVariables.curLevel == "tutorial 5")
-                nearestNumber.GetComponent<Number>().Respawn();
+                // unselected operator - do not use the number
+                if (operatorID != 4)
+                    nearestNumber.GetComponent<Number>().Respawn();
                 // Destroy(nearestNumber);
                 /* else if (GlobalVariables.curLevel == "tutorial 2" && operatorID != 4)
                 {
@@ -198,7 +200,7 @@ public class PlayerControl : MonoBehaviour
 
 
         // Jump With Impulse Force 
-        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             if (gravityDirection == 1)
                 playerRB.AddForce(force, ForceMode2D.Impulse);
@@ -275,7 +277,7 @@ public class PlayerControl : MonoBehaviour
         foreach (GameObject platform in platforms)
         {
             SpriteRenderer spriteRenderer = platform.GetComponent<SpriteRenderer>();
-            if(powerUpActive)
+            if (powerUpActive)
             {
                 spriteRenderer.color = new Color(1, 1, 1, 1);
                 EnableLayerCollision(platform);
@@ -307,7 +309,7 @@ public class PlayerControl : MonoBehaviour
                 }
 
             }
-            
+
         }
     }
 
@@ -446,145 +448,6 @@ public class PlayerControl : MonoBehaviour
         canTeleport = true; // 重新启用传送
     }
 
-    void OnCollisionEnter2D(Collision2D obstacle)
-    {
-        if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
-        {
-            TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
-            GameObject obj = GameObject.Find("EquationManager");
-            JudgeEquation judge = obj.GetComponent<JudgeEquation>();
-            TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
-
-            bool shouldTeleport = portalEquationText == null || portalEquationText.text.Length == 0 ||
-                                (int.TryParse(playerEquationText.text, out int playerNumber) &&
-                                judge.CheckEquation(portalEquationText.text, playerNumber));
-
-            if (shouldTeleport)
-            {
-                if (GlobalVariables.portUses.ContainsKey(obstacle.gameObject.name))
-                {
-                    GlobalVariables.portUses[obstacle.gameObject.name]++;
-                }
-                else
-                {
-                    GlobalVariables.portUses[obstacle.gameObject.name] = 1;
-                }
-                string pairName = obstacle.gameObject.name.EndsWith("1") ?
-                                    obstacle.gameObject.name.Replace("1", "2") :
-                                    obstacle.gameObject.name.Replace("2", "1");
-                GameObject pairPortal = GameObject.Find(pairName);
-                if (pairPortal != null)
-                {
-                    transform.position = pairPortal.transform.position; // Teleport the player
-                    // Show confirmation hint
-                    ShowHint("Start Teleport!"); 
-                    StartCoroutine(TeleportCooldown()); // 开始冷却计时
-                    Transition teleportPauseScript = SceneLoader.GetComponent<Transition>();
-                    StartCoroutine(teleportPauseScript.TeleportPause(1.5f));
-                }                
-            }
-            else
-            {
-                ShowHint("Your point doesn't satisfy the condition");
-            }
-
-            StartCoroutine(HideHint(1)); // Hide the hint after a delay
-        }
-        // // Tutorial You do not kill anyone
-        if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
-        {
-            GlobalVariables.failReason = "killedBySpike " + obstacle.gameObject.name;
-            SceneLoader.GetComponent<Transition>().LoadGameOverLost();
-        }
-
-        if (obstacle.gameObject.CompareTag("Elevator"))
-        {
-            isGrounded = true;
-        }
-        // 如果玩家与一个障碍物碰撞
-        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination"))
-        {
-            // Jump Enabled
-            isGrounded = true;
-        }
-
-        if (obstacle.gameObject.CompareTag("Goal"))
-        {
-            // Debug.Log("Goal");
-            ReturnToMainMenu();
-        }
-
-        // if Player collides with a platform
-        if (obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2") || obstacle.gameObject.CompareTag("Spike2"))
-        {
-            isGrounded = true;
-        }
-
-        // platforms that provide direct calculation
-        // if(obstacle.gameObject.CompareTag("Plat_Modify"))
-        // {
-        //     // 获取与Collider关联的GameObject上的TextMeshPro组件
-        //     TextMeshPro platTmp = obstacle.transform.GetComponentInChildren<TextMeshPro>();
-
-        //     if(platTmp != null)
-        //     {
-        //         string platText = platTmp.text;
-        //         char operatorChar = platText[0]; // 获取字符串的第一个字符作为运算符
-        //         int number;
-
-        //         // 确保从第二个字符开始到结束的字符串是一个有效的数字
-        //         if(int.TryParse(platText.Substring(1), out number))
-        //         {
-        //             // 根据运算符执行计算
-        //             switch(operatorChar)
-        //             {
-        //                 case '+':
-        //                     currentX += number;
-        //                     break;
-        //                 case '-':
-        //                     currentX -= number;
-        //                     break;
-        //                 case '*':
-        //                     currentX *= number;
-        //                     break;
-        //                 case '/':
-        //                     if(number != 0) 
-        //                         currentX /= number;
-        //                     else 
-        //                         Debug.LogError("Division by zero is not allowed.");
-        //                     break;
-        //                 default:
-        //                     Debug.LogError("Invalid operator.");
-        //                     break;
-        //             }
-        //             // 更新UI或其他相关组件
-        //             xBoard.text = currentX.ToString();
-        //             Debug.Log("Updated currentX: " + currentX);
-        //         }
-        //         else
-        //         {
-        //             Debug.LogError("Invalid number format on platform.");
-        //         }
-        //     }
-        // }
-
-
-    }
-    void ActivatePowerUp()
-    {
-        Debug.Log("Activating Power-up, Duration: " + powerUpDuration);
-        powerUpActive = true;
-        
-        resolvePlatforms();
-    }
-    void DeactivatePowerUp()
-    {
-        Debug.Log("DeactivatePowerUp called");
-        powerUpActive = false;
-        powerUpTimer = 0f;
-        resolvePlatforms();
-    }
-
     public void UpdateScore(int increaseX)
     {
         GlobalVariables.collisions++; // Chris: data collection
@@ -627,6 +490,100 @@ public class PlayerControl : MonoBehaviour
         resolvePlatforms();
     }
 
+    void OnCollisionEnter2D(Collision2D obstacle)
+    {
+        if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
+        {
+            TextMeshPro portalEquationText = obstacle.gameObject.GetComponentInChildren<TextMeshPro>();
+            GameObject obj = GameObject.Find("EquationManager");
+            JudgeEquation judge = obj.GetComponent<JudgeEquation>();
+            TextMeshPro playerEquationText = GetComponentInChildren<TextMeshPro>();
+
+            bool shouldTeleport = portalEquationText == null || portalEquationText.text.Length == 0 ||
+                                (int.TryParse(playerEquationText.text, out int playerNumber) &&
+                                judge.CheckEquation(portalEquationText.text, playerNumber));
+
+            if (shouldTeleport)
+            {
+                if (GlobalVariables.portUses.ContainsKey(obstacle.gameObject.name))
+                {
+                    GlobalVariables.portUses[obstacle.gameObject.name]++;
+                }
+                else
+                {
+                    GlobalVariables.portUses[obstacle.gameObject.name] = 1;
+                }
+                string pairName = obstacle.gameObject.name.EndsWith("1") ?
+                                    obstacle.gameObject.name.Replace("1", "2") :
+                                    obstacle.gameObject.name.Replace("2", "1");
+                GameObject pairPortal = GameObject.Find(pairName);
+                if (pairPortal != null)
+                {
+                    transform.position = pairPortal.transform.position; // Teleport the player
+                    // Show confirmation hint
+                    ShowHint("Start Teleport!");
+                    StartCoroutine(TeleportCooldown()); // 开始冷却计时
+                    Transition teleportPauseScript = SceneLoader.GetComponent<Transition>();
+                    StartCoroutine(teleportPauseScript.TeleportPause(1.5f));
+                }
+            }
+            else
+            {
+                ShowHint("Your point doesn't satisfy the condition");
+            }
+
+            StartCoroutine(HideHint(1)); // Hide the hint after a delay
+        }
+        // // Tutorial You do not kill anyone
+        if (obstacle.gameObject.CompareTag("Spike") && tutorialCheck == null)
+        {
+            GlobalVariables.failReason = "killedBySpike " + obstacle.gameObject.name;
+            SceneLoader.GetComponent<Transition>().LoadGameOverLost();
+        }
+
+        if (obstacle.gameObject.CompareTag("Elevator"))
+        {
+            isGrounded = true;
+        }
+        // 如果玩家与一个障碍物碰撞
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Destination"))
+        {
+            // Jump Enabled
+            isGrounded = true;
+        }
+
+        if (obstacle.gameObject.CompareTag("Goal"))
+        {
+            // Debug.Log("Goal");
+            ReturnToMainMenu();
+        }
+
+        // if Player collides with a platform
+        if (obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2") || obstacle.gameObject.CompareTag("Spike2"))
+        {
+            isGrounded = true;
+        }
+    }
+    void ActivatePowerUp()
+    {
+        Debug.Log("Activating Power-up, Duration: " + powerUpDuration);
+        powerUpActive = true;
+
+        resolvePlatforms();
+    }
+    void DeactivatePowerUp()
+    {
+        Debug.Log("DeactivatePowerUp called");
+        powerUpActive = false;
+        powerUpTimer = 0f;
+        resolvePlatforms();
+    }
+
+    private void OnCollisionStay2D(Collision2D obstacle)
+    {
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination") || obstacle.gameObject.CompareTag("Spike2") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2"))
+            isGrounded = true;
+    }
 
     void OnCollisionExit2D(Collision2D obstacle)
     {
@@ -763,11 +720,18 @@ public class PlayerControl : MonoBehaviour
             GameObject player = GameObject.Find("Player");
             judge.playerEquationText = player.GetComponentInChildren<TextMeshPro>();
             // Debug.Log(judge.playerEquationText.text);
+            // Default String for tutorials
 
             if (judge.playerEquationText != null)
             {
-                Debug.Log(obstacleEquationText.text);
-                judge.varValue = int.Parse(judge.playerEquationText.text);
+                if (judge.playerEquationText.text == "X=0")
+                {
+                    judge.varValue = int.Parse("0");
+                }
+                else
+                {
+                    judge.varValue = int.Parse(judge.playerEquationText.text);
+                }
             }
             // Debug.Log(judge.varValue);
 

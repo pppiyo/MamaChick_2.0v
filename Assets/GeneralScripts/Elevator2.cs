@@ -66,7 +66,9 @@ public class Elevator2 : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player collided with elevator2");
+            currentPosition = collision.gameObject.transform.position;
+            currentPosition.y = transform.position.y + GetComponent<BoxCollider>().size.y/2;
+            collision.gameObject.transform.position = currentPosition;
             // 检查碰撞对象是否是从下方碰撞
         }
         if (collision.gameObject.CompareTag("Monster2"))
@@ -78,4 +80,15 @@ public class Elevator2 : MonoBehaviour
 
 
     }
-}
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            currentPosition = collision.gameObject.transform.position;
+            currentPosition.y = transform.position.y + GetComponent<BoxCollider>().size.y / 2;
+            collision.gameObject.transform.position = currentPosition;
+            // 检查碰撞对象是否是从下方碰撞
+        }
+    }
+ }
