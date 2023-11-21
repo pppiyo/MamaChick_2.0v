@@ -194,7 +194,7 @@ public class PlayerControl : MonoBehaviour
 
 
         // Jump With Impulse Force 
-        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             if (gravityDirection == 1)
                 playerRB.AddForce(force, ForceMode2D.Impulse);
@@ -442,6 +442,48 @@ public class PlayerControl : MonoBehaviour
         canTeleport = true; // 重新启用传送
     }
 
+    public void UpdateScore(int increaseX)
+    {
+        GlobalVariables.collisions++; // Chris: data collection
+
+        switch (operatorID)
+        {
+            case 0:
+                GlobalVariables.opTimesMap["+"]++;
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX += increaseX;
+                break;
+            case 1:
+                GlobalVariables.opTimesMap["-"]++;
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX -= increaseX;
+                break;
+            case 2:
+                GlobalVariables.opTimesMap["*"]++;
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX *= increaseX;
+                break;
+            case 3:
+                GlobalVariables.opTimesMap["/"]++;
+                if (negativeX(currentX, increaseX))
+                    return;
+                currentX /= increaseX;
+                break;
+            case 4:
+                hintDisplay = "Select an Operator";
+                ShowHint(hintDisplay);
+                StartCoroutine(HideHint(1));
+                break;
+        }
+
+        xBoard.text = currentX.ToString();
+
+        resolvePlatforms();
+    }
+
     void OnCollisionEnter2D(Collision2D obstacle)
     {
         if (obstacle.gameObject.CompareTag("Portal") && canTeleport)
@@ -515,56 +557,6 @@ public class PlayerControl : MonoBehaviour
         {
             isGrounded = true;
         }
-
-        // platforms that provide direct calculation
-        // if(obstacle.gameObject.CompareTag("Plat_Modify"))
-        // {
-        //     // 获取与Collider关联的GameObject上的TextMeshPro组件
-        //     TextMeshPro platTmp = obstacle.transform.GetComponentInChildren<TextMeshPro>();
-
-        //     if(platTmp != null)
-        //     {
-        //         string platText = platTmp.text;
-        //         char operatorChar = platText[0]; // 获取字符串的第一个字符作为运算符
-        //         int number;
-
-        //         // 确保从第二个字符开始到结束的字符串是一个有效的数字
-        //         if(int.TryParse(platText.Substring(1), out number))
-        //         {
-        //             // 根据运算符执行计算
-        //             switch(operatorChar)
-        //             {
-        //                 case '+':
-        //                     currentX += number;
-        //                     break;
-        //                 case '-':
-        //                     currentX -= number;
-        //                     break;
-        //                 case '*':
-        //                     currentX *= number;
-        //                     break;
-        //                 case '/':
-        //                     if(number != 0) 
-        //                         currentX /= number;
-        //                     else 
-        //                         Debug.LogError("Division by zero is not allowed.");
-        //                     break;
-        //                 default:
-        //                     Debug.LogError("Invalid operator.");
-        //                     break;
-        //             }
-        //             // 更新UI或其他相关组件
-        //             xBoard.text = currentX.ToString();
-        //             Debug.Log("Updated currentX: " + currentX);
-        //         }
-        //         else
-        //         {
-        //             Debug.LogError("Invalid number format on platform.");
-        //         }
-        //     }
-        // }
-
-
     }
     void ActivatePowerUp()
     {
@@ -581,48 +573,11 @@ public class PlayerControl : MonoBehaviour
         resolvePlatforms();
     }
 
-    public void UpdateScore(int increaseX)
+    private void OnCollisionStay2D(Collision2D obstacle)
     {
-        GlobalVariables.collisions++; // Chris: data collection
-
-        switch (operatorID)
-        {
-            case 0:
-                GlobalVariables.opTimesMap["+"]++;
-                if (negativeX(currentX, increaseX))
-                    return;
-                currentX += increaseX;
-                break;
-            case 1:
-                GlobalVariables.opTimesMap["-"]++;
-                if (negativeX(currentX, increaseX))
-                    return;
-                currentX -= increaseX;
-                break;
-            case 2:
-                GlobalVariables.opTimesMap["*"]++;
-                if (negativeX(currentX, increaseX))
-                    return;
-                currentX *= increaseX;
-                break;
-            case 3:
-                GlobalVariables.opTimesMap["/"]++;
-                if (negativeX(currentX, increaseX))
-                    return;
-                currentX /= increaseX;
-                break;
-            case 4:
-                hintDisplay = "Select an Operator";
-                ShowHint(hintDisplay);
-                StartCoroutine(HideHint(1));
-                break;
-        }
-
-        xBoard.text = currentX.ToString();
-
-        resolvePlatforms();
+        if (obstacle.gameObject.CompareTag("Ground") || obstacle.gameObject.CompareTag("Platform_Solid") || obstacle.gameObject.CompareTag("Platform_Mutate") || obstacle.gameObject.CompareTag("Destination") || obstacle.gameObject.CompareTag("Spike2") || obstacle.gameObject.CompareTag("Elevator") || obstacle.gameObject.CompareTag("Elevator2"))
+            isGrounded = true;
     }
-
 
     void OnCollisionExit2D(Collision2D obstacle)
     {
@@ -759,11 +714,18 @@ public class PlayerControl : MonoBehaviour
             GameObject player = GameObject.Find("Player");
             judge.playerEquationText = player.GetComponentInChildren<TextMeshPro>();
             // Debug.Log(judge.playerEquationText.text);
+            // Default String for tutorials
 
             if (judge.playerEquationText != null)
             {
-                Debug.Log(obstacleEquationText.text);
-                judge.varValue = int.Parse(judge.playerEquationText.text);
+                if (judge.playerEquationText.text == "X=0")
+                {
+                    judge.varValue = int.Parse("0");
+                }
+                else
+                {
+                    judge.varValue = int.Parse(judge.playerEquationText.text);
+                }
             }
             // Debug.Log(judge.varValue);
 
