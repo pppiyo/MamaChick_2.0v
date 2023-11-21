@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 public class PlayerControl : MonoBehaviour
 {
-    public float powerUpDuration = 50f;
+    public float powerUpDuration = 10f;
     private bool powerUpActive = false;
     private float powerUpTimer = 0f;
 
@@ -119,8 +119,10 @@ public class PlayerControl : MonoBehaviour
         if (powerUpActive)
         {
             powerUpTimer += Time.deltaTime;
+            Debug.Log("Power-up Timer: " + powerUpTimer);
             if (powerUpTimer >= powerUpDuration)
             {
+                Debug.Log("Deactivating Power-up");
                 DeactivatePowerUp();
                 powerUpTimer = 0f;
             }
@@ -567,12 +569,14 @@ public class PlayerControl : MonoBehaviour
     void ActivatePowerUp()
     {
         powerUpActive = true;
-        powerUpTimer = 0f;
+        
         resolvePlatforms();
     }
     void DeactivatePowerUp()
     {
+        Debug.Log("DeactivatePowerUp called");
         powerUpActive = false;
+        powerUpTimer = 0f;
         resolvePlatforms();
     }
 
