@@ -6,7 +6,7 @@ public class PlayerArrow : MonoBehaviour
 {
     private Transform player; // 玩家的Transform
     private Transform target; // 目标的Transform
-    private float distanceFromPlayer = 1.3f; // 箭头距离玩家的距离
+    private float distanceFromPlayer = 1.5f; // 箭头距离玩家的距离
 
     void Start()
     {
