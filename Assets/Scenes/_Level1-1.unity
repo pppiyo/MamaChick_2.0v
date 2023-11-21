@@ -482,7 +482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351557972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.596113, y: -10.57522, z: 0}
+  m_LocalPosition: {x: -16.324942, y: -10.5633, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -761,7 +761,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.903887, y: 6.8752203, z: -10}
+  m_LocalPosition: {x: -7.1750584, y: 6.8633003, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2078,6 +2078,10 @@ PrefabInstance:
       propertyPath: m_fontColorGradient.bottomRight.r
       value: 0.6792453
       objectReference: {fileID: 0}
+    - target: {fileID: 2677334681602958742, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2869645890506337624, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
@@ -2201,6 +2205,10 @@ PrefabInstance:
     - target: {fileID: 7093897415270158821, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadLevels
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006445462857072907, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
