@@ -5,7 +5,7 @@ using UnityEngine;
 public class Number : MonoBehaviour
 {
     public float respawnDelay = 3f; // 重生的延迟时间
-    public int maxRespawns = 3; // 最大重生次数
+    public int maxRespawns = 1; // 最大重生次数
     public bool isRespawnable = false; // 是否可重生
     private Vector3 initialPosition; // 初始位置
     private int respawnCount = 0; // 当前重生次数
@@ -20,7 +20,6 @@ public class Number : MonoBehaviour
     {
         if (!isRespawnable)
         {
-            Debug.Log("HI");
             Destroy(gameObject);
             return; // 如果不可重生，直接返回
         }

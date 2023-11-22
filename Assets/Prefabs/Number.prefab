@@ -379,8 +379,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   respawnDelay: 3
-  maxRespawns: 3
-  isRespawnable: 0
+  maxRespawns: 1
+  isRespawnable: 1
 --- !u!1001 &8588997315289453578
 PrefabInstance:
   m_ObjectHideFlags: 0

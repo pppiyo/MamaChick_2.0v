@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 279189293082434419}
   - component: {fileID: 279189293082434418}
   - component: {fileID: 4869215705996449247}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Teleport
   m_TagString: Portal
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3586916678666598213, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4727643624131759845, guid: 55e010f0cdd6e4a3f9c9e728c82024c9, type: 3}
       propertyPath: m_text
