@@ -101,7 +101,9 @@ public class PlayerControl : MonoBehaviour
         // Scene Loader 
         SceneLoader = GameObject.Find("SceneManager");
         // Check if current level is a tutorial scene
-        tutorialCheck = GameObject.Find("TutorialInstructions");
+        tutorialCheck = GameObject.Find("TutorialInstructions"); 
+        // Timelapse Normalise incase of reloads
+        Time.timeScale = 1f;
     }
 
     void Update()
