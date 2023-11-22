@@ -14,10 +14,8 @@ public class GunController : MonoBehaviour
     public GameObject bulletDividePrefab;
     private GameObject bulletPrefab;
     private GameObject bullet;
-    // public DragAndShoot dragAndShoot;
     private float cooldown = 0.5f;
     private bool isEquipped = false;
-    // private GameObject numberPrefab = null;
     private int shootCnt = 0;
     public int maxBulletCnt = 10;
 
@@ -31,9 +29,6 @@ public class GunController : MonoBehaviour
         //Press 'F' to shoot
         if (isEquipped && Input.GetKeyDown(KeyCode.F) && cooldown <= 0)
         {
-            // numberPrefab.GetComponent<Rigidbody2D>().isKinematic = true;
-            // numberPrefab.GetComponent<Collider2D>().isTrigger = true;
-
             if (shootCnt == maxBulletCnt)
             {
                 player.ShowHint("No Bullet Left");
@@ -48,14 +43,11 @@ public class GunController : MonoBehaviour
 
                 player.ShowHint("You have " + (maxBulletCnt - shootCnt) + " bullets left");
                 StartCoroutine(player.HideHint(3));
-                // player.HideHint(1);
             }
         }
         else
         {
             cooldown -= Time.deltaTime;
-            // numberPrefab.GetComponent<Rigidbody2D>().isKinematic = false;
-            // numberPrefab.GetComponent<Collider2D>().isTrigger = false;
         }
     }
 
