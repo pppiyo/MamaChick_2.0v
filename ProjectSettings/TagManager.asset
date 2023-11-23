@@ -29,6 +29,7 @@ TagManager:
   - Spike2
   - HiddenBox
   - MagicGate
+  - Green
   layers:
   - Default
   - TransparentFX
