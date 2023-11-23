@@ -10,6 +10,11 @@ public class FloatingText : MonoBehaviour
     private RectTransform rectTransform;  // 添加RectTransform的引用
     private bool isTextChanging = false;
 
+    public Transform player; // 指向Player对象的Transform组件
+    public Vector3 offset = new Vector3(0, 50, 0); // 文本在Player头顶的偏移量
+
+
+
     void Start()
     {
         text = GetComponent<TextMeshProUGUI>();
@@ -27,8 +32,12 @@ public class FloatingText : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
+            // Vector3 screenPos = Camera.main.WorldToScreenPoint(player.position + offset);
+            // text.rectTransform.position = screenPos + Vector3.up * speed * Time.deltaTime;
+
+
             // 在垂直方向上自动向上移动
-            rectTransform.anchoredPosition += Vector2.up * speed * Time.deltaTime;
+            text.rectTransform.position += Vector3.up * speed * Time.deltaTime;
 
             // 打印物体的当前 anchoredPosition
             // Debug.Log("Current Anchored Position: " + rectTransform.anchoredPosition);

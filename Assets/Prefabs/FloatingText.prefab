@@ -151,3 +151,5 @@ MonoBehaviour:
   text: {fileID: 6295620945491722358}
   speed: 2
   scaleSpeed: 0.2
+  player: {fileID: 2696232932582028286, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+  offset: {x: 0, y: 50, z: 0}
