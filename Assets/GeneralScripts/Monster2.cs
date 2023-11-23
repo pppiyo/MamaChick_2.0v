@@ -29,6 +29,7 @@ public class Monster2 : MonoBehaviour
     private TMP_Text numberText; // Reference to the TMP_Text component with the number.
     private int number; // The real value of the monster.
     private int MAX_SIZE_NUMBER = 40; // the max size facotr monster2 can get. (in terms of appearance cannot be bigger than this number's corresponding size)
+    private int MIN_SIZE_NUMBER = 3; // the min size facotr monster2 can get. (in terms of appearance cannot be smaller than this number's corresponding size)
     public List<GameObject> prefabList; // drop prefab list
 
 
@@ -164,6 +165,10 @@ public class Monster2 : MonoBehaviour
         if (number > MAX_SIZE_NUMBER)
         {
             sizeNumber = MAX_SIZE_NUMBER;
+        }
+        else if (number < MIN_SIZE_NUMBER)
+        {
+            sizeNumber = MIN_SIZE_NUMBER;
         }
 
         // Calculate the new scale based on the number for both width and height.
