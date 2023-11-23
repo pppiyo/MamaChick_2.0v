@@ -431,16 +431,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'A/D : left and right move
+  m_text: 'A/D : Left and right move
 
-    space bar: jump
+    Space bar: Jump
 
-    P : pick up a number
+    E : Pick up a number
 
-    left-click
-    : drag-release after picking up a number
+    Left-click
+    : Drag-release to shoot
 
-    Arrows : choose operators'
+    Arrows : Choose operators'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

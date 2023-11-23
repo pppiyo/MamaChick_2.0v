@@ -129,6 +129,8 @@ MonoBehaviour:
   moveSpeed: 1
   condition: 1
   scaleMultiplier: 0.1
+  prefabList:
+  - {fileID: 1399365483588171463, guid: dfaafa9a9af864af7b7916620d1a4c1a, type: 3}
 --- !u!114 &-3820135245217699546
 MonoBehaviour:
   m_ObjectHideFlags: 0
