@@ -59,6 +59,7 @@ public class PlayerControl : MonoBehaviour
     public FloatingText floatingTextPrefab; // 假设有一个预制体 FloatingTextPrefab，将其拖拽到这个字段中
     private FloatingText floatingTextInstance;
 
+    private SpriteRenderer playerSpriteRenderer;
 
 
     void Start()
@@ -67,6 +68,8 @@ public class PlayerControl : MonoBehaviour
         // Keep the player in bound
         SetPlayerBoundary();
         //KeepPlayerInBound();
+
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
 
         // 查找所有包含 "platform" 字符串的游戏对象
         GameObject[] platformObjects = FindObjectsWithSubstring("Platform");
@@ -104,10 +107,10 @@ public class PlayerControl : MonoBehaviour
         // Scene Loader 
         SceneLoader = GameObject.Find("SceneManager");
         // Check if current level is a tutorial scene
-        tutorialCheck = GameObject.Find("TutorialInstructions"); 
+        tutorialCheck = GameObject.Find("TutorialInstructions");
         // Timelapse Normalise incase of reloads
         Time.timeScale = 1f;
-        
+
     }
 
     void Update()
@@ -190,6 +193,11 @@ public class PlayerControl : MonoBehaviour
         {
             // Flip the player's direction.
             Flip();
+            // Toggle the direction
+            facingRight = !facingRight;
+
+            // Update the flipX property of the SpriteRenderer
+            playerSpriteRenderer.flipX = !facingRight;
         }
 
         // Gain the moveDirection
@@ -335,7 +343,7 @@ public class PlayerControl : MonoBehaviour
             gunChild.transform.localPosition = new Vector3(-gunChild.transform.localPosition.x, gunChild.transform.localPosition.y, gunChild.transform.localPosition.z);
 
             // Update the facing direction flag.
-            facingRight = !facingRight;
+            // facingRight = !facingRight;
         }
     }
 
@@ -475,8 +483,8 @@ public class PlayerControl : MonoBehaviour
         floatingTextInstance.GetComponent<RectTransform>().anchoredPosition = transform.position + new Vector3(0, -100, 0);
         Debug.Log("Player Screen Position: " + transform.position);
 
-        
-        
+
+
         // floatingTextInstance = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
         floatingTextInstance.SetTextValues("+", increaseX.ToString());
 
