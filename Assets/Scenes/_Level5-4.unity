@@ -1887,7 +1887,7 @@ MonoBehaviour:
   moveSpeed: 4
   condition: 1
   lowerPlatform: {fileID: 370154756}
-  upperPlatform: {fileID: 1573833581}
+  upperPlatform: {fileID: 692306920}
 --- !u!1001 &383612674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2257,7 +2257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.173714, y: 14.530001, z: -10}
+  m_LocalPosition: {x: 37.340797, y: 14.530001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2925,6 +2925,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9b2edf3428ff4c20bb3b8deb45d09ef, type: 3}
+--- !u!1 &692306920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4388556524763799107, guid: 773a19477782342849644ecb562b39b5, type: 3}
+  m_PrefabInstance: {fileID: 164459020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &717952130 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7291866983596998147, guid: 97c99a155f6314758a5cdecc1c523cbe, type: 3}
@@ -4763,7 +4768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   condition: 1
-  lowerPlatform: {fileID: 1573833581}
+  lowerPlatform: {fileID: 1504460583}
   upperPlatform: {fileID: 789496694}
 --- !u!4 &1014913720 stripped
 Transform:
@@ -5517,6 +5522,10 @@ PrefabInstance:
     - target: {fileID: 2869645890506337629, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_Name
       value: RadialMenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 2869645890506337629, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7093897415270158818, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -6677,6 +6686,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfaafa9a9af864af7b7916620d1a4c1a, type: 3}
+--- !u!1 &1504460583 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4388556524763799107, guid: 773a19477782342849644ecb562b39b5, type: 3}
+  m_PrefabInstance: {fileID: 1782772132}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1506593611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7113,7 +7127,7 @@ MonoBehaviour:
   moveSpeed: 4
   condition: 1
   lowerPlatform: {fileID: 1573833581}
-  upperPlatform: {fileID: 789496694}
+  upperPlatform: {fileID: 1504460583}
 --- !u!4 &1603039515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7291866983596998147, guid: 97c99a155f6314758a5cdecc1c523cbe, type: 3}
@@ -8720,7 +8734,7 @@ MonoBehaviour:
   moveSpeed: 4
   condition: 1
   lowerPlatform: {fileID: 370154756}
-  upperPlatform: {fileID: 1573833581}
+  upperPlatform: {fileID: 692306920}
 --- !u!1001 &1990151693
 PrefabInstance:
   m_ObjectHideFlags: 0
