@@ -805,7 +805,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // 计算最近的球体对象
-        float minDistance = 1.0f;
+        float minDistance = 0.9f;
         foreach (GameObject ball in balls)
         {
             float distance = Vector3.Distance(transform.position, ball.transform.position);
@@ -831,7 +831,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         // 计算最近的球体对象
-        float minDistance = 1.5f;
+        float minDistance = 2.2f;
         nearestBall = null;
 
         foreach (GameObject ball in balls)
