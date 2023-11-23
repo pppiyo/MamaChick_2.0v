@@ -251,7 +251,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         //test_ball
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.E) && nearestBall == null)
         {
             PickupNearestNumber();
         }
