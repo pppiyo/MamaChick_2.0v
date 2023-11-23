@@ -55,6 +55,9 @@ public class PlayerControl : MonoBehaviour
     private Collider2D groundCollider;
     public float rightBound;
     public float leftBound;
+    // 获取 FloatingText 实例的引用
+    public FloatingText floatingTextPrefab; // 假设有一个预制体 FloatingTextPrefab，将其拖拽到这个字段中
+    private FloatingText floatingTextInstance;
 
 
 
@@ -104,6 +107,7 @@ public class PlayerControl : MonoBehaviour
         tutorialCheck = GameObject.Find("TutorialInstructions"); 
         // Timelapse Normalise incase of reloads
         Time.timeScale = 1f;
+        
     }
 
     void Update()
@@ -453,6 +457,28 @@ public class PlayerControl : MonoBehaviour
     public void UpdateScore(int increaseX)
     {
         GlobalVariables.collisions++; // Chris: data collection
+
+        // 获取player在世界坐标中的位置
+        // Vector3 playerWorldPosition = transform.position;
+
+        // 将世界坐标转换为屏幕坐标
+        // Vector3 playerScreenPosition = Camera.main.WorldToScreenPoint(playerWorldPosition);
+
+        // 找到Canvas对象
+        Canvas canvas = GameObject.Find("RadialMenuCanvas").GetComponent<Canvas>();
+
+        // 将屏幕坐标直接作为Canvas坐标
+        // Vector2 playerCanvasPosition = playerWorldPosition;
+
+        // 实例化floatingTextPrefab并设置位置
+        floatingTextInstance = Instantiate(floatingTextPrefab, canvas.transform);
+        floatingTextInstance.GetComponent<RectTransform>().anchoredPosition = transform.position + new Vector3(0, -100, 0);
+        Debug.Log("Player Screen Position: " + transform.position);
+
+        
+        
+        // floatingTextInstance = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
+        floatingTextInstance.SetTextValues("+", increaseX.ToString());
 
         switch (operatorID)
         {
