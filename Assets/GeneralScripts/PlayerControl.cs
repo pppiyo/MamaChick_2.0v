@@ -526,7 +526,16 @@ public class PlayerControl : MonoBehaviour
                     ShowHint("Start Teleport!");
                     StartCoroutine(TeleportCooldown()); // 开始冷却计时
                     Transition teleportPauseScript = SceneLoader.GetComponent<Transition>();
-                    StartCoroutine(teleportPauseScript.TeleportPause(1.5f));
+                    if (nearestBall != null)
+                    {
+                        nearestBall.GetComponent<TrailRenderer>().enabled = false;
+                    }
+                    StartCoroutine(teleportPauseScript.TeleportPause(0.5f));
+                    if (nearestBall != null)
+                    {
+                        nearestBall.GetComponent<TrailRenderer>().Clear();
+                        nearestBall.GetComponent<TrailRenderer>().enabled = true;
+                    }
                 }
             }
             else
