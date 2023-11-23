@@ -29,6 +29,7 @@ public class Monster2 : MonoBehaviour
     private TMP_Text numberText; // Reference to the TMP_Text component with the number.
     private int number; // The real value of the monster.
     private int MAX_SIZE_NUMBER = 40; // the max size facotr monster2 can get. (in terms of appearance cannot be bigger than this number's corresponding size)
+    public List<GameObject> prefabList; // drop prefab list
 
 
     void Start()
@@ -49,9 +50,9 @@ public class Monster2 : MonoBehaviour
         if (numberText)
         {
             number = int.Parse(numberText.text);
+            UpdateSize();
+            UpdateMovement();
         }
-        UpdateSize();
-        UpdateMovement();
     }
 
 
@@ -117,23 +118,24 @@ public class Monster2 : MonoBehaviour
             }
             // // Debug.Log(result);
 
-            if (result > MaxNumber)
+            if (result > MaxNumber) // when result is bigger than max number, set it to max number
             {
                 numberText.text = MaxNumber.ToString();
             }
-            else if (result > 0 && result <= MaxNumber)
+            else if (result > 0 && result <= MaxNumber) // when result is between 0 and max number, set it to result
             {
                 numberText.text = result.ToString();
             }
-            else
+            else // when result is negative or 0, set it to 0
             {
-                numberText.text = "0";
+                // numberText.text = "0";
+                Destroy(gameObject);
+                dropRandomObject();
             }
 
             Destroy(other.gameObject);
         }
 
-        // Debug.Log("hi");
         if (other.gameObject.CompareTag("Elevator2"))
         {
             Debug.Log("monster2 collided with elevator2");
@@ -142,7 +144,7 @@ public class Monster2 : MonoBehaviour
 
         if (other.gameObject.CompareTag("Player"))
         {
-            if(GlobalVariables.curLevel == "tutorial 5")
+            if (GlobalVariables.curLevel == "tutorial 5")
             {
                 SceneManager.LoadScene("_Tutorial5__");
             }
@@ -154,7 +156,6 @@ public class Monster2 : MonoBehaviour
         }
 
     }
-
 
 
     private void UpdateSize()
@@ -256,5 +257,26 @@ public class Monster2 : MonoBehaviour
     {
         GlobalVariables.failReason = "killedByMonster " + gameObject.name;
         SceneLoader.GetComponent<Transition>().LoadGameOverLost();
+    }
+
+    private void dropRandomObject()
+    {
+        if (prefabList.Count > 0)
+        {
+            // Select and instantiate a random prefab at the current box's position
+            GameObject selectedPrefab = prefabList[Random.Range(0, prefabList.Count)];
+            GameObject newPrefabInstance = Instantiate(selectedPrefab, transform.position, Quaternion.identity);
+
+            // Check if the selected prefab is named 'number'
+            if (newPrefabInstance.name.Contains("Number"))
+            {
+                // Find the TMP component and assign a random number between 1-10
+                TMP_Text numberText = newPrefabInstance.transform.Find("Number_Text")?.GetComponent<TMP_Text>();
+                if (numberText != null)
+                {
+                    numberText.text = Random.Range(1, 11).ToString();
+                }
+            }
+        }
     }
 }
