@@ -154,6 +154,7 @@ MonoBehaviour:
   ground: {fileID: 0}
   rightBound: 40
   leftBound: -10
+  floatingTextPrefab: {fileID: 6295620945491722359, guid: 7cd3eb76bb2494c2aa66c12a7a1a97bb, type: 3}
 --- !u!58 &8154925501307779328
 CircleCollider2D:
   m_ObjectHideFlags: 0
