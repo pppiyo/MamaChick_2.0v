@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SwipeController : MonoBehaviour, IEndDragHandler
 {
@@ -12,6 +13,8 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     [SerializeField] RectTransform levelPagesRect;
     [SerializeField] float tweenTime;
     [SerializeField] LeanTweenType tweenType;
+    [SerializeField] Button previousBtn, nextBtn;
+
     float dragthreshold;
 
     public int Maxpage { get => maxpage; set => maxpage = value; }
@@ -27,6 +30,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
         currentPage = 1;
         targetPos = levelPagesRect.localPosition;
         dragthreshold = Screen.width / 15;
+        UpdateArrowButton();
     }
     public void Next()
     {
@@ -51,6 +55,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     void MovePage()
     {
         levelPagesRect.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
+        UpdateArrowButton();
     }
     public void OnEndDrag(PointerEventData eventData)
     {
@@ -63,6 +68,13 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
         {
             MovePage();
         }
+    }
+    void UpdateArrowButton()
+    {
+        nextBtn.interactable = true;
+        previousBtn.interactable = true;
+        if(currentPage == 1) previousBtn.interactable = false;
+        else if (currentPage == Maxpage) nextBtn.interactable = false;
     }
 
 }

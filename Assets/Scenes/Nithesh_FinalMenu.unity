@@ -2565,6 +2565,8 @@ MonoBehaviour:
   levelPagesRect: {fileID: 1649650221}
   tweenTime: 0.3
   tweenType: 6
+  previousBtn: {fileID: 1298152466}
+  nextBtn: {fileID: 1764596517}
 --- !u!1 &743392138
 GameObject:
   m_ObjectHideFlags: 0
