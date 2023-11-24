@@ -29,6 +29,7 @@ public class GameReport
     public List<string> stage_names = new List<string>();
     public List<int> stage_times = new List<int>();
     public int numRestart;
+    public int inverseTimes;
     
     public string mode;
 
@@ -44,6 +45,7 @@ public class GameReport
         failReason = GlobalVariables.failReason;
         monsterKilled = GlobalVariables.monsterKilled;
         numRestart = GlobalVariables.numRestart;
+        inverseTimes = GlobalVariables.inverseTimes;
         foreach (var keyValuePair in GlobalVariables.platformMap)
         {
             names.Add(keyValuePair.Key);

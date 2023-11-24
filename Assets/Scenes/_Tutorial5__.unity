@@ -678,6 +678,7 @@ GameObject:
   m_Component:
   - component: {fileID: 472477017}
   - component: {fileID: 472477018}
+  - component: {fileID: 472477019}
   m_Layer: 0
   m_Name: CM vcam1
   m_TagString: Untagged
@@ -693,7 +694,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472477016}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -13.778078, y: -7.5331, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -723,7 +724,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1327968171}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 8
+    OrthographicSize: 10
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -739,6 +740,21 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 987007865}
+--- !u!114 &472477019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472477016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BoundingShape2D: {fileID: 954333869}
+  m_Damping: 0.5
+  m_MaxWindowSize: -1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +809,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -817,7 +833,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0645456, y: -0.3000002, z: -10}
+  m_LocalPosition: {x: 0.7780781, y: 4.0331, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1233,8 +1249,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 45.50646, y: 35.24465}
-      - {x: 8.466107, y: 23.891796}
-      - {x: -20.117744, y: 7.7485466}
+      - {x: 7.161393, y: 31.720064}
+      - {x: -20.40768, y: 15.141913}
       - {x: -20.7525, y: -6.013255}
       - {x: 73.824295, y: -5.8101225}
       - {x: 74.465126, y: 34.093765}
@@ -1306,8 +1322,8 @@ MonoBehaviour:
   m_YDamping: 1
   m_ZDamping: 1
   m_TargetMovementOnly: 1
-  m_ScreenX: 0.12
-  m_ScreenY: 0.7
+  m_ScreenX: 0.5
+  m_ScreenY: 0.5
   m_CameraDistance: 10
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
@@ -1315,7 +1331,7 @@ MonoBehaviour:
   m_UnlimitedSoftZone: 0
   m_SoftZoneWidth: 0.82
   m_SoftZoneHeight: 0.8
-  m_BiasX: 0.00000004543037
+  m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
   m_GroupFramingMode: 2
