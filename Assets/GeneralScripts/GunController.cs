@@ -60,7 +60,7 @@ public class GunController : MonoBehaviour
         {
             player.ShowHint("You got a gun! Press 'F' to shoot");
             StartCoroutine(player.HideHint(3));
-            AttachGunToPlayer(other.gameObject);
+            AttachGunToPlayer(other.gameObject, GetPlayerFacingDirection());
             isEquipped = true;
         }
     }
@@ -102,15 +102,31 @@ public class GunController : MonoBehaviour
     }
 
 
-    private void AttachGunToPlayer(GameObject player)
+    private void AttachGunToPlayer(GameObject player, Vector2 playerDirection)
     {
         if (player != null && gameObject != null)
         {
 
-            // Set the local position of the gun relative to the player (adjust these values as needed).
-            gameObject.transform.localPosition = new Vector3(player.transform.position.x +
-            player.transform.localScale.x / 2 + gameObject.transform.localScale.x / 2 + 1.2f,
-            player.transform.position.y, 0);
+            if (playerDirection == Vector2.right)
+            {
+                // Set the local position of the gun relative to the player (adjust these values as needed).
+                gameObject.transform.localPosition = new Vector3(player.transform.position.x +
+                player.transform.localScale.x / 2 + gameObject.transform.localScale.x / 2 + 1.2f,
+                player.transform.position.y, 0);
+            }
+            else if (playerDirection == Vector2.left)
+            {
+                // Set the local position of the gun relative to the player (adjust these values as needed).
+                gameObject.transform.localPosition = new Vector3(player.transform.position.x -
+                player.transform.localScale.x / 2 - gameObject.transform.localScale.x / 2 - 1.2f,
+                player.transform.position.y, 0);
+
+                // Flip the object by changing the X scale
+                Vector3 newScale = gameObject.transform.localScale;
+                newScale.x *= -1;
+                gameObject.transform.localScale = newScale;
+            }
+
 
             // Set the gun's parent to the player's GameObject, making it move with the player.
             gameObject.transform.SetParent(player.transform);
