@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
+
 
 public class PlayerControl : MonoBehaviour
 {
@@ -60,6 +62,10 @@ public class PlayerControl : MonoBehaviour
     private FloatingText floatingTextInstance;
 
     private SpriteRenderer playerSpriteRenderer;
+
+    // Constants
+    private const int MAX_INT = Int32.MaxValue;
+    private const int MIN_INT = Int32.MinValue;
 
 
     void Start()
@@ -365,6 +371,7 @@ public class PlayerControl : MonoBehaviour
         hintText.gameObject.SetActive(false);
     }
 
+    // inverse gravity with overflow bug fixed
     bool negativeX(int result, int increment)
     {
         previousResult = result;
@@ -372,27 +379,51 @@ public class PlayerControl : MonoBehaviour
         switch (operatorID)
         {
             case 0:
-                result += increment;
+                if (result > MAX_INT - increment)
+                {
+                    // handle overflow: let result = MAX_INT
+                    result = MAX_INT;
+                }
+                else
+                {
+                    result += increment;
+                }
                 hintDisplay = "Adding " + increment;
                 break;
             case 1:
-                result -= increment;
+                if (result < MIN_INT + increment)
+                {
+                    // handle overflow: let result = MIN_INT
+                    result = MIN_INT;
+                }
+                else
+                {
+                    result -= increment;
+                }
                 hintDisplay = "Subracting " + increment;
                 break;
             case 2:
-                result *= increment;
+                if (result > MAX_INT / increment)
+                {
+                    // handle overflow: let result = MAX_INT
+                    result = MAX_INT;
+                }
+                else
+                {
+                    result *= increment;
+                }
                 hintDisplay = "Multiplying " + increment;
                 break;
             case 3:
                 if (increment != 0)
                 {
                     result /= increment;
-                    hintDisplay = "Dividing " + increment;
                 }
-                // else
-                // {
-                //     hintDisplay = "Cannot divide by 0";
-                // }
+                else
+                {
+                    result = MAX_INT;
+                }
+                hintDisplay = "Dividing " + increment;
                 break;
         }
 
@@ -438,6 +469,77 @@ public class PlayerControl : MonoBehaviour
 
         return false;
     }
+
+    // bool negativeX(int result, int increment)
+    // {
+    //     previousResult = result;
+    //     hintDisplay = "";
+    //     switch (operatorID)
+    //     {
+    //         case 0:
+    //             result += increment;
+    //             hintDisplay = "Adding " + increment;
+    //             break;
+    //         case 1:
+    //             result -= increment;
+    //             hintDisplay = "Subracting " + increment;
+    //             break;
+    //         case 2:
+    //             result *= increment;
+    //             hintDisplay = "Multiplying " + increment;
+    //             break;
+    //         case 3:
+    //             if (increment != 0)
+    //             {
+    //                 result /= increment;
+    //                 hintDisplay = "Dividing " + increment;
+    //             }
+
+    //             break;
+    //     }
+
+    //     // Only is Gravity for the level is activated
+    //     if (GlobalVariables.gravityLevel)
+    //     {
+    //         if (result < 0)
+    //         {
+    //             // Flip Gravity Logic;
+    //             if (previousResult >= 0)
+    //             {
+    //                 GlobalVariables.inverseTimes++;
+    //                 hintDisplay += "\n Flipping Gravity!";
+    //                 gravityDirection = gravityDirection * -1;
+    //                 ShowHint(hintDisplay);
+    //             }
+    //             else
+    //             {
+    //                 ShowHint(hintDisplay);
+    //             }
+    //         }
+    //         else
+    //         {
+    //             // Flip Gravity Logic;
+    //             if (previousResult < 0)
+    //             {
+    //                 GlobalVariables.inverseTimes++;
+    //                 hintDisplay += "\n Flipping Gravity!";
+    //                 gravityDirection = gravityDirection * -1;
+    //                 ShowHint(hintDisplay);
+    //             }
+    //             else
+    //             {
+    //                 ShowHint(hintDisplay);
+    //             }
+    //         }
+    //     }
+
+    //     // added?
+    //     ShowHint(hintDisplay);
+
+    //     StartCoroutine(HideHint(1));
+
+    //     return false;
+    // }
 
     GameObject[] FindObjectsWithSubstring(string substring)
     {
@@ -488,31 +590,68 @@ public class PlayerControl : MonoBehaviour
         // floatingTextInstance = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
         floatingTextInstance.SetTextValues("+", increaseX.ToString());
 
+        // operations with overflow bug fixed
         switch (operatorID)
         {
             case 0:
                 GlobalVariables.opTimesMap["+"]++;
                 if (negativeX(currentX, increaseX))
                     return;
-                currentX += increaseX;
+                // Handle overflow
+                if (currentX > MAX_INT - increaseX)
+                {
+                    // handle overflow: let result = MAX_INT
+                    currentX = MAX_INT;
+                }
+                else
+                {
+                    currentX += increaseX;
+                }
                 break;
             case 1:
                 GlobalVariables.opTimesMap["-"]++;
                 if (negativeX(currentX, increaseX))
                     return;
-                currentX -= increaseX;
+                // Handle overflow
+                if (currentX < MIN_INT + increaseX)
+                {
+                    // handle overflow: let currentX = MIN_INT
+                    currentX = MIN_INT;
+                }
+                else
+                {
+                    currentX -= increaseX;
+                }
                 break;
             case 2:
                 GlobalVariables.opTimesMap["*"]++;
                 if (negativeX(currentX, increaseX))
                     return;
-                currentX *= increaseX;
+                // Handle overflow
+                if (currentX > MAX_INT / increaseX)
+                {
+                    // handle overflow: let currentX = MAX_INT
+                    currentX = MAX_INT;
+                }
+                else
+                {
+                    currentX *= increaseX;
+                }
                 break;
             case 3:
                 GlobalVariables.opTimesMap["/"]++;
                 if (negativeX(currentX, increaseX))
                     return;
-                currentX /= increaseX;
+                // Handle divide by zero
+                if (increaseX != 0)
+                {
+                    currentX /= increaseX;
+                }
+                else
+                {
+                    currentX = MAX_INT;
+                }
+
                 break;
             case 4:
                 hintDisplay = "Select an Operator";
@@ -520,6 +659,39 @@ public class PlayerControl : MonoBehaviour
                 StartCoroutine(HideHint(1));
                 break;
         }
+
+        // switch (operatorID)
+        // {
+        //     case 0:
+        //         GlobalVariables.opTimesMap["+"]++;
+        //         if (negativeX(currentX, increaseX))
+        //             return;
+        //         currentX += increaseX;
+        //         break;
+        //     case 1:
+        //         GlobalVariables.opTimesMap["-"]++;
+        //         if (negativeX(currentX, increaseX))
+        //             return;
+        //         currentX -= increaseX;
+        //         break;
+        //     case 2:
+        //         GlobalVariables.opTimesMap["*"]++;
+        //         if (negativeX(currentX, increaseX))
+        //             return;
+        //         currentX *= increaseX;
+        //         break;
+        //     case 3:
+        //         GlobalVariables.opTimesMap["/"]++;
+        //         if (negativeX(currentX, increaseX))
+        //             return;
+        //         currentX /= increaseX;
+        //         break;
+        //     case 4:
+        //         hintDisplay = "Select an Operator";
+        //         ShowHint(hintDisplay);
+        //         StartCoroutine(HideHint(1));
+        //         break;
+        // }
 
         xBoard.text = currentX.ToString();
 
