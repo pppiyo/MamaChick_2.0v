@@ -408,6 +408,10 @@ public class PlayerControl : MonoBehaviour
                     // handle overflow: let result = MAX_INT
                     result = MAX_INT;
                 }
+                else if (result < MIN_INT / increment)
+                {
+                    result = MIN_INT;
+                }
                 else
                 {
                     result *= increment;
@@ -421,7 +425,12 @@ public class PlayerControl : MonoBehaviour
                 }
                 else
                 {
-                    result = MAX_INT;
+                    if (result > 0)
+                        result = MAX_INT;
+                    if (result < 0)
+                        result = MIN_INT;
+                    if (result == 0)
+                        result = 0;
                 }
                 hintDisplay = "Dividing " + increment;
                 break;
@@ -631,7 +640,7 @@ public class PlayerControl : MonoBehaviour
                     // handle overflow: let currentX = MAX_INT
                     currentX = MAX_INT;
                 }
-                else if (currentX * increaseX < MAX_INT)
+                else if (currentX * increaseX < MIN_INT)
                 {
                     currentX = MIN_INT;
                 }

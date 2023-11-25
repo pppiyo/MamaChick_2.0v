@@ -89,6 +89,7 @@ public class BulletController : MonoBehaviour
         }
     }
 
+    // Bullet interaction with Number (counterpart for monster2 is in Monster2.cs)
     private void UpdatenearestNumberText()
     {
         GameObject numberText = nearestNumber.gameObject.transform.Find("Number_Text").gameObject;
@@ -110,15 +111,50 @@ public class BulletController : MonoBehaviour
 
             if (prefabName == "BulletAdd(Clone)")
             {
-                result = playerNumber + number;
+                // result = playerNumber + number;
+                // Handle overflow
+                if (number + playerNumber > MaxNumber)
+                {
+                    // handle overflow: let result = MaxNumber
+                    result = MaxNumber;
+                }
+                else
+                {
+                    result = playerNumber + number;
+                }
             }
             else if (prefabName == "BulletSub(Clone)")
             {
-                result = playerNumber - number;
+                // result = playerNumber - number;
+                // Handle overflow
+                if (playerNumber - number < MinNumber)
+                {
+                    // handle overflow: let currentX = MinNumber
+                    result = MinNumber;
+                }
+                else
+                {
+                    result = playerNumber - number;
+                }
             }
             else if (prefabName == "BulletMultiply(Clone)")
             {
-                result = playerNumber * number;
+                // result = playerNumber * number;
+                // Handle overflow
+                if (playerNumber * number > MaxNumber)
+                {
+                    // handle overflow: let currentX = MaxNumber
+                    result = MaxNumber;
+                }
+                else if (playerNumber * number < MinNumber)
+                {
+                    // handle overflow: let currentX = MinNumber
+                    result = MinNumber;
+                }
+                else
+                {
+                    result = playerNumber * number;
+                }
             }
             else if (prefabName == "BulletDivide(Clone)")
             {
@@ -128,11 +164,22 @@ public class BulletController : MonoBehaviour
                 }
                 else
                 {
-                    result = MaxNumber;
+                    if (playerNumber > 0)
+                    {
+                        result = MaxNumber;
+                    }
+                    else if (playerNumber < 0)
+                    {
+                        result = MinNumber;
+                    }
+                    else // playerNumber == 0
+                    {
+                        result = 0;
+                    }
                 }
             }
 
-            Debug.Log("!!!!!result is: " + result);
+            // Debug.Log("!!!!!result is: " + result);
 
             if (result > MaxNumber)
             {
