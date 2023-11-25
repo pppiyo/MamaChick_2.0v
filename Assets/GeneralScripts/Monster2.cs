@@ -85,7 +85,6 @@ public class Monster2 : MonoBehaviour
         {
             string prefabName = other.gameObject.name;
 
-            // Debug.Log("prefab name is: " + prefabName);
             Debug.Log("monster 2 Text: " + number);
 
             // get player number text // good
@@ -96,16 +95,53 @@ public class Monster2 : MonoBehaviour
 
             if (prefabName == "BulletAdd(Clone)")
             {
-                result = playerNumber + number;
+                // Handle overflow
+                if (number + playerNumber > MaxNumber)
+                {
+                    // handle overflow: let result = MaxNumber
+                    result = MaxNumber;
+                }
+                else
+                {
+                    result = playerNumber + number;
+                }
             }
+
             else if (prefabName == "BulletSub(Clone)")
             {
-                result = playerNumber - number;
+                // Handle overflow
+                if (playerNumber - number < MinNumber)
+                {
+                    // handle overflow: let currentX = MinNumber
+                    result = MinNumber;
+                }
+                else
+                {
+                    result = playerNumber - number;
+                }
             }
+
+
             else if (prefabName == "BulletMultiply(Clone)")
             {
-                result = playerNumber * number;
+                // Handle overflow
+                if (playerNumber * number > MaxNumber)
+                {
+                    // handle overflow: let currentX = MaxNumber
+                    result = MaxNumber;
+                }
+                else if (playerNumber * number < MinNumber)
+                {
+                    // handle overflow: let currentX = MinNumber
+                    result = MinNumber;
+                }
+                else
+                {
+                    result = playerNumber * number;
+                }
             }
+
+
             else if (prefabName == "BulletDivide(Clone)")
             {
                 if (number != 0)
@@ -114,16 +150,26 @@ public class Monster2 : MonoBehaviour
                 }
                 else
                 {
-                    result = MaxNumber;
+                    if (playerNumber > 0)
+                    {
+                        result = MaxNumber;
+                    }
+                    else if (playerNumber < 0)
+                    {
+                        result = MinNumber;
+                    }
+                    else // playerNumber == 0
+                    {
+                        result = 0;
+                    }
                 }
             }
-            // // Debug.Log(result);
 
-            if (result > MaxNumber) // when result is bigger than max number, set it to max number
+            if (result >= MaxNumber) // when result is bigger than max number, set it to max number
             {
                 numberText.text = MaxNumber.ToString();
             }
-            else if (result > 0 && result <= MaxNumber) // when result is between 0 and max number, set it to result
+            else if (result > 0 && result < MaxNumber) // when result is between 0 and max number, set it to result
             {
                 numberText.text = result.ToString();
             }
@@ -156,6 +202,15 @@ public class Monster2 : MonoBehaviour
             }
         }
 
+        // If the monster collides with a number, update mosnter's value based on equation <number operator monster = monster>, then destroy the number.
+        if (other.gameObject.CompareTag("Number"))
+        {
+            Debug.Log("monster2 collided with number!");
+            Destroy(other.gameObject);
+            Destroy(gameObject);
+            dropRandomObject();
+
+        }
     }
 
 
@@ -257,6 +312,7 @@ public class Monster2 : MonoBehaviour
             }
         }
     }
+
 
     private void killedByMonster(GameObject gameObject)
     {
