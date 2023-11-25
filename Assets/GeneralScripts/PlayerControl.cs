@@ -585,8 +585,6 @@ public class PlayerControl : MonoBehaviour
         floatingTextInstance.GetComponent<RectTransform>().anchoredPosition = transform.position + new Vector3(0, -100, 0);
         Debug.Log("Player Screen Position: " + transform.position);
 
-
-
         // floatingTextInstance = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
         floatingTextInstance.SetTextValues("+", increaseX.ToString());
 
@@ -628,10 +626,14 @@ public class PlayerControl : MonoBehaviour
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
-                if (currentX > MAX_INT / increaseX)
+                if (currentX * increaseX > MAX_INT)
                 {
                     // handle overflow: let currentX = MAX_INT
                     currentX = MAX_INT;
+                }
+                else if (currentX * increaseX < MAX_INT)
+                {
+                    currentX = MIN_INT;
                 }
                 else
                 {
@@ -649,7 +651,12 @@ public class PlayerControl : MonoBehaviour
                 }
                 else
                 {
-                    currentX = MAX_INT;
+                    if (currentX > 0)
+                        currentX = MAX_INT;
+                    if (currentX < 0)
+                        currentX = MIN_INT;
+                    if (currentX == 0)
+                        currentX = 0;
                 }
 
                 break;
