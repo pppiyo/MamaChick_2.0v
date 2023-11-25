@@ -379,7 +379,7 @@ public class PlayerControl : MonoBehaviour
         switch (operatorID)
         {
             case 0:
-                if (result > MAX_INT - increment)
+                if (result + increment > MAX_INT)
                 {
                     // handle overflow: let result = MAX_INT
                     result = MAX_INT;
@@ -391,7 +391,7 @@ public class PlayerControl : MonoBehaviour
                 hintDisplay = "Adding " + increment;
                 break;
             case 1:
-                if (result < MIN_INT + increment)
+                if (result - increment < MIN_INT)
                 {
                     // handle overflow: let result = MIN_INT
                     result = MIN_INT;
@@ -403,12 +403,12 @@ public class PlayerControl : MonoBehaviour
                 hintDisplay = "Subracting " + increment;
                 break;
             case 2:
-                if (result > MAX_INT / increment)
+                if (result * increment > MAX_INT)
                 {
                     // handle overflow: let result = MAX_INT
                     result = MAX_INT;
                 }
-                else if (result < MIN_INT / increment)
+                else if (result * increment < MIN_INT)
                 {
                     result = MIN_INT;
                 }
@@ -594,6 +594,8 @@ public class PlayerControl : MonoBehaviour
         floatingTextInstance.GetComponent<RectTransform>().anchoredPosition = transform.position + new Vector3(0, -100, 0);
         Debug.Log("Player Screen Position: " + transform.position);
 
+
+
         // floatingTextInstance = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
         floatingTextInstance.SetTextValues("+", increaseX.ToString());
 
@@ -605,7 +607,7 @@ public class PlayerControl : MonoBehaviour
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
-                if (currentX > MAX_INT - increaseX)
+                if (currentX + increaseX > MAX_INT)
                 {
                     // handle overflow: let result = MAX_INT
                     currentX = MAX_INT;
@@ -620,7 +622,7 @@ public class PlayerControl : MonoBehaviour
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
-                if (currentX < MIN_INT + increaseX)
+                if (currentX - increaseX < MIN_INT)
                 {
                     // handle overflow: let currentX = MIN_INT
                     currentX = MIN_INT;
