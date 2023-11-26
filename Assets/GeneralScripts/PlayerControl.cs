@@ -597,13 +597,14 @@ public class PlayerControl : MonoBehaviour
 
 
         // floatingTextInstance = Instantiate(floatingTextPrefab, transform.position, Quaternion.identity);
-        floatingTextInstance.SetTextValues("+", increaseX.ToString());
+        // floatingTextInstance.SetTextValues("+", increaseX.ToString());
 
         // operations with overflow bug fixed
         switch (operatorID)
         {
             case 0:
                 GlobalVariables.opTimesMap["+"]++;
+                floatingTextInstance.SetTextValues("+", increaseX.ToString());
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
@@ -619,6 +620,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case 1:
                 GlobalVariables.opTimesMap["-"]++;
+                floatingTextInstance.SetTextValues("-", increaseX.ToString());
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
@@ -634,6 +636,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case 2:
                 GlobalVariables.opTimesMap["*"]++;
+                floatingTextInstance.SetTextValues("*", increaseX.ToString());
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
@@ -653,6 +656,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case 3:
                 GlobalVariables.opTimesMap["/"]++;
+                floatingTextInstance.SetTextValues("/", increaseX.ToString());
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle divide by zero
