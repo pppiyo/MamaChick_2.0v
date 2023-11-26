@@ -58,6 +58,7 @@ public class FloatingText : MonoBehaviour
     {
         isTextChanging = true;
         // 在这里更新文本的显示内容
+        Debug.Log(operatorID);
         text.text = operatorID + " " + increaseX;
         isTextChanging = false;
     }
