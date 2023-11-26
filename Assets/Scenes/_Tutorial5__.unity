@@ -694,7 +694,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472477016}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.778078, y: -7.5331, z: 0}
+  m_LocalPosition: {x: -14.525607, y: -7.53471, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -833,7 +833,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7780781, y: 4.0331, z: -10}
+  m_LocalPosition: {x: 1.5256071, y: 4.03471, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1438,6 +1438,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 398297816681354788, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 33f638d8d33b06b4d83e10495b44fb9b, type: 3}
     - target: {fileID: 2739489628989735268, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1538,6 +1542,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: RadialMenuCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 6765680256474877842, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 147.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093897415270158818, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093897415270158818, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -235.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093897415270158818, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 149.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7093897415270158821, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1545,6 +1565,10 @@ PrefabInstance:
     - target: {fileID: 7093897415270158821, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadLevels
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006445462857072907, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 148.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
