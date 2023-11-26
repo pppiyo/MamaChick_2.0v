@@ -427,10 +427,8 @@ public class PlayerControl : MonoBehaviour
                 {
                     if (result > 0)
                         result = MAX_INT;
-                    if (result < 0)
+                    else
                         result = MIN_INT;
-                    if (result == 0)
-                        result = 0;
                 }
                 hintDisplay = "Dividing " + increment;
                 break;
@@ -668,10 +666,8 @@ public class PlayerControl : MonoBehaviour
                 {
                     if (currentX > 0)
                         currentX = MAX_INT;
-                    if (currentX < 0)
+                    else
                         currentX = MIN_INT;
-                    if (currentX == 0)
-                        currentX = 0;
                 }
 
                 break;
