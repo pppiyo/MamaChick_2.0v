@@ -247,22 +247,22 @@ public class PlayerControl : MonoBehaviour
             Physics2D.gravity = (float)-0.5 * invertedGravity;
 
         // Change Operator from arrow keys
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && GameObject.Find("SubButton") != null)
         {
             operatorID = 1;
             EventSystem.current.SetSelectedGameObject(GameObject.Find("SubButton"));
         }
-        else if (Input.GetKey(KeyCode.LeftArrow))
+        else if (Input.GetKey(KeyCode.LeftArrow) && GameObject.Find("DivButton") != null)
         {
             operatorID = 3;
             EventSystem.current.SetSelectedGameObject(GameObject.Find("DivButton"));
         }
-        else if (Input.GetKey(KeyCode.UpArrow))
+        else if (Input.GetKey(KeyCode.UpArrow) && GameObject.Find("AddButton") != null)
         {
             operatorID = 0;
             EventSystem.current.SetSelectedGameObject(GameObject.Find("AddButton"));
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow) && GameObject.Find("MulButton") != null)
         {
             operatorID = 2;
             EventSystem.current.SetSelectedGameObject(GameObject.Find("MulButton"));
@@ -376,47 +376,61 @@ public class PlayerControl : MonoBehaviour
     {
         previousResult = result;
         hintDisplay = "";
+        Debug.Log(operatorID);
+        Debug.Log(increment);
         switch (operatorID)
         {
             case 0:
-                if (result + increment > MAX_INT)
+
+                if (increment >= 0 && result > MAX_INT - increment)
                 {
                     // handle overflow: let result = MAX_INT
                     result = MAX_INT;
+                }
+                else if (increment < 0 && result < MIN_INT - increment)
+                {
+                    result = MIN_INT;
                 }
                 else
                 {
                     result += increment;
                 }
-                hintDisplay = "Adding " + increment;
                 break;
             case 1:
-                if (result - increment < MIN_INT)
+                if (increment >= 0 && result < MIN_INT + increment)
                 {
-                    // handle overflow: let result = MIN_INT
+                    // handle overflow: let currentX = MIN_INT
                     result = MIN_INT;
+                }
+                else if (increment< 0 && result > MAX_INT + increment)
+                {
+                    result = MAX_INT;
                 }
                 else
                 {
                     result -= increment;
                 }
-                hintDisplay = "Subracting " + increment;
                 break;
             case 2:
-                if (result * increment > MAX_INT)
+                if (increment == 0 || result == 0)
                 {
-                    // handle overflow: let result = MAX_INT
-                    result = MAX_INT;
+                    result = 0;
                 }
-                else if (result * increment < MIN_INT)
+                else if (Math.Abs(result) > MAX_INT / Math.Abs(increment))
                 {
-                    result = MIN_INT;
+                    if ((result > 0 && increment > 0) || (result < 0 && increment < 0))
+                    {
+                        result = MAX_INT;
+                    }
+                    else
+                    {
+                        result = MIN_INT;
+                    }
                 }
                 else
                 {
                     result *= increment;
                 }
-                hintDisplay = "Multiplying " + increment;
                 break;
             case 3:
                 if (increment != 0)
@@ -432,7 +446,6 @@ public class PlayerControl : MonoBehaviour
                     if (result == 0)
                         result = 0;
                 }
-                hintDisplay = "Dividing " + increment;
                 break;
         }
 
@@ -445,12 +458,8 @@ public class PlayerControl : MonoBehaviour
                 if (previousResult >= 0)
                 {
                     GlobalVariables.inverseTimes++;
-                    hintDisplay += "\n Flipping Gravity!";
+                    hintDisplay += "Flipping Gravity!";
                     gravityDirection = gravityDirection * -1;
-                    ShowHint(hintDisplay);
-                }
-                else
-                {
                     ShowHint(hintDisplay);
                 }
             }
@@ -460,12 +469,8 @@ public class PlayerControl : MonoBehaviour
                 if (previousResult < 0)
                 {
                     GlobalVariables.inverseTimes++;
-                    hintDisplay += "\n Flipping Gravity!";
+                    hintDisplay += "Flipping Gravity!";
                     gravityDirection = gravityDirection * -1;
-                    ShowHint(hintDisplay);
-                }
-                else
-                {
                     ShowHint(hintDisplay);
                 }
             }
@@ -600,6 +605,8 @@ public class PlayerControl : MonoBehaviour
         // floatingTextInstance.SetTextValues("+", increaseX.ToString());
 
         // operations with overflow bug fixed
+        Debug.Log(operatorID);
+        Debug.Log(increaseX);
         switch (operatorID)
         {
             case 0:
@@ -608,10 +615,14 @@ public class PlayerControl : MonoBehaviour
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
-                if (currentX + increaseX > MAX_INT)
+                if (increaseX >= 0 && currentX > MAX_INT - increaseX)
                 {
                     // handle overflow: let result = MAX_INT
                     currentX = MAX_INT;
+                }
+                else if(increaseX < 0 && currentX < MIN_INT - increaseX)
+                {
+                    currentX = MIN_INT;
                 }
                 else
                 {
@@ -624,10 +635,14 @@ public class PlayerControl : MonoBehaviour
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
-                if (currentX - increaseX < MIN_INT)
+                if (increaseX >= 0 && currentX < MIN_INT + increaseX)
                 {
                     // handle overflow: let currentX = MIN_INT
                     currentX = MIN_INT;
+                }
+                else if(increaseX < 0 && currentX > MAX_INT + increaseX)
+                {
+                    currentX = MAX_INT;
                 }
                 else
                 {
@@ -640,14 +655,20 @@ public class PlayerControl : MonoBehaviour
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
-                if (currentX * increaseX > MAX_INT)
+                if (increaseX == 0 || currentX == 0)
                 {
-                    // handle overflow: let currentX = MAX_INT
-                    currentX = MAX_INT;
+                    currentX = 0;
                 }
-                else if (currentX * increaseX < MIN_INT)
+                else if (Math.Abs(currentX) > MAX_INT / Math.Abs(increaseX))
                 {
-                    currentX = MIN_INT;
+                    if((currentX > 0 && increaseX > 0) || (currentX< 0 && increaseX < 0))
+                    {
+                        currentX = MAX_INT;
+                    }
+                    else
+                    {
+                        currentX = MIN_INT;
+                    }
                 }
                 else
                 {
@@ -664,7 +685,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     currentX /= increaseX;
                 }
-                else
+                 else
                 {
                     if (currentX > 0)
                         currentX = MAX_INT;
@@ -673,7 +694,6 @@ public class PlayerControl : MonoBehaviour
                     if (currentX == 0)
                         currentX = 0;
                 }
-
                 break;
             case 4:
                 hintDisplay = "Select an Operator";

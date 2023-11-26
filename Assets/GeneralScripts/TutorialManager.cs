@@ -42,6 +42,9 @@ public class TutorialManager : MonoBehaviour
     private GameObject SpikeInstruction;
     private GameObject Stage4Objects;
     private GameObject AddInstruction;
+    private GameObject SubInstruction;
+    private GameObject DivInstruction;
+    private GameObject MulInstruction;
     private GameObject EpressInstruction;
     private GameObject fakePlatformInstruction;
     private GameObject MenuInstruction;
@@ -52,6 +55,10 @@ public class TutorialManager : MonoBehaviour
     private GameObject Platform_1_10;
     private GameObject Destination;
     private GameObject Stage4_1;
+    private GameObject AddButton;
+    private GameObject SubButton;
+    private GameObject DivButton;
+    private GameObject MulButton;
 
     // Variables for level 2 tracking
     private int level2Stage0;
@@ -132,13 +139,20 @@ public class TutorialManager : MonoBehaviour
         fakePlatformInstruction = GameObject.Find("fakePlatformInstruction");
         MenuInstruction = GameObject.Find("MenuInstruction");
         AddInstruction = GameObject.Find("AddInstruction");
+        SubInstruction = GameObject.Find("SubInstruction");
+        DivInstruction = GameObject.Find("DivInstruction");
+        MulInstruction = GameObject.Find("MulInstruction");
         EpressInstruction = GameObject.Find("EpressInstruction");
         Platform_1_7 = GameObject.Find("Platform_1_7");
         Platform_1_8 = GameObject.Find("Platform_1_8");
         Platform_1_9 = GameObject.Find("Platform_1_9");
         Platform_1_10 = GameObject.Find("Platform_1_10");
         Stage4_1 = GameObject.Find("Stage4_1");
-        
+        AddButton = GameObject.Find("AddButton");
+        SubButton = GameObject.Find("SubButton");
+        MulButton = GameObject.Find("MulButton");
+        DivButton = GameObject.Find("DivButton");
+
 
         // Level 4 is simple in text for now
         if (GlobalVariables.curLevel == "tutorial 5")
@@ -155,18 +169,6 @@ public class TutorialManager : MonoBehaviour
         foreach (GameObject obj in tutorialElements)
         {
             obj.SetActive(false);
-        }
-        tutorialElements = GameObject.FindGameObjectsWithTag("Tutorial_object");
-        foreach (GameObject obj in tutorialElements)
-        {
-            if(GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4" && GlobalVariables.curLevel != "tutorial 5")
-                obj.SetActive(false);
-        }
-        tutorialElements = GameObject.FindGameObjectsWithTag("Platform_Solid");
-        foreach (GameObject obj in tutorialElements)
-        {
-            if (GlobalVariables.curLevel != "tutorial 3" && GlobalVariables.curLevel != "tutorial 4" && GlobalVariables.curLevel != "tutorial 5")
-                obj.SetActive(false);
         }
         tutorialElements = GameObject.FindGameObjectsWithTag("Platform_Mutate");
         foreach (GameObject obj in tutorialElements)
@@ -226,6 +228,14 @@ public class TutorialManager : MonoBehaviour
         Checkpoint1.SetActive(false);
         Stage4_1.SetActive(true);
         MenuWheel.SetActive(true);
+        Platform_1_1.SetActive(true);
+        Platform_1_3.SetActive(true);
+        Checkpoint1.SetActive(true);
+
+        AddButton.SetActive(false);
+        SubButton.SetActive(false);
+        MulButton.SetActive(false);
+        DivButton.SetActive(false);
     }
 
     void deactivateLevel1Stage0()
@@ -252,9 +262,6 @@ public class TutorialManager : MonoBehaviour
     void activateLevel1Stage2()
     {
         currentStage = "Level1Stage2";
-        Platform_1_1.SetActive(true);
-        Platform_1_3.SetActive(true);
-        Checkpoint1.SetActive(true);
         PlatformInstruction.SetActive(true);
         level1Stage2 = 1;
     }
@@ -270,6 +277,7 @@ public class TutorialManager : MonoBehaviour
         currentStage = "Level1Stage3";
         Stage3Objects.SetActive(true);
         SpikeInstruction.SetActive(true);
+        GameObject.Find("Part12").GetComponent<SpriteRenderer>().color = Color.green;
         level1Stage3 = 1;
     }
 
@@ -284,43 +292,25 @@ public class TutorialManager : MonoBehaviour
         currentStage = "Level1Stage4";
         Stage4Objects.SetActive(true);
         AddInstruction.SetActive(true);
+        AddButton.SetActive(true);
         UPkey.SetActive(true);
+        GameObject.Find("Part22").GetComponent<SpriteRenderer>().color = Color.green;
         level1Stage4 = 1;
     }
 
     void deactivateLevel1Stage4()
     {
-        SpikeInstruction.SetActive(false);
-        fakePlatformInstruction = GameObject.Find("fakePlatformInstruction");
-        AddInstruction.SetActive(false);
-        EpressInstruction.SetActive(false);
-        level1Stage4 = 3;
+        level1Stage4 = 9;
     }
 
     void activateLevel1Stage5()
     {
         currentStage = "Level1Stage5";
-        Stage5Objects.SetActive(true);
-        UPkey.SetActive(true);
-        DOWNkey.SetActive(true);
-        Leftkey.SetActive(true);
-        Rightkey.SetActive(true);
         MenuInstruction.SetActive(true);
-        Platform_1_7.SetActive(true);
-        Platform_1_8.SetActive(true);
-        Platform_1_9.SetActive(true);
-        Platform_1_10.SetActive(true);
-        level1Stage4 = 5;
-    }
-
-    void deactivateLevel1Stage5()
-    {
-        UPkey.SetActive(false);
-        DOWNkey.SetActive(false);
-        Akey.SetActive(false);
-        Dkey.SetActive(false);
-        MenuInstruction.SetActive(false);
-        level1Stage5 = 3;
+        AddButton.SetActive(true);
+        SubButton.SetActive(true);
+        DivButton.SetActive(true);
+        level1Stage5 = 1;
     }
 
     void level1Manager()
@@ -340,7 +330,7 @@ public class TutorialManager : MonoBehaviour
                 {
                     currentProgression += "D";
                 }
-                if(currentProgression == "AD" || currentProgression == "DA")
+                if(currentProgression == "A" || currentProgression == "D")
                 {
                     level1Stage0 = 2;
                     shouldWait = true;
@@ -394,7 +384,7 @@ public class TutorialManager : MonoBehaviour
                                         break;
                                     case 1:
                                         // Wait for crossing checkpoint 2
-                                        if (Player.transform.position.x > 30)
+                                        if (Player.transform.position.x > 28)
                                         {
                                             level1Stage3 = 2;
                                         }
@@ -410,26 +400,135 @@ public class TutorialManager : MonoBehaviour
                                                 activateLevel1Stage4();
                                                 break;
                                             case 1:
-                                                if(Player.transform.position.x > 50)
+                                                if (Input.GetKey(KeyCode.UpArrow))
                                                 {
+                                                    AddInstruction.SetActive(false);
+                                                    UPkey.SetActive(false);
+                                                }
+                                                if(GameObject.Find("AddInstruction") != null && Player.transform.position.x  > 35)
+                                                {
+                                                    Player.transform.position = new Vector3(35, Player.transform.position.y, 0);
+                                                }
+
+                                                if(GameObject.Find("AddInstruction")  == null && GameObject.Find("Number4") != null)
+                                                {
+                                                    Debug.Log("Flashadd");
+                                                }
+
+                                                if(GameObject.Find("Number4") == null)
+                                                {
+                                                    Debug.Log("Wonderfuladd");
                                                     level1Stage4 = 2;
                                                 }
                                                 break;
                                             case 2:
-                                                deactivateLevel1Stage4();
+                                                if(Player.transform.position.x > 69 && Player.transform.position.y > 12)
+                                                {
+                                                    AddButton.SetActive(false);
+                                                    SubInstruction.SetActive(true);
+                                                    SubButton.SetActive(true);
+                                                    Rightkey.SetActive(true);
+                                                    GameObject.Find("Part32").GetComponent<SpriteRenderer>().color = Color.green;
+                                                    level1Stage4 = 3;
+                                                }
                                                 break;
                                             case 3:
+                                                if (Input.GetKey(KeyCode.RightArrow))
+                                                {
+                                                    SubInstruction.SetActive(false);
+                                                    Rightkey.SetActive(false);
+                                                }
+                                                if (GameObject.Find("SubInstruction") != null && Player.transform.position.x > 80)
+                                                {
+                                                    Player.transform.position = new Vector3(80, Player.transform.position.y, 0);
+                                                }
+                                                if (GameObject.Find("SubInstruction") == null && GameObject.Find("Number15") != null)
+                                                {
+                                                    Debug.Log("Flashsub");
+                                                }
+                                                if (GameObject.Find("Number15") == null)
+                                                {
+                                                    Debug.Log("Wonderfulsub");
+                                                    level1Stage4 = 4;
+                                                }
+                                                break;
+                                            case 4:
+                                                if (Player.transform.position.x > 106 && Player.transform.position.y > 22)
+                                                {
+                                                    SubButton.SetActive(false);
+                                                    DivInstruction.SetActive(true);
+                                                    DivButton.SetActive(true);
+                                                    Leftkey.SetActive(true);
+                                                    GameObject.Find("Part42").GetComponent<SpriteRenderer>().color = Color.green;
+                                                    level1Stage4 = 5;
+                                                }
+                                                break;
+                                            case 5:
+                                                if (Input.GetKey(KeyCode.LeftArrow))
+                                                {
+                                                    DivInstruction.SetActive(false);
+                                                    Leftkey.SetActive(false);
+                                                }
+                                                if (GameObject.Find("DivInstruction") != null && Player.transform.position.x > 118)
+                                                {
+                                                    Player.transform.position = new Vector3(118, Player.transform.position.y, 0);
+                                                }
+                                                if (GameObject.Find("DivInstruction") == null && GameObject.Find("Number2") != null)
+                                                {
+                                                    Debug.Log("Flashdiv");
+                                                }
+                                                if (GameObject.Find("Number2") == null)
+                                                {
+                                                    Debug.Log("Wonderfuldiv");
+                                                    level1Stage4 = 6;
+                                                }
+                                                break;
+                                            case 6:
+                                                if (Player.transform.position.x > 135 && Player.transform.position.y > 30)
+                                                {
+                                                    DivButton.SetActive(false);
+                                                    MulInstruction.SetActive(true);
+                                                    MulButton.SetActive(true);
+                                                    DOWNkey.SetActive(true);
+                                                    GameObject.Find("Part52").GetComponent<SpriteRenderer>().color = Color.green;
+                                                    level1Stage4 = 7;
+                                                }
+                                                break;
+                                            case 7:
+                                                if (Input.GetKey(KeyCode.DownArrow))
+                                                {
+                                                    MulInstruction.SetActive(false);
+                                                    DOWNkey.SetActive(false);
+                                                }
+                                                if (GameObject.Find("MulInstruction") != null && Player.transform.position.x > 145)
+                                                {
+                                                    Player.transform.position = new Vector3(145, Player.transform.position.y, 0);
+                                                }
+                                                if (GameObject.Find("MulInstruction") == null && GameObject.Find("Number30") != null)
+                                                {
+                                                    Debug.Log("Flashmul");
+                                                }
+                                                if (GameObject.Find("Number30") == null)
+                                                {
+                                                    Debug.Log("Wonderfulmul");
+                                                }
+                                                if(GameObject.Find("Number0") == null)
+                                                {
+                                                    level1Stage4 = 8;
+                                                }
+                                                break;
+                                            case 8:
+                                                deactivateLevel1Stage4();
+                                                break;
+                                            case 9:
                                                 // Stage 5
                                                 switch (level1Stage5)
                                                 {
                                                     case 0:
-                                                        activateLevel1Stage5();
+                                                        if(Player.transform.position.y < 12)
+                                                            activateLevel1Stage5();
                                                         break;
                                                     case 1:
-                                                        break;
-                                                    case 2:
-                                                        break;
-                                                    case 3:
                                                         break;
                                                 }
                                                 break;
