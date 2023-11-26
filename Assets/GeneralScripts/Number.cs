@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Number : MonoBehaviour
 {
@@ -41,6 +42,23 @@ public class Number : MonoBehaviour
 
     private void ResetPosition()
     {
+        // tweak the position to avoid overlapping with the player
+        GameObject player = GameObject.Find("Player");
+        if (player != null)
+        {
+            float playerWidth = player.transform.localScale.x;
+            float numberWidth = transform.localScale.x;
+            // float margin = playerWidth / 6.0;
+            // float offset = (playerWidth + numberWidth) / 2 + margin;
+            float offset = (playerWidth + numberWidth) / 2;
+            if (Math.Abs(initialPosition.x - player.transform.position.x) < offset)
+            {
+                if (initialPosition.x < player.transform.position.x)
+                    initialPosition.x -= offset;
+                else
+                    initialPosition.x += offset;
+            };
+        }
         transform.position = initialPosition; // 重置位置到初始位置
         gameObject.SetActive(true); // 重新激活对象
     }
