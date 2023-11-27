@@ -700,7 +700,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.6407175, y: 2.9771056, z: -10}
+  m_LocalPosition: {x: -4.2115383, y: 2.9843726, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2744,7 +2744,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101665317}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.749282, y: -6.6871057, z: 0}
+  m_LocalPosition: {x: -14.178461, y: -6.6943727, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3049,7 +3049,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156084627599, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 412
+      value: 202
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388362156084627599, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 165
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156240684584, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_IsActive
@@ -3257,7 +3261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5388362157470085751, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_text
-      value: PRESS P TO PICK NUMBERS
+      value: PRESS E TO PICK NUMBERS
       objectReference: {fileID: 0}
     - target: {fileID: 5388362157470085751, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_fontSize
