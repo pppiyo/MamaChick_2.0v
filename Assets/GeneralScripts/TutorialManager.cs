@@ -26,6 +26,8 @@ public class TutorialManager : MonoBehaviour
     // Individual Level Components
     private GameObject Akey;
     private GameObject Dkey;
+    private GameObject Fkey;
+    private GameObject Ekey;
     private GameObject MoveInstruction;
     private GameObject Spacekey;
     private GameObject JumpInstruction;
@@ -122,6 +124,8 @@ public class TutorialManager : MonoBehaviour
         // Initialise Level Components
         Akey = GameObject.Find("Akey");
         Dkey = GameObject.Find("Dkey");
+        Fkey = GameObject.Find("Fkey");
+        Ekey = GameObject.Find("Ekey");
         MoveInstruction = GameObject.Find("MoveInstruction");
         Spacekey = GameObject.Find("Spacekey");
         JumpInstruction = GameObject.Find("JumpInstruction");
@@ -571,21 +575,6 @@ public class TutorialManager : MonoBehaviour
         level2Stage0 = 1;
     }
 
-    void deactivateLevel2Stage0()
-    {
-        level2Stage0 = 3;
-    }
-
-    void activateLevel2Stage1()
-    {
-        MenuInstruction.SetActive(true);
-    }
-
-    void deactivateLevel2Stage1()
-    {
-
-    }
-
     void level2Manager()
     {
         Platform_1_7.SetActive(true);
@@ -594,6 +583,12 @@ public class TutorialManager : MonoBehaviour
         if (Player.transform.position.x > 10)
         {
             JumpInstruction.SetActive(false);
+            if(GameObject.Find("TeleportA_1").transform.Find("Highlighter(Clone)")  != null)
+            {
+                GameObject dummy = GameObject.Find("TeleportA_1").transform.Find("Highlighter(Clone)").gameObject;
+                if (dummy != null)
+                    Destroy(dummy);
+            }
         }
         switch (level2Stage0)
         {
@@ -604,45 +599,21 @@ public class TutorialManager : MonoBehaviour
                 if(Player.transform.position.x > 20)
                 {
                     OperationInstruction.SetActive(true);
+                    GameObject.Find("Part12").GetComponent<SpriteRenderer>().color = Color.green;
                 }
-                if(Player.transform.position.y > 5)
+                if(Player.transform.position.x > 50)
                 {
                     OperationInstruction.SetActive(false);
+                    GameObject.Find("Part22").GetComponent<SpriteRenderer>().color = Color.green;
                     level2Stage0 = 2;
                 }
                 break;
             case 2:
-                if (!Number2_1.activeSelf && !Number2_2.activeSelf && !Number3_1.activeSelf)
-                {/*
-                    if (Player.GetComponent<PlayerControl>().currentX < 9)
-                    {
-                        Player.transform.position = GameObject.Find("Checkpoint1").transform.position;
-                        Player.GetComponent<PlayerControl>().currentX = 0;
-                        GameObject.Find("Player_Number").GetComponent<TMP_Text>().text = "0";
-                        SpikeInstruction.SetActive(true);
-                        Number2_1.SetActive(true);
-                        Number2_2.SetActive(true);
-                        Number3_1.SetActive(true);
-                    }*/
-                }
-                if (Player.transform.position.x > 60)
+                
+                if (Player.transform.position.x > 55)
                 {
                     SpikeInstruction.SetActive(false);
-                    deactivateLevel2Stage0();
-                }
-                break;
-            case 3:
-                switch (level2Stage1)
-                {
-                    case 0:
-                        activateLevel2Stage1();
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        break;
+                    MenuInstruction.SetActive(true);
                 }
                 break;
         }
@@ -651,7 +622,7 @@ public class TutorialManager : MonoBehaviour
     void activateLevel3Stage0()
     {
         JumpInstruction.SetActive(true);
-        StartCoroutine(Highlighter(GameObject.Find("Number3")));
+        StartCoroutine(Highlighter(GameObject.Find("Number3"),  3));
         level3Stage0 = 1;
     }
 
@@ -679,6 +650,7 @@ public class TutorialManager : MonoBehaviour
             case 2:
                 OperationInstruction.SetActive(true);
                 // shot logic
+                StartCoroutine(Highlighter(GameObject.Find("Platform_1_2"), 3));
                 if (GlobalVariables.numberShot > 0)
                 {
                     OperationInstruction.SetActive(false);
@@ -707,6 +679,7 @@ public class TutorialManager : MonoBehaviour
                     case 3:
                         if(Player.transform.position.x > 20)
                         {
+                            GameObject.Find("Part22").GetComponent<SpriteRenderer>().color = Color.green;
                             SpikeInstruction.SetActive(true);
                             StartCoroutine(Highlighter(GameObject.Find("Elevator_1_2"), 2));
                         }
@@ -754,9 +727,9 @@ public class TutorialManager : MonoBehaviour
 
     void activateLevel5Stage0()
     {
-        JumpInstruction.SetActive(true);
         OperationInstruction.SetActive(false);
         SpikeInstruction.SetActive(false);
+        StartCoroutine(Highlighter(GameObject.Find("Gun"), 3));
         level5Stage0 = 1;
     }
 
@@ -775,33 +748,36 @@ public class TutorialManager : MonoBehaviour
             case 1:
                 if(Player.transform.Find("Gun") && Input.GetKeyDown(KeyCode.F))
                 {
-                    JumpInstruction.SetActive(false);
+                    OperationInstruction.SetActive(true);
+                    StartCoroutine(Highlighter(GameObject.Find("Number8"), 3));
+                    level5Stage0 = 3;
+                    if (GameObject.Find("Gun").transform.Find("Highlighter(Clone)") != null)
+                    {
+                        GameObject dummy = GameObject.Find("Gun").transform.Find("Highlighter(Clone)").gameObject;
+                        if (dummy != null)
+                            Destroy(dummy);
+                    }
                     level5Stage0 = 2;
                 }
                 break;
             case 2:
-                if(Player.GetComponent<PlayerControl>().currentX == 0 && Input.GetKeyDown(KeyCode.F))
+                if(Player.transform.position.x > 22 && Player.transform.position.y > 5.8f)
                 {
-                    OperationInstruction.SetActive(true);
+                    OperationInstruction.SetActive(false);
                     level5Stage0 = 3;
                 }
                 break;
             case 3:
-                if(Player.GetComponent<PlayerControl>().currentX != 0)
-                {
-                    OperationInstruction.SetActive(false);
-                    level5Stage0 = 4;
-                }
-                    break;
-            case 4:
                 if(Player.transform.position.x > 19 && Player.transform.position.y > 3)
                 {
                     SpikeInstruction.SetActive(true);
-                    level5Stage0 = 5;
+                    StartCoroutine(Highlighter(GameObject.Find("Monster2"), 3));
+                    level5Stage0 = 4;
                 }
                 break;
-            case 5:
-                SpikeInstruction.SetActive(true);
+            case 4:
+                if(GameObject.Find("Monster2") == null)
+                    SpikeInstruction.SetActive(false);
                 break;
         }
     }
