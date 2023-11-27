@@ -694,7 +694,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472477016}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.312086, y: -7.52563, z: 0}
+  m_LocalPosition: {x: -12.610573, y: -7.53058, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -833,7 +833,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.687914, y: 4.02563, z: -10}
+  m_LocalPosition: {x: -0.38942719, y: 4.03058, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2147,6 +2147,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5388362156563794561, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
+      propertyPath: HighlighterMaterial
+      value: 
+      objectReference: {fileID: 1990967466355533608, guid: cf7a0bdc73fb25a40adbe33478ac70c1, type: 3}
     - target: {fileID: 5388362156563794562, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_Pivot.x
       value: 0

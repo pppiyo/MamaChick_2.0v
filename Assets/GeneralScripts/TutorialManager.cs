@@ -6,6 +6,7 @@ using TMPro;
 
 public class TutorialManager : MonoBehaviour
 {
+    public GameObject HighlighterMaterial;
     private string level;
     private int stage;
     private GameObject Player;
@@ -213,6 +214,27 @@ public class TutorialManager : MonoBehaviour
             }
         }
     }
+    // Highlighter 
+    IEnumerator Highlighter(GameObject highlight, int timeLimit)
+    {
+        float elapsedTime = 0f;
+        int i = 0;
+        GameObject highlightInstance;
+        while (elapsedTime < timeLimit && highlight != null)
+        {
+            if (highlight.transform.Find("Highlighter(Clone)") == null)
+            {
+                highlightInstance = Instantiate(HighlighterMaterial, highlight.transform);
+            }
+            else
+            {
+                highlightInstance = highlight.transform.Find("Highlighter(Clone)").gameObject;
+                Destroy(highlightInstance);
+            }
+            yield return new WaitForSeconds(0.1f);
+            elapsedTime += Time.deltaTime*30;
+        }
+    }
 
     //activateLevel#Stage# function activates necessary elements of the corresponding level and stage
     //deactivateLevel#Stage# function deactivates necessary elements of the corresponding level and stage
@@ -412,12 +434,13 @@ public class TutorialManager : MonoBehaviour
 
                                                 if(GameObject.Find("AddInstruction")  == null && GameObject.Find("Number4") != null)
                                                 {
-                                                    Debug.Log("Flashadd");
+                                                    StartCoroutine(Highlighter(GameObject.Find("Number4"), 3));
+                                                    level1Stage4 = 22;
                                                 }
-
+                                                break;
+                                            case 22:
                                                 if(GameObject.Find("Number4") == null)
                                                 {
-                                                    Debug.Log("Wonderfuladd");
                                                     level1Stage4 = 2;
                                                 }
                                                 break;
@@ -444,11 +467,10 @@ public class TutorialManager : MonoBehaviour
                                                 }
                                                 if (GameObject.Find("SubInstruction") == null && GameObject.Find("Number15") != null)
                                                 {
-                                                    Debug.Log("Flashsub");
+                                                    StartCoroutine(Highlighter(GameObject.Find("Number15"), 3));
                                                 }
                                                 if (GameObject.Find("Number15") == null)
                                                 {
-                                                    Debug.Log("Wonderfulsub");
                                                     level1Stage4 = 4;
                                                 }
                                                 break;
@@ -475,11 +497,10 @@ public class TutorialManager : MonoBehaviour
                                                 }
                                                 if (GameObject.Find("DivInstruction") == null && GameObject.Find("Number2") != null)
                                                 {
-                                                    Debug.Log("Flashdiv");
+                                                    StartCoroutine(Highlighter(GameObject.Find("Number2"), 3));
                                                 }
                                                 if (GameObject.Find("Number2") == null)
                                                 {
-                                                    Debug.Log("Wonderfuldiv");
                                                     level1Stage4 = 6;
                                                 }
                                                 break;
@@ -506,11 +527,7 @@ public class TutorialManager : MonoBehaviour
                                                 }
                                                 if (GameObject.Find("MulInstruction") == null && GameObject.Find("Number30") != null)
                                                 {
-                                                    Debug.Log("Flashmul");
-                                                }
-                                                if (GameObject.Find("Number30") == null)
-                                                {
-                                                    Debug.Log("Wonderfulmul");
+                                                    StartCoroutine(Highlighter(GameObject.Find("Number30"), 3));
                                                 }
                                                 if(GameObject.Find("Number0") == null)
                                                 {
@@ -549,6 +566,7 @@ public class TutorialManager : MonoBehaviour
         Platform_1_3.SetActive(true);
         Platform_1_10.SetActive(true);
         JumpInstruction.SetActive(true);
+        StartCoroutine(Highlighter(GameObject.Find("TeleportA_1"), 2));
         Checkpoint1.SetActive(true);
         level2Stage0 = 1;
     }
@@ -633,6 +651,7 @@ public class TutorialManager : MonoBehaviour
     void activateLevel3Stage0()
     {
         JumpInstruction.SetActive(true);
+        StartCoroutine(Highlighter(GameObject.Find("Number3")));
         level3Stage0 = 1;
     }
 
@@ -653,6 +672,7 @@ public class TutorialManager : MonoBehaviour
                 if (GlobalVariables.numbersGrabbed > 0)
                 {
                     JumpInstruction.SetActive(false);
+                    GameObject.Find("Ekey").SetActive(false);
                     level3Stage0 = 2;
                 }
                 break;
@@ -672,6 +692,7 @@ public class TutorialManager : MonoBehaviour
                         if(Player.transform.position.x > 2 && Player.transform.position.y > 7)
                         {
                             PlatformInstruction.SetActive(true);
+                            StartCoroutine(Highlighter(GameObject.Find("Elevator_1_1"), 2));
                             level3Stage1 = 1;
                         }
                         break;
@@ -687,6 +708,7 @@ public class TutorialManager : MonoBehaviour
                         if(Player.transform.position.x > 20)
                         {
                             SpikeInstruction.SetActive(true);
+                            StartCoroutine(Highlighter(GameObject.Find("Elevator_1_2"), 2));
                         }
                         if(Player.transform.position.x > 40)
                         {
@@ -695,7 +717,6 @@ public class TutorialManager : MonoBehaviour
                         break;
                 }
                 break;
-
         }
     }
 
