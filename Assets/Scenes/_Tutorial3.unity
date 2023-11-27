@@ -3097,6 +3097,10 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156084627598, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
+      propertyPath: m_margin.z
+      value: -43.618423
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388362156084627598, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3142,7 +3146,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156240684590, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_text
-      value: 'MOUSE-CLICK: DRAG AND SHOOT'
+      value: 'MOUSE-CLICK: DRAG AND SHOOT AT PLATFORMS'
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156240684590, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_fontSize
@@ -3178,7 +3182,7 @@ PrefabInstance:
       objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5388362156240684590, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4293388811
+      value: 4278436591
       objectReference: {fileID: 0}
     - target: {fileID: 5388362156240684591, guid: 636a9e3e40c7759419d5fd19f59ae038, type: 3}
       propertyPath: m_AnchoredPosition.x
