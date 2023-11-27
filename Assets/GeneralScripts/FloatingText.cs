@@ -23,13 +23,11 @@ public class FloatingText : MonoBehaviour
 
     void Update()
     {
-        if (text != null && rectTransform != null && !isTextChanging)
+        if (text != null && rectTransform != null && !isTextChanging && elapsedTime < 3f)
         {
             elapsedTime += Time.deltaTime;
-            Debug.Log("TEXT:" + text.text);
             // Vector3 screenPos = Camera.main.WorldToScreenPoint(player.position + offset);
             // text.rectTransform.position = screenPos + Vector3.up * speed * Time.deltaTime;
-
 
             // 在垂直方向上自动向上移动
             text.rectTransform.position += Vector3.up * speed * Time.deltaTime;
