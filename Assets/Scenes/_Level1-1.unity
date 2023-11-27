@@ -482,7 +482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351557972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.085709, y: -10.58303, z: 0}
+  m_LocalPosition: {x: -19.387753, y: -10.57937, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -762,7 +762,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.4142914, y: 6.88303, z: -10}
+  m_LocalPosition: {x: -4.1122475, y: 6.8793697, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1661,7 +1661,7 @@ PrefabInstance:
     - target: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: floatingTextPrefab
       value: 
-      objectReference: {fileID: 6295620945491722359, guid: 7cd3eb76bb2494c2aa66c12a7a1a97bb, type: 3}
+      objectReference: {fileID: 8621720025952756700, guid: 6823c9034fda51747afa07fef6721488, type: 3}
     - target: {fileID: 1052844417149255869, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -1757,6 +1757,10 @@ PrefabInstance:
     - target: {fileID: 4514688109888760572, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_Color.r
       value: 0.25031227
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432816068724433186, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
+      propertyPath: speed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7785517248897100423, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: distanceFromPlayer

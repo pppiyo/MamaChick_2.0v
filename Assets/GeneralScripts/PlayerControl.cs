@@ -58,8 +58,7 @@ public class PlayerControl : MonoBehaviour
     public float rightBound;
     public float leftBound;
     // 获取 FloatingText 实例的引用
-    public FloatingText floatingTextPrefab; // 假设有一个预制体 FloatingTextPrefab，将其拖拽到这个字段中
-    private FloatingText floatingTextInstance;
+    public GameObject floatingTextInstance;
 
     private SpriteRenderer playerSpriteRenderer;
 
@@ -70,7 +69,7 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-
+        floatingTextInstance = GameObject.Find("Player_Indicator");
         // Keep the player in bound
         SetPlayerBoundary();
         //KeepPlayerInBound();
@@ -595,9 +594,8 @@ public class PlayerControl : MonoBehaviour
         // Vector2 playerCanvasPosition = playerWorldPosition;
 
         // 实例化floatingTextPrefab并设置位置
-        floatingTextInstance = Instantiate(floatingTextPrefab, canvas.transform);
-        floatingTextInstance.GetComponent<RectTransform>().anchoredPosition = transform.position + new Vector3(0, -100, 0);
-        Debug.Log("Player Screen Position: " + transform.position);
+        // floatingTextInstance.GetComponent<RectTransform>().anchoredPosition = transform.position + new Vector3(0, -100, 0);
+        // Debug.Log("Player Screen Position: " + transform.position);
 
 
 
@@ -611,7 +609,7 @@ public class PlayerControl : MonoBehaviour
         {
             case 0:
                 GlobalVariables.opTimesMap["+"]++;
-                floatingTextInstance.SetTextValues("+", increaseX.ToString());
+                floatingTextInstance.GetComponent<FloatingText>().SetTextValues("+", increaseX.ToString());
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
@@ -631,7 +629,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case 1:
                 GlobalVariables.opTimesMap["-"]++;
-                floatingTextInstance.SetTextValues("-", increaseX.ToString());
+                floatingTextInstance.GetComponent<FloatingText>().SetTextValues("-", increaseX.ToString());
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
@@ -651,7 +649,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case 2:
                 GlobalVariables.opTimesMap["*"]++;
-                floatingTextInstance.SetTextValues("*", increaseX.ToString());
+                floatingTextInstance.GetComponent<FloatingText>().SetTextValues("*", increaseX.ToString());
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle overflow
@@ -677,7 +675,7 @@ public class PlayerControl : MonoBehaviour
                 break;
             case 3:
                 GlobalVariables.opTimesMap["/"]++;
-                floatingTextInstance.SetTextValues("/", increaseX.ToString());
+                floatingTextInstance.GetComponent<FloatingText>().SetTextValues("/", increaseX.ToString());
                 if (negativeX(currentX, increaseX))
                     return;
                 // Handle divide by zero
@@ -696,9 +694,7 @@ public class PlayerControl : MonoBehaviour
                 }
                 break;
             case 4:
-                hintDisplay = "Select an Operator";
-                ShowHint(hintDisplay);
-                StartCoroutine(HideHint(1));
+                floatingTextInstance.GetComponent<FloatingText>().SetTextValues("SELECT", "AN OPERATOR");
                 break;
         }
 
