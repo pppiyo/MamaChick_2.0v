@@ -767,7 +767,6 @@ public class PlayerControl : MonoBehaviour
                 {
                     transform.position = pairPortal.transform.position; // Teleport the player
                     // Show confirmation hint
-                    ShowHint("Start Teleport!");
                     StartCoroutine(TeleportCooldown()); // 开始冷却计时
                     Transition teleportPauseScript = SceneLoader.GetComponent<Transition>();
                     if (nearestBall != null)
