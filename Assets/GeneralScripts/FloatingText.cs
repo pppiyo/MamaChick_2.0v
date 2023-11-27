@@ -5,7 +5,7 @@ public class FloatingText : MonoBehaviour
 {
     private TMP_Text text;
     public float speed = 40f;
-    public float scaleSpeed = 10f;
+    public float scaleSpeed = 20f;
     private float elapsedTime;
     private RectTransform rectTransform;  // 添加RectTransform的引用
     private bool isTextChanging = false;
@@ -54,7 +54,7 @@ public class FloatingText : MonoBehaviour
         Debug.Log(operatorID);
         text.text = operatorID + " " + increaseX;
         rectTransform.anchoredPosition = Vector3.zero + new Vector3(0, 5, 0);
-        text.fontSize = 45;
+        text.fontSize = 80f;
         elapsedTime = 0f;
         isTextChanging = false;
     }
