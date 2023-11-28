@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &12861890 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8141260372545767314, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
-  m_PrefabInstance: {fileID: 998239397}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &30845314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1826,7 +1821,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.415068, y: 10.16294, z: -10}
+  m_LocalPosition: {x: 1.4810438, y: 10.127319, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -4201,38 +4196,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 576140655, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
   m_PrefabInstance: {fileID: 998239397}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12861890}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d72d1b30d0e74936886b09c5c58e743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &1327968171
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12861890}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.96, y: 3.51}
-    newSize: {x: 1, y: 2}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2}
-  m_EdgeRadius: 0
 --- !u!1001 &1343382764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5767,7 +5736,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004763542}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.973034, y: -5.0729394, z: 0}
+  m_LocalPosition: {x: -3.371417, y: -5.0373187, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
