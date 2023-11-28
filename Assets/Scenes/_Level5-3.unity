@@ -1121,11 +1121,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4257005571330269642, guid: 62f0d05d45acb4b63b3a54722035b6e2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -18.4
+      value: 3.47
       objectReference: {fileID: 0}
     - target: {fileID: 4257005571330269642, guid: 62f0d05d45acb4b63b3a54722035b6e2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.1
+      value: 1.49
       objectReference: {fileID: 0}
     - target: {fileID: 4257005571330269642, guid: 62f0d05d45acb4b63b3a54722035b6e2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1802,7 +1802,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 20
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1826,7 +1826,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.683197, y: 15.177309, z: -10}
+  m_LocalPosition: {x: 9.415068, y: 10.16294, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -3235,11 +3235,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2696232932582028286, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.7
+      value: -13.11
       objectReference: {fileID: 0}
     - target: {fileID: 2696232932582028286, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6
+      value: -1.81
       objectReference: {fileID: 0}
     - target: {fileID: 2696232932582028286, guid: 970879d43d1e94bd586fe13880d00024, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3726,7 +3726,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2869645891521259825, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -373
+      value: -398.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2869645891521259825, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -134.5
       objectReference: {fileID: 0}
     - target: {fileID: 7093897415270158818, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4220,7 +4224,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8, y: 6.26}
+    oldSize: {x: 1.96, y: 3.51}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -5128,8 +5132,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 54.61313, y: 40.637646}
-      - {x: -23.689465, y: 39.986927}
-      - {x: -24.005793, y: 16.04419}
+      - {x: -26.09093, y: 40.158463}
+      - {x: -26.374207, y: 16.480476}
       - {x: -26.233395, y: -4.9915867}
       - {x: 54.33592, y: -4.633089}
       - {x: 52.617283, y: 19.498373}
@@ -5763,7 +5767,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004763542}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.423694, y: -9.577309, z: 0}
+  m_LocalPosition: {x: -7.973034, y: -5.0729394, z: 0}
   m_LocalScale: {x: 2, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5794,7 +5798,7 @@ MonoBehaviour:
   m_Follow: {fileID: 998239398}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 20
+    OrthographicSize: 15
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0

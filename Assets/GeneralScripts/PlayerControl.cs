@@ -94,6 +94,7 @@ public class PlayerControl : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
         force = jumpForce * Vector2.up;
         isGrounded = false;
+        if(GlobalVariables.curLevel != "tutorial 5")
         currentX = 0;
         xBoard = xObject.GetComponent<TMP_Text>();
         hintText.gameObject.SetActive(false);
