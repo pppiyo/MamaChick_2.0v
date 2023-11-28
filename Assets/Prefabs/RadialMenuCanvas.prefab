@@ -554,11 +554,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1215979794034190858, guid: 45ad8a42758c84583a50a89d034f7438, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.9437
       objectReference: {fileID: 0}
     - target: {fileID: 1215979794034190858, guid: 45ad8a42758c84583a50a89d034f7438, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1.64365
       objectReference: {fileID: 0}
     - target: {fileID: 1215979794034190858, guid: 45ad8a42758c84583a50a89d034f7438, type: 3}
       propertyPath: m_LocalPosition.x
@@ -594,7 +594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1215979794034190858, guid: 45ad8a42758c84583a50a89d034f7438, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -91
+      value: -92
       objectReference: {fileID: 0}
     - target: {fileID: 1215979794034190858, guid: 45ad8a42758c84583a50a89d034f7438, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -612,6 +612,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OKButtonUI
       objectReference: {fileID: 0}
+    - target: {fileID: 1215979794034190860, guid: 45ad8a42758c84583a50a89d034f7438, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 820faf885893d462c88898b39033178e, type: 3}
     - target: {fileID: 1215979794034190861, guid: 45ad8a42758c84583a50a89d034f7438, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
