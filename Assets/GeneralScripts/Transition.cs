@@ -261,7 +261,7 @@ public class Transition : MonoBehaviour
                 LoadLevel4_1();
                 break;
             case "tutorial 5":
-                LoadLevels();
+                LoadLevel5_1();
                 break;
 
             case "_Level1-1":
