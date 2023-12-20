@@ -703,7 +703,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 351557972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.172338, y: -6.39713, z: 0}
+  m_LocalPosition: {x: -10.280743, y: -6.40548, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -970,7 +970,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.388008, y: 4.81913, z: -10}
+  m_LocalPosition: {x: -24.290749, y: 4.82748, z: -10}
   m_LocalScale: {x: 1.0125, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1242,7 +1242,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 689109013}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.5, y: 16.9, z: 0}
+  m_LocalPosition: {x: 33.5, y: 13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2937,6 +2937,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6765680256474877842, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 191.00002
+      objectReference: {fileID: 0}
     - target: {fileID: 7093897415270158818, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2951,7 +2955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7093897415270158818, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 158
+      value: 192.00002
       objectReference: {fileID: 0}
     - target: {fileID: 7093897415270158821, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2960,6 +2964,10 @@ PrefabInstance:
     - target: {fileID: 7093897415270158821, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadLevels
+      objectReference: {fileID: 0}
+    - target: {fileID: 8006445462857072907, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 191
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6895c6a1d235eb4abaf15d46dc502cc, type: 3}
@@ -3437,7 +3445,7 @@ Transform:
   m_GameObject: {fileID: 1658387322}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.5, y: 18, z: 0}
-  m_LocalScale: {x: 2.90625, y: 2.8125, z: 2.5}
+  m_LocalScale: {x: 3.9960938, y: 3.1640625, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
