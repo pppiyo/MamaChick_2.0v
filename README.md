@@ -5,4 +5,4 @@ Platformer inspired by blackjack
 
 ## [Gold Presentation Slides](https://docs.google.com/presentation/d/1JLnsKLyFmHb_k_yttrtShvD7zzileBw4lP8AUnmliVk/edit#slide=id.g29f97bc5a4f_0_474)
 
-## [Play the Game](https://meivenka.github.io/mamchickTesting/)
+## [Play the Game](https://play.unity.com/mg/other/mamachick_gold_build)
